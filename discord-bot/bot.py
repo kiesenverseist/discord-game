@@ -8,9 +8,10 @@ class MyClient(discord.Client):
         self.send_q = send
         self.recv_q = recv
 
-        self.bg_task = self.loop.create_task(self.send_messages())
+        # self.bg_task = self.loop.create_task(self.send_messages())
 
     async def on_ready(self):
+        print('------')
         print('Logged in as')
         print(self.user.name)
         print(self.user.id)
@@ -20,9 +21,8 @@ class MyClient(discord.Client):
         await self.wait_until_ready()
         channel = self.get_channel(566610532786765854) # channel ID goes here
         while not self.is_closed():
-            if not self.recv_q.empty():
-                await channel.send(str(self.recv_q.get()))
-            await asyncio.sleep(1)
+            msg = await self.recv_q.get()
+            await channel.send(str(msg))
 
     async def on_message(self, message):
         # we do not want the bot to reply to itself
@@ -30,4 +30,4 @@ class MyClient(discord.Client):
             return
 
         if message.channel.id == 566610532786765854:
-            self.send_q.put(str(message.content))
+            await self.send_q.put(str(message.content))

@@ -3,20 +3,20 @@ import queue
 import websockets
 
 class ws():   
-    def __init__(self, send, recv):
+    def __init__(self, lop, send, recv):
         self.send_q = send
         self.recv_q = recv
+        self.loop = lop
     
     async def consumer(self, message):
         print("MESSAHE RECIEVEDDDD")
         print(f'>{message}')
-        self.recv_q.put(message)
+        await self.recv_q.put(message)
     
     async def producer(self):
-        if not self.send_q.empty():
-                msg = self.send_q.get()
-                print("<" + msg)
-                return msg
+        msg = await self.send_q.get()
+        print("<" + msg)
+        return msg
     
     async def consumer_handler(self, websocket, path):
         async for message in websocket:
@@ -43,10 +43,7 @@ class ws():
             task.cancel()
     
     def run(self):
-        loop=asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
         start_server = websockets.serve(self.handler, '127.0.0.1', 5678)
-
-        asyncio.get_event_loop().run_until_complete(start_server)
-        asyncio.get_event_loop().run_forever()
+        print("**server started**")
+        self.loop.run_until_complete(start_server)
+        self.loop.run_forever()
