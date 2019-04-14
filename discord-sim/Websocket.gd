@@ -7,6 +7,8 @@ func _ready():
 	client.connect("data_received", self, "data_recieved")
 	client.connect("connection_established", self, "connection_established")
 	client.connect("connection_error", self, "connection_error")
+	
+	get_tree().create_timer(1).connect("timeout", self, "send_data", [{"":''}])
 
 #warning-ignore:unused_argument
 func _process(delta):
@@ -16,6 +18,7 @@ func _process(delta):
 
 func send_data(data : Dictionary):
 	var msg = JSON.print(data)
+	msg = "hello there"
 	printt("data send", msg)
 	client.get_peer(1).put_packet(msg.to_utf8())
 
