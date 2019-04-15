@@ -3,7 +3,7 @@ services:
 
 env:
   - GAME_NAME="Discord Game"
-  - PATH="discord-sim"
+  - GODOT_PROJECT_PATH="discord-sim"
 
 # Get relevent installation
 install:
@@ -11,9 +11,9 @@ install:
 
 # To export the games
 script:
-- docker run -e EXPORT_NAME="Linux/X11"       -e OUTPUT_FILENAME="${GAME_NAME}-$TRAVIS_TAG"         -e SOURCE_PATH="${PATH}" -v $(pwd):/build/src/discord-sim -v $(pwd)/output/linux:/build/output   kiesenverseist/docker-godot-export:master
-- docker run -e EXPORT_NAME="Windows Desktop" -e OUTPUT_FILENAME="${GAME_NAME}-$TRAVIS_TAG.exe"     -e SOURCE_PATH="${PATH}" -v $(pwd):/build/src/discord-sim -v $(pwd)/output/windows:/build/output kiesenverseist/docker-godot-export:master
-- docker run -e EXPORT_NAME="Mac OSX"         -e OUTPUT_FILENAME="${GAME_NAME}-$TRAVIS_TAG-mac.app" -e SOURCE_PATH="${PATH}" -v $(pwd):/build/src/discord-sim -v $(pwd)/output/mac:/build/output     kiesenverseist/docker-godot-export:master
+- docker run -e EXPORT_NAME="Linux/X11"       -e OUTPUT_FILENAME="${GAME_NAME}-$TRAVIS_TAG"         -e SOURCE_PATH="${GODOT_PROJECT_PATH}" -v $(pwd):/build/src/discord-sim -v $(pwd)/output/linux:/build/output   kiesenverseist/docker-godot-export:master
+- docker run -e EXPORT_NAME="Windows Desktop" -e OUTPUT_FILENAME="${GAME_NAME}-$TRAVIS_TAG.exe"     -e SOURCE_PATH="${GODOT_PROJECT_PATH}" -v $(pwd):/build/src/discord-sim -v $(pwd)/output/windows:/build/output kiesenverseist/docker-godot-export:master
+- docker run -e EXPORT_NAME="Mac OSX"         -e OUTPUT_FILENAME="${GAME_NAME}-$TRAVIS_TAG-mac.app" -e SOURCE_PATH="${GODOT_PROJECT_PATH}" -v $(pwd):/build/src/discord-sim -v $(pwd)/output/mac:/build/output     kiesenverseist/docker-godot-export:master
 
 # This creates zip files from the exported game builds for the
 # three desktop platforms
