@@ -2,8 +2,9 @@ services:
 - docker
 
 env:
-  - GAME_NAME="Discord Game"
-  - GODOT_PROJECT_PATH="discord-sim"
+  global:
+    - GAME_NAME="Discord Game"
+    - GODOT_PROJECT_PATH="discord-sim"
 
 # Get relevent installation
 install:
