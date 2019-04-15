@@ -1,0 +1,38 @@
+services:
+- docker
+
+env:
+  - GAME_NAME="Discord Game"
+
+# Get relevent installation
+install:
+- docker pull kiesenverseist/docker-godot-export:master
+
+# To export the games
+script:
+- docker run -e EXPORT_NAME="Linux/X11"       -e OUTPUT_FILENAME="${GAME_NAME}-$TRAVIS_TAG"         -v $(pwd):/build/src/discord-sim -v $(pwd)/output/linux:/build/output   kiesenverseist/docker-godot-export:master
+- docker run -e EXPORT_NAME="Windows Desktop" -e OUTPUT_FILENAME="${GAME_NAME}-$TRAVIS_TAG.exe"     -v $(pwd):/build/src/discord-sim -v $(pwd)/output/windows:/build/output kiesenverseist/docker-godot-export:master
+- docker run -e EXPORT_NAME="Mac OSX"         -e OUTPUT_FILENAME="${GAME_NAME}-$TRAVIS_TAG-mac.app" -v $(pwd):/build/src/discord-sim -v $(pwd)/output/mac:/build/output     kiesenverseist/docker-godot-export:master
+
+# This creates zip files from the exported game builds for the
+# three desktop platforms
+before_deploy:
+- zip -r -j "${GAME_NAME}-$TRAVIS_TAG-linux.zip"   output/linux
+- zip -r -j "${GAME_NAME}-$TRAVIS_TAG-windows.zip" output/windows
+- cp output/mac/* .
+- mv *.app "${GAME_NAME}-$TRAVIS_TAG-mac.zip"
+
+deploy:
+# The following block is responsible to upload the zip files
+# created above to GitHub Releases whenever a new git tag
+# is created.
+- provider: releases
+  skip-cleanup: true
+  api_key: $GITHUB_TOKEN
+  file:
+    - "${GAME_NAME}-$TRAVIS_TAG-linux.zip"
+    - "${GAME_NAME}-$TRAVIS_TAG-windows.zip"
+    - "${GAME_NAME}-$TRAVIS_TAG-mac.zip"
+  on:
+    all_branches: true
+    tags: true
