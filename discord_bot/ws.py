@@ -1,6 +1,7 @@
 import asyncio
 import queue
 import websockets
+import json
 
 class ws():   
     def __init__(self, send, recv):
@@ -8,15 +9,16 @@ class ws():
         self.recv_q = recv
     
     async def consumer(self, message):
-        print("MESSAHE RECIEVEDDDD")
+        msg = json.loads(message)
         print(f'>{message}')
-        self.recv_q.put(message)
+        self.recv_q.put(msg)
     
     async def producer(self):
         if not self.send_q.empty():
-                msg = self.send_q.get()
-                print("<" + msg)
-                return msg
+            msg = self.send_q.get()
+            print("<" +str(msg))
+            msg = json.dumps(msg)
+            return msg
     
     async def consumer_handler(self, websocket, path):
         async for message in websocket:

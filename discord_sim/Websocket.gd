@@ -2,13 +2,15 @@ extends Node
 
 var client = WebSocketClient.new()
 
+signal user_joined(data)
+signal message_recieved(data)
+
 func _ready():
 	client.connect_to_url("ws://127.0.0.1:5678")
 	client.connect("data_received", self, "data_recieved")
 	client.connect("connection_established", self, "connection_established")
 	client.connect("connection_error", self, "connection_error")
-	
-	get_tree().create_timer(1).connect("timeout", self, "send_data", [{"":''}])
+			
 
 #warning-ignore:unused_argument
 func _process(delta):
@@ -18,24 +20,28 @@ func _process(delta):
 
 func send_data(data : Dictionary):
 	var msg = JSON.print(data)
-	msg = "hello there"
-	printt("data send", msg)
+	printt("> ", msg)
 	client.get_peer(1).put_packet(msg.to_utf8())
 
 func data_recieved():
 	var data = client.get_peer(1).get_packet()
-	data = (data as PoolByteArray).get_string_from_ascii()
-	print("data recieved: %s" % data)
-#	data = JSON.parse(data).result
-#
-#	match data["type"]:
-#		"message":
-#			printt("message", data["content"])
-#		_:
-#			print("unknown data type")
+	data = (data as PoolByteArray).get_string_from_utf8()
+	print("< %s" % data)
+	
+	data = JSON.parse(data).result
+
+	match data["type"]:
+		"message":
+			emit_signal("message_recieved", data)
+		"member_join":
+			emit_signal("user_joined", data)
+		_:
+			print("unknown data type")
 
 func connection_established(protocol = "none"):
 	print("Connection succesfull: %s" % protocol)
+	send_data({"type":"message", "message":"Server Connected",
+			"channel_id" : "566610532786765854"})
 
 func conection_error():
 	print("connection error'd")
