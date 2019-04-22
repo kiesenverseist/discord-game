@@ -57,8 +57,16 @@ func load_all():
 	
 	print("done loading")
 
+func add_user(id : String, nam : String):
+	users[id] = User.new(id, nam)
+
+func remove_user(id : String):
+	users.erase(id)
+
 class Team:
 	var data = {}
+	
+	var points setget ,get_points
 	
 	func _init(nam : String):
 		data["name"] = nam
@@ -66,6 +74,9 @@ class Team:
 	
 	func add_points(p : int):
 		data["points"] += p
+	
+	func get_points() -> int:
+		return data["points"]
 	
 	func get_all() -> String:
 		return JSON.print(data)
@@ -80,14 +91,18 @@ class Team:
 class User:
 	var data = {}
 	
-	func _init(id : String):
+	func _init(id : String, nam : String = ""):
 		data["id"] = id
+		data["user_name"] = nam
 	
 	func set_nick(nick : String):
 		data["nick"] = nick
 	
 	func set_avatar(avatar : String):
 		data["avatar"] = avatar
+	
+	func get_all() -> String:
+		return JSON.print(data)
 	
 	func set_all(dat : String):
 		var parsed = JSON.parse(dat).result
@@ -96,3 +111,8 @@ class User:
 		for key in parsed:
 			data[key] = parsed[key]
 
+
+
+func _on_ToolButton_pressed():
+	save_all()
+	get_tree().quit()

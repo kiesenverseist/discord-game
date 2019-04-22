@@ -13,6 +13,7 @@ enum {
 }
 
 onready var ws = $"../Websocket"
+onready var gd = $"../GlobalData"
 
 func _ready():
 	ws.connect("message_recieved", self, "_on_message_receved")
@@ -32,20 +33,21 @@ func _on_message_receved(data):
 		if data["channel_name"] == "generator":
 			match data["category_name"]:
 				"Red":
-					r_p+=1
+					gd.teams["Red"].add_points(1)
 				"Green":
-					g_p+=1
+					gd.teams["Green"].add_points(1)
 				"Blue":
-					b_p+=1
+					gd.teams["Blue"].add_points(1)
 				"Yellow":
-					y_p+=1
+					gd.teams["Yellow"].add_points(1)
 				_:
 					pass
 			
 			var send_update = {}
 			send_update["type"] = "replace_last"
 			send_update["channel_id"] = "569550419450134528"
-			send_update["message"] = "Red: %s \nGreen: %s \nYellow: %s \nBlue: %s" % [r_p, g_p, y_p, b_p]
+			send_update["message"] = "Red: %s \nGreen: %s \nYellow: %s \nBlue: %s" \
+					% [gd.teams["Red"].points, gd.teams["Green"].points, gd.teams["Yellow"].points, gd.teams["Blue"].points]
 			ws.send_data(send_update)
 	else:
 		var reply_dm = {}
