@@ -21,8 +21,11 @@ class ws():
             return msg
     
     async def consumer_handler(self, websocket, path):
-        async for message in websocket:
-            await self.consumer(message)
+        try:
+            async for message in websocket:
+                await self.consumer(message)
+        finally:
+            await self.consumer(json.dumps({"type":"message", "message":"Server Closed", "channel_id" : "566610532786765854"}))
 
     async def producer_handler(self, websocket, path):
         while True:

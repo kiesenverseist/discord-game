@@ -45,3 +45,8 @@ func connection_established(protocol = "none"):
 
 func conection_error():
 	print("connection error'd")
+
+func close():
+	send_data({"type":"message", "message":"Server Closed",
+			"channel_id" : "566610532786765854"})
+	client.disconnect_from_host(1000,"Server closed")

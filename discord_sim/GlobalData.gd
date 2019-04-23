@@ -3,6 +3,8 @@ extends Node
 var teams = {}
 var users = {}
 
+onready var ws = $"../Websocket"
+
 func _ready():
 	var savefile = File.new()
 	if savefile.file_exists("user://game.save"):
@@ -111,8 +113,7 @@ class User:
 		for key in parsed:
 			data[key] = parsed[key]
 
-
-
 func _on_ToolButton_pressed():
+	ws.close()
 	save_all()
 	get_tree().quit()
