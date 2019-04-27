@@ -4,13 +4,17 @@ import discord
 import random
 
 class MyClient(discord.Client):
-    def queues(self, send, recv):
+    def __init__(self, send, recv, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
         self.send_q = send
         self.recv_q = recv
 
         self.bg_task = self.loop.create_task(self.send_messages())
 
+    ## EVENT FUNCTIONS
     async def on_ready(self):
+        print('------')
         print('Logged in as')
         print(self.user.name)
         print(self.user.id)
@@ -21,6 +25,8 @@ class MyClient(discord.Client):
         
         self.gld = self.get_guild(566545531665383424)
 
+        await self.index_channels()
+
     async def send_messages(self):
         await self.wait_until_ready()
         while not self.is_closed():
@@ -28,9 +34,14 @@ class MyClient(discord.Client):
                 data = self.recv_q.get()
 
                 if data["type"] == "message":
-                    channel = self.get_channel(int(data.get("channel_id", 566610532786765854)))
-                    await channel.send(data["message"])
-                
+                    if not "channel_name" in data: #if the channel name is not soecified, the id will be
+                        channel = self.get_channel(int(data.get("channel_id", 566610532786765854)))
+                        await channel.send(data["message"])
+                    else:
+                        channel_id = self.indexed_channels[data["category_name"]][data["channel_name"]]
+                        channel = self.get_channel(int(channel_id))
+                        await channel.send(data["message"])
+
                 if data["type"] == "set_role":
                     user = self.gld.get_member(int(data["user_id"]))
                     role = self.gld.get_role(int(data["role_id"]))
@@ -42,7 +53,12 @@ class MyClient(discord.Client):
                         await m.delete()
                 
                 if data["type"] == "replace_last":
-                    ch = self.get_channel(int(data["channel_id"]))
+                    if not "channel_name" in data: #if the channel name is not soecified, the id will be
+                        ch = self.get_channel(int(data.get("channel_id", 566610532786765854)))
+                    else:
+                        channel_id = self.indexed_channels[data["category_name"]][data["channel_name"]]
+                        ch = self.get_channel(int(channel_id))
+                    
                     msg = ch.last_message
                     if msg != None:
                         await msg.edit(content=data["message"])
@@ -85,3 +101,27 @@ class MyClient(discord.Client):
             data["category_name"] = message.channel.category.name
 
         self.send_q.put(data)
+    
+    ## UTIL FUNCTIONS
+    async def index_channels(self):
+        all_channels = self.gld.by_category()
+
+        self.indexed_channels = {}
+
+        for t in all_channels:
+            if t[0] == None:
+                cat = "Misc"
+                cat_id = "0"
+            else:
+                cat = str(t[0])
+                cat_id = t[0].id
+            
+            self.indexed_channels[cat] = {"category_id" : cat_id}
+
+            for c in t[1]:
+                chan = str(c)
+                chan_id = c.id
+                self.indexed_channels[cat][chan] = chan_id
+        
+        print(self.indexed_channels)
+

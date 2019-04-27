@@ -45,7 +45,8 @@ func _on_message_receved(data):
 			
 			var send_update = {}
 			send_update["type"] = "replace_last"
-			send_update["channel_id"] = "569550419450134528"
+			send_update["category_name"] = "Super"
+			send_update["channel_name"] = "leaderboard"
 			send_update["message"] = "Red: %s \nGreen: %s \nYellow: %s \nBlue: %s" \
 					% [gd.teams["Red"].points, gd.teams["Green"].points, gd.teams["Yellow"].points, gd.teams["Blue"].points]
 			ws.send_data(send_update)
