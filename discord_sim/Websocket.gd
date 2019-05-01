@@ -20,13 +20,13 @@ func _process(delta):
 
 func send_data(data : Dictionary):
 	var msg = JSON.print(data)
-	printt("> ", msg)
+	printt(">", msg)
 	client.get_peer(1).put_packet(msg.to_utf8())
 
 func data_recieved():
 	var data = client.get_peer(1).get_packet()
 	data = (data as PoolByteArray).get_string_from_utf8()
-	print("< %s" % data)
+	printt("<", data)
 	
 	data = JSON.parse(data).result
 
@@ -50,3 +50,4 @@ func close():
 	send_data({"type":"message", "message":"Server Closed",
 			"channel_id" : "566610532786765854"})
 	client.disconnect_from_host(1000,"Server closed")
+

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Websocket.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://Manager.gd" type="Script" id=3]
 [ext_resource path="res://GlobalData.gd" type="Script" id=4]
+[ext_resource path="res://TeamGUI.gd" type="Script" id=5]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -45,9 +46,179 @@ script = ExtResource( 4 )
 
 [node name="GUI" type="CanvasLayer" parent="."]
 
-[node name="ToolButton" type="ToolButton" parent="GUI"]
-margin_right = 12.0
-margin_bottom = 22.0
+[node name="CloseGame" type="ToolButton" parent="GUI"]
+margin_left = 8.76663
+margin_top = 9.95798
+margin_right = 99.7666
+margin_bottom = 31.958
 text = "Close Server"
 
-[connection signal="pressed" from="GUI/ToolButton" to="GlobalData" method="_on_ToolButton_pressed"]
+[node name="SaveGame" type="ToolButton" parent="GUI"]
+margin_left = 124.79
+margin_top = 11.3445
+margin_right = 205.79
+margin_bottom = 33.3445
+text = "Save Game"
+
+[node name="Teams" type="TabContainer" parent="GUI"]
+margin_left = 8.19328
+margin_top = 35.9243
+margin_right = 286.193
+margin_bottom = 252.924
+script = ExtResource( 5 )
+
+[node name="Red" type="VBoxContainer" parent="GUI/Teams"]
+editor/display_folded = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="MemberCount" type="Label" parent="GUI/Teams/Red"]
+margin_right = 269.0
+margin_bottom = 14.0
+
+[node name="Points" type="Label" parent="GUI/Teams/Red"]
+margin_top = 18.0
+margin_right = 269.0
+margin_bottom = 32.0
+
+[node name="PointButtons" type="HSplitContainer" parent="GUI/Teams/Red"]
+margin_top = 36.0
+margin_right = 269.0
+margin_bottom = 58.0
+
+[node name="AddPoints" type="ToolButton" parent="GUI/Teams/Red/PointButtons"]
+margin_right = 74.0
+margin_bottom = 22.0
+text = "Add Point"
+
+[node name="SubPoints" type="ToolButton" parent="GUI/Teams/Red/PointButtons"]
+margin_left = 86.0
+margin_right = 269.0
+margin_bottom = 22.0
+text = "Sub Point"
+
+[node name="Blue" type="VBoxContainer" parent="GUI/Teams"]
+editor/display_folded = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="MemberCount" type="Label" parent="GUI/Teams/Blue"]
+margin_right = 158.0
+margin_bottom = 14.0
+
+[node name="Points" type="Label" parent="GUI/Teams/Blue"]
+margin_top = 18.0
+margin_right = 158.0
+margin_bottom = 32.0
+
+[node name="PointButtons" type="HSplitContainer" parent="GUI/Teams/Blue"]
+margin_top = 36.0
+margin_right = 158.0
+margin_bottom = 58.0
+
+[node name="AddPoints" type="ToolButton" parent="GUI/Teams/Blue/PointButtons"]
+margin_right = 74.0
+margin_bottom = 22.0
+text = "Add Point"
+
+[node name="SubPoints" type="ToolButton" parent="GUI/Teams/Blue/PointButtons"]
+margin_left = 86.0
+margin_right = 158.0
+margin_bottom = 22.0
+text = "Sub Point"
+
+[node name="Green" type="VBoxContainer" parent="GUI/Teams"]
+editor/display_folded = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="MemberCount" type="Label" parent="GUI/Teams/Green"]
+margin_right = 158.0
+margin_bottom = 14.0
+
+[node name="Points" type="Label" parent="GUI/Teams/Green"]
+margin_top = 18.0
+margin_right = 158.0
+margin_bottom = 32.0
+
+[node name="PointButtons" type="HSplitContainer" parent="GUI/Teams/Green"]
+margin_top = 36.0
+margin_right = 158.0
+margin_bottom = 58.0
+
+[node name="AddPoints" type="ToolButton" parent="GUI/Teams/Green/PointButtons"]
+margin_right = 74.0
+margin_bottom = 22.0
+text = "Add Point"
+
+[node name="SubPoints" type="ToolButton" parent="GUI/Teams/Green/PointButtons"]
+margin_left = 86.0
+margin_right = 158.0
+margin_bottom = 22.0
+text = "Sub Point"
+
+[node name="Yellow" type="VBoxContainer" parent="GUI/Teams"]
+editor/display_folded = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="MemberCount" type="Label" parent="GUI/Teams/Yellow"]
+margin_right = 158.0
+margin_bottom = 14.0
+
+[node name="Points" type="Label" parent="GUI/Teams/Yellow"]
+margin_top = 18.0
+margin_right = 158.0
+margin_bottom = 32.0
+
+[node name="PointButtons" type="HSplitContainer" parent="GUI/Teams/Yellow"]
+margin_top = 36.0
+margin_right = 158.0
+margin_bottom = 58.0
+
+[node name="AddPoints" type="ToolButton" parent="GUI/Teams/Yellow/PointButtons"]
+margin_right = 74.0
+margin_bottom = 22.0
+text = "Add Point"
+
+[node name="SubPoints" type="ToolButton" parent="GUI/Teams/Yellow/PointButtons"]
+margin_left = 86.0
+margin_right = 158.0
+margin_bottom = 22.0
+text = "Sub Point"
+
+[node name="TabContainer2" type="TabContainer" parent="GUI"]
+margin_left = 10.0
+margin_top = 272.0
+margin_right = 18.0
+margin_bottom = 308.0
+
+[connection signal="pressed" from="GUI/CloseGame" to="GlobalData" method="_on_ToolButton_pressed"]
+[connection signal="pressed" from="GUI/SaveGame" to="GlobalData" method="save_all"]
+[connection signal="pressed" from="GUI/Teams/Red/PointButtons/AddPoints" to="GUI/Teams" method="change_points" binds= [ "Red", 1 ]]
+[connection signal="pressed" from="GUI/Teams/Red/PointButtons/SubPoints" to="GUI/Teams" method="change_points" binds= [ "Red", -1 ]]
+[connection signal="pressed" from="GUI/Teams/Blue/PointButtons/AddPoints" to="GUI/Teams" method="change_points" binds= [ "Blue", 1 ]]
+[connection signal="pressed" from="GUI/Teams/Blue/PointButtons/SubPoints" to="GUI/Teams" method="change_points" binds= [ "Blue", -1 ]]
+[connection signal="pressed" from="GUI/Teams/Green/PointButtons/AddPoints" to="GUI/Teams" method="change_points" binds= [ "Green", 1 ]]
+[connection signal="pressed" from="GUI/Teams/Green/PointButtons/SubPoints" to="GUI/Teams" method="change_points" binds= [ "Green", -1 ]]
+[connection signal="pressed" from="GUI/Teams/Yellow/PointButtons/AddPoints" to="GUI/Teams" method="change_points" binds= [ "Yellow", 1 ]]
+[connection signal="pressed" from="GUI/Teams/Yellow/PointButtons/SubPoints" to="GUI/Teams" method="change_points" binds= [ "Yellow", -1 ]]

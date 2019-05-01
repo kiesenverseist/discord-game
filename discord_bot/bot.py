@@ -12,6 +12,9 @@ class MyClient(discord.Client):
 
         self.bg_task = self.loop.create_task(self.send_messages())
 
+        self.indexed_channels = {}
+        self.indexed_roles = {}
+
     ## EVENT FUNCTIONS
     async def on_ready(self):
         print('------')
@@ -26,6 +29,7 @@ class MyClient(discord.Client):
         self.gld = self.get_guild(566545531665383424)
 
         await self.index_channels()
+        await self.index_roles()
 
     async def send_messages(self):
         await self.wait_until_ready()
@@ -44,7 +48,11 @@ class MyClient(discord.Client):
 
                 if data["type"] == "set_role":
                     user = self.gld.get_member(int(data["user_id"]))
-                    role = self.gld.get_role(int(data["role_id"]))
+                    if "role_name" in data:
+                        role_id = self.gld.get_role(int(indexed_roles(data["role_name"])))
+                        role = self.gld.get_role(role_id)
+                    else:
+                        role = self.gld.get_role(int(data["role_id"]))
                     await user.add_roles(role)
 
                 if data["type"] == "clear_channel": #does not work
@@ -82,6 +90,24 @@ class MyClient(discord.Client):
         data["user_name"] = member.name
 
         self.send_q.put(data)
+
+    async def on_guild_channel_delete(self, channel):
+        self.index_channels()
+    
+    async def on_guild_channel_create(self, channel):
+        self.index_channels()
+    
+    async def on_guild_channel_update(self, before, after):
+        self.index_channels()
+    
+    async def on_guild_role_delete(self, role):
+        self.index_roles()
+    
+    async def on_guild_role_create(self, role):
+        self.index_roles()
+    
+    async def on_guild_role_update(self, before, after):
+        self.index_roles()
 
     async def on_message(self, message):
         # we do not want the bot to reply to itself
@@ -125,3 +151,11 @@ class MyClient(discord.Client):
         
         print(self.indexed_channels)
 
+    async def index_roles(self):
+        self.indexed_roles = {}
+
+        all_roles = self.gld.roles
+        for role in all_roles:
+            self.indexed_roles[str(role)] = role.id
+        
+        print(self.indexed_roles)

@@ -15,6 +15,12 @@ func _ready():
 		teams["Blue"] = Team.new("Blue")
 		teams["Yellow"] = Team.new("Yellow")
 	savefile.close()
+	
+	get_tree().create_timer(3600).connect("timeout", self, "autosave")
+
+func autosave():
+	save_all()
+	get_tree().create_timer(3600).connect("timeout", self, "autosave")
 
 func save_all():
 	var data = {}
@@ -69,16 +75,20 @@ class Team:
 	var data = {}
 	
 	var points setget ,get_points
+	var name setget ,get_name
 	
 	func _init(nam : String):
 		data["name"] = nam
 		data["points"] = 0
 	
-	func add_points(p : int):
+	func add_points(p : int = 1):
 		data["points"] += p
 	
 	func get_points() -> int:
 		return data["points"]
+	
+	func get_name() -> String:
+		return data["name"]
 	
 	func get_all() -> String:
 		return JSON.print(data)
