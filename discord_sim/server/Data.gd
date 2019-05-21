@@ -1,11 +1,14 @@
 extends Node
 
+remotesync var _networked_teams setget set_networked_teams
+
 var teams = {}
 var users = {}
 
 onready var ws = $"../Websocket"
 
 func _ready():
+	get_tree().set_auto_accept_quit(false)
 	var savefile = File.new()
 	if savefile.file_exists("user://game.save"):
 		load_all()
@@ -22,7 +25,7 @@ func autosave():
 	save_all()
 	get_tree().create_timer(3600).connect("timeout", self, "autosave")
 
-func save_all():
+master func save_all():
 	var data = {}
 	
 	var ts = {}
@@ -44,6 +47,10 @@ func save_all():
 	save_game.close()
 	
 	print("data saved")
+
+func _notification(what):
+    if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+        close_server()
 
 func load_all():
 	var save_game = File.new()
@@ -70,6 +77,26 @@ func add_user(id : String, nam : String):
 
 func remove_user(id : String):
 	users.erase(id)
+
+func set_data(type, id, property, value):
+	pass
+
+func set_teams(t = teams):
+	rset("networked_teams", t)
+	printt("setting teams", t)
+
+func set_networked_teams(t):
+	teams = t
+	_networked_teams = t
+
+func get_teams():
+	return teams
+
+func set_users(u):
+	rset("users", u)
+
+func get_users():
+	return users
 
 class Team:
 	var data = {}
@@ -123,7 +150,7 @@ class User:
 		for key in parsed:
 			data[key] = parsed[key]
 
-func _on_ToolButton_pressed():
+master func close_server():
 	ws.close()
 	save_all()
 	get_tree().quit()

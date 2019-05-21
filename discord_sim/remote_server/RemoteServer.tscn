@@ -1,6 +1,45 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://remote_server/RemoteServer.gd" type="Script" id=1]
+[ext_resource path="res://remote_server/Data.gd" type="Script" id=2]
+[ext_resource path="res://remote_server/gui.gd" type="Script" id=3]
 
-[node name="RemoteServer" type="Node"]
+[node name="Main" type="Node"]
 script = ExtResource( 1 )
+
+[node name="WebSocket" type="Node" parent="."]
+
+[node name="Data" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="Discord" type="Node" parent="."]
+
+[node name="GUI" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="Exit" type="ToolButton" parent="GUI"]
+margin_right = 12.0
+margin_bottom = 22.0
+text = "Close Server"
+
+[node name="Save" type="ToolButton" parent="GUI"]
+margin_top = 21.6485
+margin_right = 41.0
+margin_bottom = 43.6485
+text = "Save"
+
+[node name="AddYellow" type="ToolButton" parent="GUI"]
+margin_left = -0.698334
+margin_top = 46.7887
+margin_right = 84.3017
+margin_bottom = 68.7887
+text = "Yellow += 1"
+
+[node name="YellowPoints" type="Label" parent="GUI"]
+margin_left = 6.28506
+margin_top = 74.0239
+margin_right = 46.2851
+margin_bottom = 88.0239
+[connection signal="pressed" from="GUI/Exit" to="GUI" method="_on_Exit_pressed"]
+[connection signal="pressed" from="GUI/Save" to="GUI" method="_on_Save_pressed"]
+[connection signal="pressed" from="GUI/AddYellow" to="GUI" method="_on_AddYellow_pressed"]

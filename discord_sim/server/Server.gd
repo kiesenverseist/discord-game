@@ -2,8 +2,9 @@ extends Node
 
 var server = NetworkedMultiplayerENet.new()
 
-var clients = {}
-var remote_server
+var all_clients = {}
+var player_clients = {}
+var remote_servers = {}
 
 func _ready():
 	server.create_server(8181, 100)
@@ -13,10 +14,23 @@ func _ready():
 	get_tree().connect("network_peer_disconnected",self, "client_disconnected")
 
 func client_connected(id):
-	clients[id] = null
+	print("client connected", id)
+	all_clients[id] = null
 
 func client_disconnected(id):
-	clients.erase(id)
+	print("client disconnected", id)
+	all_clients.erase(id)
+	
+	if id in player_clients:
+		player_clients.erase(id)
+	
+	if id in remote_servers:
+		remote_servers.erase(id)
 
 remote func remote_server_setup(id):
-	remote_server = id
+	print("remote server connected", id)
+	remote_servers[id] = null
+	$Data.set_teams()
+
+remote func player_client_setup(id):
+	player_clients[id] = null

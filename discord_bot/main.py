@@ -14,5 +14,8 @@ ws_client = ws(send_q, recv_q)
 bot_worker = threading.Thread(target=bot_client.run, args=('Mjk5ODg2MTcxOTQzNzMxMjAw.XLGm2A.ytEKFiSHFYtRFgjPa1y2VNNwsew',))
 ws_worker = threading.Thread(target=ws_client.run)
 
-bot_worker.start()
-ws_worker.start()
+bot_worker.name = "bot thread"
+ws_worker.name = "ws thread"
+
+for t in [bot_worker, ws_worker]:
+    t.start()

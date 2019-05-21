@@ -17,3 +17,8 @@ _global_script_class_icons={
 
 config/name="Discord Game"
 run/main_scene="res://Server.tscn"
+run/main_scene.server="res://server/Server.tscn"
+
+[debug]
+
+settings/stdout/verbose_stdout=true

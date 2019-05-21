@@ -18,7 +18,7 @@ func _process(delta):
 		return
 	client.poll()
 
-func send_data(data : Dictionary):
+master func send_data(data : Dictionary):
 	var msg = JSON.print(data)
 	printt(">", msg)
 	client.get_peer(1).put_packet(msg.to_utf8())
@@ -43,7 +43,7 @@ func connection_established(protocol = "none"):
 	send_data({"type":"message", "message":"Server Connected",
 			"channel_id" : "566610532786765854"})
 
-func conection_error():
+func connection_error():
 	print("connection error'd")
 
 func close():

@@ -29,7 +29,9 @@ func _on_user_join(data):
 func _on_message_receved(data):
 	if not data["is_dm"]:
 		if data["channel_name"] == "generator":
-			da.teams[data["category_name"]].add_points(1)
+			var t = da.teams
+			t[data["category_name"]].add_points(1)
+			da.teams = t
 			
 			update_leaderboard()
 	else:
@@ -45,7 +47,8 @@ static func leader_board_sort(a , b):
 func update_leaderboard():
 	# to make a sorted list of teams
 	var teams : Array = []
-	for team in da.teams:
+	var t = da.teams
+	for team in t:
 		teams.append(da.teams[team])
 	
 	teams.sort_custom(self, "leader_board_sort")
