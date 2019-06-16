@@ -51,7 +51,7 @@ class ws():
         loop=asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
 
-        start_server = websockets.serve(self.handler, 'localhost', 8080)
+        start_server = websockets.serve(self.handler, '0.0.0.0', 8080)
 
         asyncio.get_event_loop().run_until_complete(start_server)
         asyncio.get_event_loop().run_forever()
