@@ -1,23 +1,30 @@
 extends Node
 
-remotesync var _networked_teams setget set_networked_teams
+var teams : Dictionary = {} setget set_teams, get_teams
+var users : Dictionary = {} setget set_users, get_users
 
-var teams = {} setget set_teams, get_teams
-var users = {} setget set_users, get_users
+func set_teams(t_dict : Dictionary = teams):
+	var t_data : Dictionary
+	for t in t_dict:
+		t_data[t] = t_dict[t].get_all()
+	var t_str = JSON.print(t_data)
+	rpc("set_networked_teams", t_str)
+	printt("setting teams from remote", t_str)
 
-func set_teams(t = teams):
-	rset("networked_teams", t)
-	printt("setting teams", t)
+remotesync func set_networked_teams(t_str : String):
+	var t = JSON.parse(t_str).result
+	for team in t:
+		var t_new = Team.new(team)
+		t_new.set_all(t[team])
+		teams[team] = t_new
+		
+	printt("teams set by server", t)
 
-func set_networked_teams(t):
-	teams = t
-	_networked_teams = t
-
-func get_teams():
+func get_teams() -> Dictionary:
 	return teams
 
-func set_users(u = users):
+func set_users(u : Dictionary = users):
 	rset("users", u)
 
-func get_users():
+func get_users() -> Dictionary:
 	return users

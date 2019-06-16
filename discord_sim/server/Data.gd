@@ -1,7 +1,5 @@
 extends Node
 
-remotesync var _networked_teams setget set_networked_teams
-
 var teams = {}
 var users = {}
 
@@ -19,11 +17,11 @@ func _ready():
 		teams["Yellow"] = Team.new("Yellow")
 	savefile.close()
 	
-	get_tree().create_timer(3600).connect("timeout", self, "autosave")
+	get_tree().create_timer(1800).connect("timeout", self, "autosave")
 
 func autosave():
 	save_all()
-	get_tree().create_timer(3600).connect("timeout", self, "autosave")
+	get_tree().create_timer(1800).connect("timeout", self, "autosave")
 
 master func save_all():
 	var data = {}
@@ -81,74 +79,31 @@ func remove_user(id : String):
 func set_data(type, id, property, value):
 	pass
 
-func set_teams(t = teams):
-	rset("networked_teams", t)
-	printt("setting teams", t)
+func set_teams(t_dict : Dictionary = teams):
+	var t_data : Dictionary
+	for t in t_dict:
+		t_data[t] = t_dict[t].get_all()
+	var t_str = JSON.print(t_data)
+	rpc("set_networked_teams", t_str)
+	printt("setting teams from server", t_str)
 
-func set_networked_teams(t):
-	teams = t
-	_networked_teams = t
+remotesync func set_networked_teams(t_str : String):
+	var t = JSON.parse(t_str).result
+	for team in t:
+		var t_new = Team.new(team)
+		t_new.set_all(t[team])
+		teams[team] = t_new
+	printt("teams set by remote", t)
 
-func get_teams():
+func get_teams() -> Dictionary:
 	return teams
 
 func set_users(u):
 	rset("users", u)
 
-func get_users():
+func get_users() -> Dictionary:
 	return users
 
-class Team:
-	var data = {}
-	
-	var points setget ,get_points
-	var name setget ,get_name
-	
-	func _init(nam : String):
-		data["name"] = nam
-		data["points"] = 0
-	
-	func add_points(p : int = 1):
-		data["points"] += p
-	
-	func get_points() -> int:
-		return data["points"]
-	
-	func get_name() -> String:
-		return data["name"]
-	
-	func get_all() -> String:
-		return JSON.print(data)
-	
-	func set_all(dat : String):
-		var parsed = JSON.parse(dat).result
-		
-		#not directley equating incase anything new is not in the old save
-		for key in parsed:
-			data[key] = parsed[key]
-
-class User:
-	var data = {}
-	
-	func _init(id : String, nam : String = ""):
-		data["id"] = id
-		data["user_name"] = nam
-	
-	func set_nick(nick : String):
-		data["nick"] = nick
-	
-	func set_avatar(avatar : String):
-		data["avatar"] = avatar
-	
-	func get_all() -> String:
-		return JSON.print(data)
-	
-	func set_all(dat : String):
-		var parsed = JSON.parse(dat).result
-		
-		#not directley equating incase anything new is not in the old save
-		for key in parsed:
-			data[key] = parsed[key]
 
 master func close_server():
 	ws.close()

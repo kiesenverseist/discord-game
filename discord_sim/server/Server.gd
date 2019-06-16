@@ -12,6 +12,9 @@ func _ready():
 	
 	get_tree().connect("network_peer_connected",self, "client_connected")
 	get_tree().connect("network_peer_disconnected",self, "client_disconnected")
+	
+	for c in [$Websocket, $Data, $Discord]:
+		c.set_network_master(1)
 
 func client_connected(id):
 	print("client connected", id)

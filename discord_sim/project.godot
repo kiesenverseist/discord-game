@@ -8,15 +8,26 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Resource",
+"class": "Team",
+"language": "GDScript",
+"path": "res://common/Team.gd"
+}, {
+"base": "Resource",
+"class": "User",
+"language": "GDScript",
+"path": "res://common/User.gd"
+} ]
 _global_script_class_icons={
-
+"Team": "",
+"User": ""
 }
 
 [application]
 
 config/name="Discord Game"
-run/main_scene="res://Server.tscn"
+run/main_scene="res://common/Boot.tscn"
 run/main_scene.server="res://server/Server.tscn"
 
 [debug]
