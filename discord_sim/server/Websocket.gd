@@ -6,7 +6,7 @@ signal user_joined(data)
 signal message_recieved(data)
 
 func _ready():
-	client.connect_to_url("ws://127.0.0.1:5678")
+	client.connect_to_url("ws://kiesen.australiaeast.cloudapp.azure.com:8080")
 	client.connect("data_received", self, "data_recieved")
 	client.connect("connection_established", self, "connection_established")
 	client.connect("connection_error", self, "connection_error")
