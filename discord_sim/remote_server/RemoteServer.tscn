@@ -35,11 +35,46 @@ margin_right = 84.3017
 margin_bottom = 68.7887
 text = "Yellow += 1"
 
+[node name="OpenTeams" type="ToolButton" parent="GUI"]
+margin_left = -0.698334
+margin_top = 71.9424
+margin_right = 81.3017
+margin_bottom = 93.9424
+text = "Edit Teams"
+
 [node name="YellowPoints" type="Label" parent="GUI"]
 margin_left = 6.28506
 margin_top = 74.0239
 margin_right = 46.2851
 margin_bottom = 88.0239
+
+[node name="TeamsWindow" type="WindowDialog" parent="GUI"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -98.5
+margin_top = -60.5
+margin_right = 98.5
+margin_bottom = 60.5
+grow_horizontal = 2
+grow_vertical = 2
+window_title = "Edit Teams"
+resizable = true
+
+[node name="TabContainer" type="TabContainer" parent="GUI/TeamsWindow"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Yellow" type="VBoxContainer" parent="GUI/TeamsWindow/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
 [connection signal="pressed" from="GUI/Exit" to="GUI" method="_on_Exit_pressed"]
 [connection signal="pressed" from="GUI/Save" to="GUI" method="_on_Save_pressed"]
 [connection signal="pressed" from="GUI/AddYellow" to="GUI" method="_on_AddYellow_pressed"]
+[connection signal="pressed" from="GUI/OpenTeams" to="GUI" method="_on_OpenTeams_pressed"]

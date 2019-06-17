@@ -41,13 +41,13 @@ func data_recieved():
 func connection_established(protocol = "none"):
 	print("Connection succesfull: %s" % protocol)
 	send_data({"type":"message", "message":"Server Connected",
-			"channel_id" : "566610532786765854"})
+			"channel_name" : "bridge", "category_name" : "Super"})
 
 func connection_error():
 	print("connection error'd")
 
 func close():
 	send_data({"type":"message", "message":"Server Closed",
-			"channel_id" : "566610532786765854"})
+			"channel_name" : "bridge", "category_name" : "Super"})
 	client.disconnect_from_host(1000,"Server closed")
 

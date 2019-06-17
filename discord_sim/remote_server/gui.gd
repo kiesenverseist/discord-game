@@ -20,3 +20,7 @@ func _on_AddYellow_pressed():
 	var t = da.teams
 	t["Yellow"].add_points(1)
 	da.teams = t
+
+
+func _on_OpenTeams_pressed():
+	$TeamsWindow.popup()

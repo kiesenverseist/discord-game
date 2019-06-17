@@ -92,22 +92,22 @@ class MyClient(discord.Client):
         self.send_q.put(data)
 
     async def on_guild_channel_delete(self, channel):
-        self.index_channels()
+        await self.index_channels()
     
     async def on_guild_channel_create(self, channel):
-        self.index_channels()
+        await self.index_channels()
     
     async def on_guild_channel_update(self, before, after):
-        self.index_channels()
+        await self.index_channels()
     
     async def on_guild_role_delete(self, role):
-        self.index_roles()
+        await self.index_roles()
     
     async def on_guild_role_create(self, role):
-        self.index_roles()
+        await self.index_roles()
     
     async def on_guild_role_update(self, before, after):
-        self.index_roles()
+        await self.index_roles()
 
     async def on_message(self, message):
         # we do not want the bot to reply to itself
