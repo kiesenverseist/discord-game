@@ -27,8 +27,9 @@ class MyClient(discord.Client):
 
         await self.index_channels()
         await self.index_roles()
-        print(self.index_channels["Super"]["bridge"])
-        ch = self.get_channel(int(self.index_channels["Super"]["bridge"]))
+
+        print(self.indexed_channels["Super"]["bridge"])
+        ch = self.get_channel(int(self.indexed_channels["Super"]["bridge"]))
         await ch.send("Beep Boop \nBot Active")
 
     async def send_messages(self):
@@ -39,7 +40,7 @@ class MyClient(discord.Client):
 
                 if data["type"] == "message":
                     if not "channel_name" in data: #if the channel name is not soecified, the id will be
-                        channel = self.get_channel(int(data.get("channel_id", self.index_channels["Super"]["bridge"])))
+                        channel = self.get_channel(int(data.get("channel_id", self.indexed_channels["Super"]["bridge"])))
                         await channel.send(data["message"])
                     else:
                         channel_id = self.indexed_channels[data["category_name"]][data["channel_name"]]
