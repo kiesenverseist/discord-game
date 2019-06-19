@@ -65,6 +65,7 @@ window_title = "Edit Teams"
 resizable = true
 
 [node name="TabContainer" type="TabContainer" parent="GUI/TeamsWindow"]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 

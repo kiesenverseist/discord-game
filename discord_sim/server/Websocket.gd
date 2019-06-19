@@ -59,6 +59,7 @@ func connection_established(protocol = "none"):
 			"channel_name" : "bridge", "category_name" : "Super"})
 	error_count = 0
 	keep_alive()
+	$"../Discord".update_leaderboard()
 
 func connection_error():
 	print("connection error'd")
