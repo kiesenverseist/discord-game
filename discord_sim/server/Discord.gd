@@ -10,22 +10,27 @@ func _ready():
 	randomize()
 
 func _on_user_join(data):
-	#var role_id = ["Red", "Blue", "Yellow", "Green"][randi()%4] #random assignment
+	var role_id
 	
-	#assign to lowest scoring
-	
-	# to make a sorted list of teams
-	var teams : Array = []
-	var t = da.teams
-	for team in t:
-		teams.append(da.teams[team])
-	teams.sort_custom(self, "leader_board_sort")
-	
-	var role_id = teams[-1].name
-	
-	if role_id == "Yellow":
-		role_id = teams[-2].name
+	if randf() < 0.4:
+		role_id = ["Red", "Blue", "Green"][randi()%3] #random assignment
+	else:
+		#assign to lowest scoring
 		
+		# to make a sorted list of teams
+		var teams : Array = []
+		var t = da.teams
+		for team in t:
+			teams.append(da.teams[team])
+		teams.sort_custom(self, "leader_board_sort")
+		
+		role_id = teams[-1].name
+		
+		if role_id == "Yellow":
+			role_id = teams[-2].name
+	
+	print("is to be assigned to ", role_id, " in 5 minutes")
+	yield(get_tree().create_timer(300), "timeout")
 	
 	var send = {}
 	send["type"] = "set_role"
@@ -51,7 +56,37 @@ func _on_message_receved(data):
 						t[team].add_points(-1)
 				
 				if not found:
-					t[data["category_name"]].add_points(1)
+					if randf() < 0.08:
+						t[data["category_name"]].add_points(3)
+						var reply = {
+							"type" : "message",
+							"channel_name" : data["channel_name"],
+							"category_name": data["category_name"],
+							"message" : "Critical Success!"
+						}
+						ws.send_data(reply)
+					elif randf() < 0.01:
+						t[data["category_name"]].add_points(-3)
+						var reply = {
+							"type" : "message",
+							"channel_name" : data["channel_name"],
+							"category_name": data["category_name"],
+							"message" : "Critical Failure!"
+						}
+						ws.send_data(reply)
+					else:
+						t[data["category_name"]].add_points(1)
+				
+				#for when a team surpasses 100
+				if t[data["category_name"]].points >= 100 and t[data["category_name"]].points <= 101 :
+					var reply = {
+						"type" : "message",
+						"channel_name" : "announcements",
+						"category_name": "Super",
+						"message" : "Congradulations to %s for reaching 100 points!\nhttps://www.youtube.com/watch?v=1Bix44C1EzY" % data["category_name"]
+					}
+					ws.send_data(reply)
+
 				da.teams = t
 			"team-chat":
 				if data["message"].matchn("*p*o*i*n*t*"):
