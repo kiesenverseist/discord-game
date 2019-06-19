@@ -120,7 +120,7 @@ class MyClient(discord.Client):
         if message.author.id == 183363112882274305 and message.content == "restart_bot":
             print("restarting bot")
             subprocess.call("./restart.sh")
-            async self.close()
+            await self.close()
 
         data = {}
         data["type"] = "message"
