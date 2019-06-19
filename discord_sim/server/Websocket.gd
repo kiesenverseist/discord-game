@@ -11,7 +11,7 @@ func _ready():
 
 func connect_to_ws():
 	print("attempting to connect to websocket")
-	client.connect_to_url("ws://kiesen.australiaeast.cloudapp.azure.com:8080")
+	client.connect_to_url("ws://kiesen.australiaeast.cloudapp.azure.com:8080")	
 	client.connect("data_received", self, "data_recieved")
 	client.connect("connection_established", self, "connection_established")
 	client.connect("connection_error", self, "connection_error")
@@ -72,5 +72,6 @@ func connection_error():
 func close():
 	send_data({"type":"message", "message":"Server Closed",
 			"channel_name" : "bridge", "category_name" : "Super"})
+	yield(get_tree(), "idle_frame")
 	client.disconnect_from_host(1000,"Server closed")
 

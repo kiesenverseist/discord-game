@@ -65,7 +65,7 @@ func update_leaderboard():
 		msg += team.name + ": " + str(team.points) + " \n"
 	
 	var send_update = {}
-	send_update["type"] = "replace_last"
+	send_update["type"] = "message"
 	send_update["category_name"] = "Super"
 	send_update["channel_name"] = "leaderboard"
 	send_update["message"] = msg
