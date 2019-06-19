@@ -53,7 +53,9 @@ class MyClient(discord.Client):
                     if "role_name" in data:
                         print("setting by name")
                         role_id = self.gld.get_role(int(self.indexed_roles(data["role_name"])))
+                        print("role id", str(role_id))
                         role = self.gld.get_role(role_id)
+                        print(str(role))
                     else:
                         print("setting by id")
                         role = self.gld.get_role(int(data["role_id"]))
