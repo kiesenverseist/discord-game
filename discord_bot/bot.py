@@ -117,7 +117,7 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
         
-        if message.author.id = 183363112882274305 and message.content == "restart_bot":
+        if message.author.id == 183363112882274305 and message.content == "restart_bot":
             print("restarting bot")
             subprocess.call("./restart.sh")
             async self.close()
