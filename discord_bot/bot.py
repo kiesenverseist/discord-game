@@ -48,13 +48,20 @@ class MyClient(discord.Client):
                         await channel.send(data["message"])
 
                 if data["type"] == "set_role":
+                    print("setting role", str(data))
                     user = self.gld.get_member(int(data["user_id"]))
                     if "role_name" in data:
+                        print("setting by name")
                         role_id = self.gld.get_role(int(self.indexed_roles(data["role_name"])))
                         role = self.gld.get_role(role_id)
                     else:
+                        print("setting by id")
                         role = self.gld.get_role(int(data["role_id"]))
-                    await user.add_roles(role)
+                    print("adding role", str(role))
+                    try:
+                        await user.add_roles(role)
+                    except:
+                        print("error in adding role")
 
                 if data["type"] == "clear_channel": #does not work
                     ch = self.get_channel(int(data["channel_id"]))

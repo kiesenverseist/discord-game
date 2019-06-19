@@ -23,6 +23,10 @@ func _on_user_join(data):
 	
 	var role_id = teams[-1].name
 	
+	if role_id == "Yellow":
+		role_id = teams[-2].name
+		
+	
 	var send = {}
 	send["type"] = "set_role"
 	send["user_id"] = data["user_id"]
