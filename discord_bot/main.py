@@ -8,7 +8,7 @@ from ws import ws
 send_q = queue.SimpleQueue()
 recv_q = queue.SimpleQueue()
 
-bot_client = MyClient(send=send_q, recv=recv_q)
+bot_client = MyClient(send=send_q, recv=recv_q, heartbeat_timeout=5)
 ws_client = ws(send_q, recv_q)
 
 ws_worker = threading.Thread(target=ws_client.run)

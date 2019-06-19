@@ -1,12 +1,5 @@
 extends Node
 
-enum {
-	RED = 566546853294899230,
-	GREEN = 566546914674212864,
-	YELLOW = 566546977139982339,
-	BLUE = 566546944843841536
-}
-
 onready var ws = $"../Websocket"
 onready var da = $"../Data"
 
@@ -17,13 +10,23 @@ func _ready():
 	randomize()
 
 func _on_user_join(data):
-	return #automatic role assignment is currently disabled
-	var role_id = str([RED, BLUE, YELLOW, GREEN][randi()%4])
+	#var role_id = ["Red", "Blue", "Yellow", "Green"][randi()%4] #random assignment
+	
+	#assign to lowest scoring
+	
+	# to make a sorted list of teams
+	var teams : Array = []
+	var t = da.teams
+	for team in t:
+		teams.append(da.teams[team])
+	teams.sort_custom(self, "leader_board_sort")
+	
+	var role_id = teams[-1].name
 	
 	var send = {}
 	send["type"] = "set_role"
 	send["user_id"] = data["user_id"]
-	send["role_id"] = role_id
+	send["role_name"] = role_id
 	ws.send_data(send)
 
 func _on_message_receved(data):

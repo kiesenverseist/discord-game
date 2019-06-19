@@ -6,7 +6,7 @@ var ip
 var port
 
 func _ready():
-	if OS.has_feature("server"):
+	if OS.has_feature("Server"):
 		get_tree().change_scene("res://server/Server.tscn")
 	if OS.has_feature("client"):
 		return

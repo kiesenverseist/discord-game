@@ -1,6 +1,6 @@
 extends Node
 
-var teams = {}
+var teams = {} setget set_teams, get_teams
 var users = {}
 
 onready var ws = $"../Websocket"
@@ -75,9 +75,6 @@ func add_user(id : String, nam : String):
 
 func remove_user(id : String):
 	users.erase(id)
-
-func set_data(type, id, property, value):
-	pass
 
 func set_teams(t_dict : Dictionary = teams):
 	var t_data : Dictionary

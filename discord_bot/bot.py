@@ -50,7 +50,7 @@ class MyClient(discord.Client):
                 if data["type"] == "set_role":
                     user = self.gld.get_member(int(data["user_id"]))
                     if "role_name" in data:
-                        role_id = self.gld.get_role(int(indexed_roles(data["role_name"])))
+                        role_id = self.gld.get_role(int(self.indexed_roles(data["role_name"])))
                         role = self.gld.get_role(role_id)
                     else:
                         role = self.gld.get_role(int(data["role_id"]))

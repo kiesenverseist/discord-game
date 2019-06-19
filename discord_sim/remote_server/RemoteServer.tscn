@@ -43,10 +43,11 @@ margin_bottom = 93.9424
 text = "Edit Teams"
 
 [node name="YellowPoints" type="Label" parent="GUI"]
-margin_left = 6.28506
-margin_top = 74.0239
-margin_right = 46.2851
-margin_bottom = 88.0239
+margin_left = 96.3482
+margin_top = 51.9263
+margin_right = 136.348
+margin_bottom = 65.9263
+text = "Yellow: "
 
 [node name="TeamsWindow" type="WindowDialog" parent="GUI"]
 visible = true
@@ -54,10 +55,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -98.5
-margin_top = -60.5
-margin_right = 98.5
-margin_bottom = 60.5
+margin_left = -176.5
+margin_top = -112.5
+margin_right = 176.5
+margin_bottom = 112.5
 grow_horizontal = 2
 grow_vertical = 2
 window_title = "Edit Teams"
@@ -74,7 +75,126 @@ margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+
+[node name="Points" type="Label" parent="GUI/TeamsWindow/TabContainer/Yellow"]
+margin_right = 345.0
+margin_bottom = 14.0
+text = "Points:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/TeamsWindow/TabContainer/Yellow"]
+margin_top = 18.0
+margin_right = 345.0
+margin_bottom = 42.0
+
+[node name="Button" type="Button" parent="GUI/TeamsWindow/TabContainer/Yellow/HBoxContainer"]
+margin_right = 84.0
+margin_bottom = 24.0
+text = "Edit Points:"
+
+[node name="SpinBox" type="SpinBox" parent="GUI/TeamsWindow/TabContainer/Yellow/HBoxContainer"]
+margin_left = 88.0
+margin_right = 162.0
+margin_bottom = 24.0
+min_value = -100.0
+value = 1.0
+
+[node name="Blue" type="VBoxContainer" parent="GUI/TeamsWindow/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Points" type="Label" parent="GUI/TeamsWindow/TabContainer/Blue"]
+margin_right = 189.0
+margin_bottom = 14.0
+text = "Points:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/TeamsWindow/TabContainer/Blue"]
+margin_top = 18.0
+margin_right = 189.0
+margin_bottom = 42.0
+
+[node name="Button" type="Button" parent="GUI/TeamsWindow/TabContainer/Blue/HBoxContainer"]
+margin_right = 84.0
+margin_bottom = 24.0
+text = "Edit Points:"
+
+[node name="SpinBox" type="SpinBox" parent="GUI/TeamsWindow/TabContainer/Blue/HBoxContainer"]
+margin_left = 88.0
+margin_right = 162.0
+margin_bottom = 24.0
+min_value = -100.0
+value = 1.0
+
+[node name="Green" type="VBoxContainer" parent="GUI/TeamsWindow/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Points" type="Label" parent="GUI/TeamsWindow/TabContainer/Green"]
+margin_right = 189.0
+margin_bottom = 14.0
+text = "Points:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/TeamsWindow/TabContainer/Green"]
+margin_top = 18.0
+margin_right = 189.0
+margin_bottom = 42.0
+
+[node name="Button" type="Button" parent="GUI/TeamsWindow/TabContainer/Green/HBoxContainer"]
+margin_right = 84.0
+margin_bottom = 24.0
+text = "Edit Points:"
+
+[node name="SpinBox" type="SpinBox" parent="GUI/TeamsWindow/TabContainer/Green/HBoxContainer"]
+margin_left = 88.0
+margin_right = 162.0
+margin_bottom = 24.0
+min_value = -100.0
+value = 1.0
+
+[node name="Red" type="VBoxContainer" parent="GUI/TeamsWindow/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Points" type="Label" parent="GUI/TeamsWindow/TabContainer/Red"]
+margin_right = 189.0
+margin_bottom = 14.0
+text = "Points:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/TeamsWindow/TabContainer/Red"]
+margin_top = 18.0
+margin_right = 189.0
+margin_bottom = 42.0
+
+[node name="Button" type="Button" parent="GUI/TeamsWindow/TabContainer/Red/HBoxContainer"]
+margin_right = 84.0
+margin_bottom = 24.0
+text = "Edit Points:"
+
+[node name="SpinBox" type="SpinBox" parent="GUI/TeamsWindow/TabContainer/Red/HBoxContainer"]
+margin_left = 88.0
+margin_right = 162.0
+margin_bottom = 24.0
+min_value = -100.0
+value = 1.0
 [connection signal="pressed" from="GUI/Exit" to="GUI" method="_on_Exit_pressed"]
 [connection signal="pressed" from="GUI/Save" to="GUI" method="_on_Save_pressed"]
 [connection signal="pressed" from="GUI/AddYellow" to="GUI" method="_on_AddYellow_pressed"]
 [connection signal="pressed" from="GUI/OpenTeams" to="GUI" method="_on_OpenTeams_pressed"]
+[connection signal="pressed" from="GUI/TeamsWindow/TabContainer/Yellow/HBoxContainer/Button" to="GUI" method="_on_EditPoints_pressed"]
+[connection signal="pressed" from="GUI/TeamsWindow/TabContainer/Blue/HBoxContainer/Button" to="GUI" method="_on_EditPoints_pressed"]
+[connection signal="pressed" from="GUI/TeamsWindow/TabContainer/Green/HBoxContainer/Button" to="GUI" method="_on_EditPoints_pressed"]
+[connection signal="pressed" from="GUI/TeamsWindow/TabContainer/Red/HBoxContainer/Button" to="GUI" method="_on_EditPoints_pressed"]
