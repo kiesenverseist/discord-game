@@ -8,6 +8,7 @@ func _ready():
 	ws.connect("user_joined", self, "_on_user_join")
 	
 	randomize()
+	leaderboard_loop()
 
 func _on_user_join(data):
 	var role_id
@@ -147,7 +148,7 @@ func _on_message_receved(data):
 static func leader_board_sort(a , b):
 	return a.points > b.points
 
-func update_leaderboard():
+remote func update_leaderboard():
 	# to make a sorted list of teams
 	var teams : Array = []
 	var t = da.teams
@@ -166,6 +167,9 @@ func update_leaderboard():
 	send_update["channel_name"] = "leaderboard"
 	send_update["message"] = msg
 	ws.send_data(send_update)
-	
-	#update daily
-	get_tree().create_timer(3600*24).connect("timeout", self, "update_leaderboard")
+
+func leaderboard_loop():
+	get_tree().create_timer(3600).connect("timeout", self, "leaderboard_loop")
+	print("current time is: ", str(OS.get_time()))
+	if OS.get_time().hour == 20:
+		update_leaderboard()

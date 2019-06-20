@@ -42,6 +42,13 @@ margin_right = 81.3017
 margin_bottom = 93.9424
 text = "Edit Teams"
 
+[node name="UpdateLeaderboard" type="ToolButton" parent="GUI"]
+margin_left = -3.08005
+margin_top = 94.9682
+margin_right = 137.92
+margin_bottom = 116.968
+text = "Update Leaderboard"
+
 [node name="YellowPoints" type="Label" parent="GUI"]
 margin_left = 96.3482
 margin_top = 51.9263
@@ -195,6 +202,7 @@ value = 1.0
 [connection signal="pressed" from="GUI/Save" to="GUI" method="_on_Save_pressed"]
 [connection signal="pressed" from="GUI/AddYellow" to="GUI" method="_on_AddYellow_pressed"]
 [connection signal="pressed" from="GUI/OpenTeams" to="GUI" method="_on_OpenTeams_pressed"]
+[connection signal="pressed" from="GUI/UpdateLeaderboard" to="GUI" method="_on_UpdateLeaderboard_pressed"]
 [connection signal="pressed" from="GUI/TeamsWindow/TabContainer/Yellow/HBoxContainer/Button" to="GUI" method="_on_EditPoints_pressed"]
 [connection signal="pressed" from="GUI/TeamsWindow/TabContainer/Blue/HBoxContainer/Button" to="GUI" method="_on_EditPoints_pressed"]
 [connection signal="pressed" from="GUI/TeamsWindow/TabContainer/Green/HBoxContainer/Button" to="GUI" method="_on_EditPoints_pressed"]

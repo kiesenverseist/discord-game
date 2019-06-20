@@ -1,6 +1,7 @@
 extends Node
 
 onready var da = $"../Data"
+onready var di = $"../Discord"
 
 func _ready():
 	set_process(false)
@@ -31,3 +32,6 @@ func _on_EditPoints_pressed():
 	var num = int(get_node("TeamsWindow/TabContainer/%s/HBoxContainer/SpinBox" % team).get_line_edit().text)
 	t[team].add_points(num)
 	da.teams = t
+
+func _on_UpdateLeaderboard_pressed():
+	di.rpc_id(1, "update_leaderboard")
