@@ -17,11 +17,11 @@ func _ready():
 		teams["Yellow"] = Team.new("Yellow")
 	savefile.close()
 	
-	get_tree().create_timer(1800).connect("timeout", self, "autosave")
+	get_tree().create_timer(900).connect("timeout", self, "autosave")
 
 func autosave():
 	save_all()
-	get_tree().create_timer(1800).connect("timeout", self, "autosave")
+	get_tree().create_timer(900).connect("timeout", self, "autosave")
 
 master func save_all():
 	var data = {}

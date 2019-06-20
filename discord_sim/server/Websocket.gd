@@ -36,7 +36,7 @@ func keep_alive():
 	if client.get_connection_status() == WebSocketClient.CONNECTION_DISCONNECTED:
 		return
 	send_data({"type":"keep alive"})
-	get_tree().create_timer(60).connect("timeout", self, "keep_alive")
+	get_tree().create_timer(180).connect("timeout", self, "keep_alive")
 
 func data_recieved():
 	var data = client.get_peer(1).get_packet()
@@ -73,6 +73,6 @@ func connection_error():
 func close():
 	send_data({"type":"message", "message":"Server Closed",
 			"channel_name" : "bridge", "category_name" : "Super"})
-	yield(get_tree(), "idle_frame")
+	yield(get_tree().create_timer(1), "timeout")
 	client.disconnect_from_host(1000,"Server closed")
 

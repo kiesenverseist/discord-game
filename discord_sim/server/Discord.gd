@@ -22,6 +22,7 @@ func _on_user_join(data):
 		var t = da.teams
 		for team in t:
 			teams.append(da.teams[team])
+		teams.shuffle()
 		teams.sort_custom(self, "leader_board_sort")
 		
 		role_id = teams[-1].name
@@ -29,8 +30,8 @@ func _on_user_join(data):
 		if role_id == "Yellow":
 			role_id = teams[-2].name
 	
-	print("is to be assigned to ", role_id, " in 5 minutes")
-	yield(get_tree().create_timer(300), "timeout")
+	print("is to be assigned to ", role_id, " in 3 minutes")
+	yield(get_tree().create_timer(180), "timeout")
 	
 	var send = {}
 	send["type"] = "set_role"
@@ -54,6 +55,13 @@ func _on_message_receved(data):
 					if data["message"].matchn("*%s*" % team) and not found:
 						found = true
 						t[team].add_points(-1)
+						var reply = {
+							"type" : "message",
+							"channel_name" : data["channel_name"],
+							"category_name": data["category_name"],
+							"message" : "Sabotage of %s successful" % team
+						}
+						ws.send_data(reply)
 				
 				if not found:
 					if randf() < 0.08:
@@ -107,14 +115,28 @@ func _on_message_receved(data):
 						var face = [">_>", "<_<", "o_0", "0_o", ":O"]
 						face.shuffle()
 						face = face.front()
+						var culprit = data["category_name"] if randf() < 0.1 else ""
 						var reply = {
 							"type" : "message",
 							"channel_name" : "team-chat",
 							"category_name": team,
-							"message" : "Another team mentioned this team %s" % face
+							"message" : "Another team mentioned this team %s" % face + culprit
 						}
 						ws.send_data(reply)
 				
+				if randf() < 0.005:
+					var t = da.teams
+					t[data["category_name"]].add_points(1)
+					da.teams = t
+					
+					var reply = {
+						"type" : "message",
+						"channel_name" : data["channel_name"],
+						"category_name": data["category_name"],
+						"message" : "You found a point."
+					}
+					ws.send_data(reply)
+
 	else:
 		var reply_dm = {}
 		reply_dm["type"] = "message"

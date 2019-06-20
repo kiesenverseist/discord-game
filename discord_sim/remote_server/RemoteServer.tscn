@@ -61,6 +61,7 @@ margin_right = 176.5
 margin_bottom = 112.5
 grow_horizontal = 2
 grow_vertical = 2
+popup_exclusive = true
 window_title = "Edit Teams"
 resizable = true
 
