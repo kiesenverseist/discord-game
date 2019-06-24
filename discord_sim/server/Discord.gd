@@ -53,7 +53,7 @@ func _on_message_receved(data):
 				var found = false
 				
 				for team in other_teams:
-					if data["message"].matchn("*%s*" % team) and not found:
+					if data["message"].matchn("* %s*" % team) and not found:
 						found = true
 						t[team].add_points(-1)
 						var reply = {

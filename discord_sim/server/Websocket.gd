@@ -3,6 +3,8 @@ extends Node
 var client = WebSocketClient.new()
 var error_count = 0
 
+var message_queue = []
+
 signal user_joined(data)
 signal message_recieved(data)
 
@@ -11,7 +13,7 @@ func _ready():
 
 func connect_to_ws():
 	print("attempting to connect to websocket")
-	client.connect_to_url("ws://kiesen.australiaeast.cloudapp.azure.com:8080")	
+	client.connect_to_url("ws://kiesen.australiaeast.cloudapp.azure.com:8080")
 	client.connect("data_received", self, "data_recieved")
 	client.connect("connection_established", self, "connection_established")
 	client.connect("connection_error", self, "connection_error")
@@ -22,15 +24,20 @@ func _process(delta):
 		if error_count <= 0:
 			connection_error()
 		return
+	
+	if not message_queue.empty() and client.get_connection_status() == WebSocketClient.CONNECTION_CONNECTED:
+		var data = message_queue.pop_front()
+		var msg = JSON.print(data)
+		printt(">", msg)
+		client.get_peer(1).put_packet(msg.to_utf8())
 	client.poll()
 
 master func send_data(data : Dictionary):
+	message_queue.append(data)
+	
 	if client.get_connection_status() == WebSocketClient.CONNECTION_DISCONNECTED:
 		printerr("the connection is dead, message not sent")
 		return
-	var msg = JSON.print(data)
-	printt(">", msg)
-	client.get_peer(1).put_packet(msg.to_utf8())
 
 func keep_alive():
 	if client.get_connection_status() == WebSocketClient.CONNECTION_DISCONNECTED:
