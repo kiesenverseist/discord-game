@@ -2,6 +2,7 @@ extends Node
 
 onready var ws = $"../Websocket"
 onready var da = $"../Data"
+var uwou_regex = RegEx.new()
 
 func _ready():
 	ws.connect("message_recieved", self, "_on_message_receved")
@@ -9,6 +10,8 @@ func _ready():
 	
 	randomize()
 	leaderboard_loop()
+	
+	uwou_regex.compile("[uUwWoO]{3}")
 
 func _on_user_join(data):
 	var role_id
@@ -42,6 +45,21 @@ func _on_user_join(data):
 
 func _on_message_receved(data):
 	if not data["is_dm"]:
+		
+		#uwou detector
+		var uwou_data = uwou_regex.search_all(data["message"])
+		if not uwou_data.empty():
+			var ret = ""
+			for res in uwou_data:
+				ret += res.get_string() + " "
+			var reply = {
+				"type" : "message",
+				"channel_name" : data["channel_name"],
+				"category_name": data["category_name"],
+				"message" : ret + "What's this?"
+			}
+			ws.send_data(reply)
+		
 		match data["channel_name"]:
 			"generator":
 				var t = da.teams
