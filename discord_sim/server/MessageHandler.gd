@@ -2,16 +2,18 @@ extends Node
 
 onready var ws = $"../../Websocket"
 onready var da = $"../../Data"
-var uwou_regex = RegEx.new()
+var regex = {
+	uwou = RegEx.new()
+}
 
 func _ready():
-	uwou_regex.compile("[uUwWoO]{3}")
+	regex.uwou.compile("[uUwWoO]{3}")
 
 func handle_message(data):
 	if not data["is_dm"]:
 		
 		#uwou detector
-		var uwou_data = uwou_regex.search_all(data["message"])
+		var uwou_data = regex.uwou.search_all(data["message"])
 		if uwou_data.size() > 20:
 			var reply = {
 				"type" : "message",
@@ -39,6 +41,20 @@ func handle_message(data):
 				"category_name": data["category_name"],
 				"message" : ret + "What's this?"
 			}
+			ws.send_data(reply)
+		
+		if data["message"].matchn("kys"):
+			var reply = {
+				"type" : "message",
+				"channel_name" : data["channel_name"],
+				"category_name": data["category_name"]
+			}
+			if data["message"].matchn("kysenverseist"):
+				var replies = ["No u","*Kiesenverseist", "No.", "staph"]
+				reply["message"] = replies[randi()%replies.size()]
+			else:
+				var replies = ["Pls noe", "Be nice", "Be kind", "Please be careful"]
+				reply["message"] = replies[randi()%replies.size()]
 			ws.send_data(reply)
 		
 		match data["channel_name"]:

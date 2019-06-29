@@ -9,7 +9,7 @@ func _ready():
 	ws.connect("user_joined", self, "_on_user_join")
 	
 	randomize()
-	leaderboard_loop()
+	update_loop()
 
 func _on_user_join(data):
 	var role_id
@@ -75,8 +75,19 @@ remote func update_leaderboard():
 	send_update["message"] = msg
 	ws.send_data(send_update)
 
-func leaderboard_loop():
+func update_loop():
 	get_tree().create_timer(3600).connect("timeout", self, "leaderboard_loop")
 	print("current time is: ", str(OS.get_time()))
+	
+	#update leaderboard
 	if OS.get_time().hour == 20:
 		update_leaderboard()
+	
+	#update team flags
+	var req = ws.request({
+		"type" : "request",
+		"request" : "channels"
+	})
+	yield(req, "request_complete")
+	var data = req.ans_data
+	req.complete()

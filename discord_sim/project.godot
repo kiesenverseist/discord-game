@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "User",
 "language": "GDScript",
 "path": "res://common/User.gd"
+}, {
+"base": "Node",
+"class": "WSRequest",
+"language": "GDScript",
+"path": "res://server/WSRequest.gd"
 } ]
 _global_script_class_icons={
 "Team": "",
-"User": ""
+"User": "",
+"WSRequest": ""
 }
 
 [application]

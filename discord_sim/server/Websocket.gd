@@ -4,9 +4,11 @@ var client = WebSocketClient.new()
 var error_count = 0
 
 var message_queue = []
+var requests = {}
 
 signal user_joined(data)
 signal message_recieved(data)
+signal answer(data)
 
 func _ready():
 	client.connect("data_received", self, "data_recieved")
@@ -39,6 +41,13 @@ master func send_data(data : Dictionary):
 	if client.get_connection_status() == WebSocketClient.CONNECTION_DISCONNECTED:
 		printerr("the connection is dead, message stored")
 
+func request(data:Dictionary) -> WSRequest:
+	var request_id := randi()
+	data["request_id"] = str(request_id)
+	var req := WSRequest.new(request_id, data)
+	add_child(req)
+	return req
+
 func keep_alive():
 	if client.get_connection_status() == WebSocketClient.CONNECTION_CONNECTED:
 		send_data({"type":"keep alive"})
@@ -56,6 +65,8 @@ func data_recieved():
 			emit_signal("message_recieved", data)
 		"member_join":
 			emit_signal("user_joined", data)
+		"answer":
+			emit_signal("answer", data)
 		_:
 			print("unknown data type")
 
