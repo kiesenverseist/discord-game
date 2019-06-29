@@ -53,7 +53,7 @@ class MyClient(discord.Client):
                     if data["request"] == "channels":
                         snd_dat = {
                             "type" : "answer",
-                            "request_id" : data["request_id"]
+                            "request_id" : data["request_id"],
                             "channels" : self.indexed_channels
                         }
                         self.send_q.put(snd_dat)
