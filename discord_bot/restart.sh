@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sleep 10 && echo "starting bot..." && python3.7 main.py
+sleep 1 && echo "starting bot..." && python3.7 main.py

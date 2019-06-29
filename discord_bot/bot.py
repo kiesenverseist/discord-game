@@ -3,6 +3,7 @@ import queue
 import discord
 import random
 import subprocess
+import os
 
 class MyClient(discord.Client):
     def __init__(self, send, recv, *args, **kwargs):
@@ -119,8 +120,9 @@ class MyClient(discord.Client):
         
         if message.author.id == 183363112882274305 and message.content == "restart_bot":
             print("restarting bot")
-            subprocess.call("./restart.sh")
-            await self.close()
+            subprocess.call("sh restart.sh", shell=True)
+            print("script finished")
+            os._exit(1)
 
         data = {}
         data["type"] = "message"
