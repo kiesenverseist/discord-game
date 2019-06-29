@@ -21,5 +21,5 @@ func complete():
 	queue_free()
 
 func on_answer(data):
-	if str(data["id"]) == name:
+	if str(data["request_id"]) == name:
 		complete_request(data)

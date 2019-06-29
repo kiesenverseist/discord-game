@@ -53,16 +53,18 @@ class MyClient(discord.Client):
                     if data["request"] == "channels":
                         snd_dat = {
                             "type" = "answer",
-                            "id" = data["id"]
+                            "request_id" = data["request_id"]
                             "channels" = self.indexed_channels
                         }
                         self.send_q.put(snd_dat)
                 
                 if data["type"] == "create_channel":
+                    category = self.indexed_channels[data["category_name"]]
+                    category = self.get_channel(int(category))
                     if data["channel_type"] == "text":
-                        create_channel()
+                        await category.create_text_channel(data["channel_name"])
                     elif data["channel_type"] == "vc":
-                        create_vc()
+                        await category.create_voice_channel(data["channel_name"])
 
                 if data["type"] == "set_role":
                     user = self.gld.get_member(int(data["user_id"]))

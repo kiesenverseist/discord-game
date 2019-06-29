@@ -2,7 +2,6 @@ extends Node
 
 onready var ws = $"../Websocket"
 onready var da = $"../Data"
-var uwou_regex = RegEx.new()
 
 func _ready():
 	ws.connect("message_recieved", self, "_on_message_receved")
@@ -89,5 +88,7 @@ func update_loop():
 		"request" : "channels"
 	})
 	yield(req, "request_complete")
-	var data = req.ans_data
+	var channels = req.ans_data["answer"]
 	req.complete()
+	print(channels)
+	
