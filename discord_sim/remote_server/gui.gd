@@ -8,9 +8,10 @@ func _ready():
 
 func start():
 	var ts = da.teams
+	var tmp = preload("res://remote_server/ui/team_edit.tscn")
 	for t in ts:
 		var nt = $TeamsWindow/TabContainer/template.duplicate()
-		nt.name = t.name
+		nt.name = t
 	$TeamsWindow/TabContainer/template.queue_free()
 	
 	set_process(true)
@@ -18,9 +19,12 @@ func start():
 func _process(delta):
 	var t = da.teams
 	for c in $TeamsWindow/TabContainer.get_children():
-		c.get_node("Points").text = "Points: " + str(t[c.name].points)
-		c.get_node("TeamChat").pressed = t[c.name].data["flag_chat"]
-		c.get_node("VoiceChat").pressed = t[c.name].data["flag_vc"]
+		if c.name == "template":
+			c.queue_free()
+		else:
+			c.get_node("Points").text = "Points: " + str(t[c.name].points)
+			c.get_node("TeamChat").pressed = t[c.name].data["flag_chat"]
+			c.get_node("VoiceChat").pressed = t[c.name].data["flag_vc"]
 
 func _on_Exit_pressed():
 	da.rpc("close_server")

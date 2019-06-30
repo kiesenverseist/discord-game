@@ -4,7 +4,7 @@ var remote_server = NetworkedMultiplayerENet.new()
 var self_id
 
 func _ready():
-	remote_server.create_client("192.168.8.110", 8181)
+	remote_server.create_client("localhost", 8181)#"192.168.8.110", 8181)
 	get_tree().network_peer = remote_server
 	self_id = get_tree().get_network_unique_id()
 	

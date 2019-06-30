@@ -61,52 +61,7 @@ resizable = true
 [node name="TabContainer" type="TabContainer" parent="GUI/TeamsWindow"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-
-[node name="template" type="VBoxContainer" parent="GUI/TeamsWindow/TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="Points" type="Label" parent="GUI/TeamsWindow/TabContainer/template"]
-margin_right = 345.0
-margin_bottom = 14.0
-text = "Points:"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI/TeamsWindow/TabContainer/template"]
-margin_top = 18.0
-margin_right = 345.0
-margin_bottom = 42.0
-
-[node name="Button" type="Button" parent="GUI/TeamsWindow/TabContainer/template/HBoxContainer"]
-margin_right = 84.0
-margin_bottom = 24.0
-text = "Edit Points:"
-
-[node name="SpinBox" type="SpinBox" parent="GUI/TeamsWindow/TabContainer/template/HBoxContainer"]
-margin_left = 88.0
-margin_right = 162.0
-margin_bottom = 24.0
-min_value = -100.0
-value = 1.0
-
-[node name="TeamChat" type="CheckBox" parent="GUI/TeamsWindow/TabContainer/template"]
-margin_top = 46.0
-margin_right = 345.0
-margin_bottom = 70.0
-text = "Has team chat"
-
-[node name="VoiceChat" type="CheckBox" parent="GUI/TeamsWindow/TabContainer/template"]
-margin_top = 74.0
-margin_right = 345.0
-margin_bottom = 98.0
-text = "Has team chat"
 [connection signal="pressed" from="GUI/Exit" to="GUI" method="_on_Exit_pressed"]
 [connection signal="pressed" from="GUI/Save" to="GUI" method="_on_Save_pressed"]
 [connection signal="pressed" from="GUI/OpenTeams" to="GUI" method="_on_OpenTeams_pressed"]
 [connection signal="pressed" from="GUI/UpdateLeaderboard" to="GUI" method="_on_UpdateLeaderboard_pressed"]
-[connection signal="pressed" from="GUI/TeamsWindow/TabContainer/template/HBoxContainer/Button" to="GUI" method="_on_EditPoints_pressed"]
-[connection signal="toggled" from="GUI/TeamsWindow/TabContainer/template/TeamChat" to="GUI" method="_on_TeamChat_toggled"]
-[connection signal="toggled" from="GUI/TeamsWindow/TabContainer/template/VoiceChat" to="GUI" method="_on_VoiceChat_toggled"]
