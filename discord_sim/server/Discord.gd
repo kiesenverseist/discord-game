@@ -75,7 +75,7 @@ remote func update_leaderboard():
 	ws.send_data(send_update)
 
 func update_loop():
-	get_tree().create_timer(60).connect("timeout", self, "update_loop")
+	get_tree().create_timer(3600).connect("timeout", self, "update_loop")
 	print("current time is: ", str(OS.get_time()))
 	
 	#update leaderboard
