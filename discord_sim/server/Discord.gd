@@ -75,7 +75,7 @@ remote func update_leaderboard():
 	ws.send_data(send_update)
 
 func update_loop():
-	get_tree().create_timer(3600).connect("timeout", self, "leaderboard_loop")
+	get_tree().create_timer(60).connect("timeout", self, "leaderboard_loop")
 	print("current time is: ", str(OS.get_time()))
 	
 	#update leaderboard
@@ -88,7 +88,27 @@ func update_loop():
 		"request" : "channels"
 	})
 	yield(req, "request_complete")
-	var channels = req.ans_data["answer"]
+	var channels = req.ans_data["channels"]
 	req.complete()
-	print(channels)
+	
+	var t = da.teams
+	
+	for team in t:
+		if team.data["flag_vc"]:
+			if not channels[team.name].has("team-vc"):
+				ws.send_data({
+					"type" : "create_channel",
+					"channel_type" : "vc",
+					
+				})
+		else:
+			if channels[team.name].has("team-vc"):
+				pass
+		if team.data["flag_chat"]:
+			if not channels[team.name].has("team-chat"):
+				pass
+		else:
+			if channels[team.name].has("team-chat"):
+				pass
+		
 	

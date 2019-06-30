@@ -19,8 +19,6 @@ func server_connected():
 	
 	print("connected to server")
 	rpc_id(1, "remote_server_setup", self_id)
-	
-#	$GUI.set_process(true)
 
 func server_failed():
 	print("could not connect to server")

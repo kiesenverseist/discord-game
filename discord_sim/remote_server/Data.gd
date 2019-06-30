@@ -20,7 +20,7 @@ remotesync func set_networked_teams(t_str : String):
 		
 	printt("teams set by server", t)
 	
-	$"../GUI".set_process(true)
+	$"../GUI".start()
 
 func get_teams() -> Dictionary:
 	return teams

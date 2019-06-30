@@ -46,6 +46,7 @@ func request(data:Dictionary) -> WSRequest:
 	data["request_id"] = str(request_id)
 	var req := WSRequest.new(request_id, data)
 	add_child(req)
+	send_data(data)
 	return req
 
 func keep_alive():
