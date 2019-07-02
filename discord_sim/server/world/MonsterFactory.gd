@@ -35,7 +35,7 @@ func spawn_loop():
 #saving / sending/ updating
 func get_all() -> String:
 	return JSON.print({
-		"next_uwou_spawn" : str(next_uowu_spawn),
+		"next_uwou_spawn" : str(next_uwou_spawn),
 		"to_spawn_uwou" : str(to_spawn_uwou)
 	})
 
@@ -43,4 +43,4 @@ func set_all(dat : String):
 	var parsed = JSON.parse(dat).result
 	
 	next_uwou_spawn = int(parsed["next_uwou_spawn"])
-	to_spawn_uwou = bool(to_spawn_uwou)
+	to_spawn_uwou = bool(parsed["to_spawn_uwou"])
