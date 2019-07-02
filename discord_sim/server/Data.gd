@@ -23,7 +23,7 @@ func autosave():
 	save_all()
 	get_tree().create_timer(900).connect("timeout", self, "autosave")
 
-master func save_all():
+master func save_all() ->void:
 	var data = {}
 	
 	var ts = {}
@@ -53,7 +53,7 @@ func _notification(what):
     if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
         close_server()
 
-func load_all():
+func load_all() -> void:
 	var save_game = File.new()
 	save_game.open("user://game.save", File.READ)
 	var data_string = save_game.get_line()
@@ -61,18 +61,27 @@ func load_all():
 	
 	var data = JSON.parse(data_string).result
 	
-	var ts = data["teams"]
-	for t in ts:
-		teams[t] = Team.new(t)
-		teams[t].set_all(ts[t])
+	if data.has("teams"):
+		var ts = data["teams"]
+		for t in ts:
+			teams[t] = Team.new(t)
+			teams[t].set_all(ts[t])
+	else:
+		print("team data missing")
 	
-	var us = data["users"]
-	for u in us:
-		users[u] = User.new(u)
-		users[u].set_all(us[u])
+	if data.has("users"):
+		var us = data["users"]
+		for u in us:
+			users[u] = User.new(u)
+			users[u].set_all(us[u])
+	else:
+		print("user data missing")
 	
-	var world = data["World"]
-	$"../World".set_all(world)
+	if data.has("World"):
+		var world = data["World"]
+		$"../World".set_all(world)
+	else:
+		print("world data missing!")
 	
 	print("done loading")
 
