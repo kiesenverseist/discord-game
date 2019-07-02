@@ -111,5 +111,11 @@ func update_loop():
 		else:
 			if channels[team].has("team-chat"):
 				pass
-		
-	
+
+func discord_message(message : String, Channel : String = "bridge", Category = "super"):
+	ws.send_data({
+		"type" : "message",
+		"channel_name" : Channel,
+		"category_name": Catgeory,
+		"message" : message
+	})

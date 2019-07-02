@@ -3,28 +3,34 @@ extends Node
 onready var da = $"../Data"
 onready var di = $"../Discord"
 
+var initialised = false
+
 func _ready():
 	set_process(false)
 
 func start():
-	var ts = da.teams
-	var tmp = preload("res://remote_server/ui/team_edit.tscn")
-	for t in ts:
-		var nt = $TeamsWindow/TabContainer/template.duplicate()
-		nt.name = t
-	$TeamsWindow/TabContainer/template.queue_free()
-	
-	set_process(true)
+	if not initialised:
+		var ts = da.teams
+		var tmp = preload("res://remote_server/ui/team_edit.tscn")
+		for t in ts:
+			var t_edit = tmp.instance()
+			$TeamsWindow/TabContainer.add_child(t_edit)
+			t_edit.name = t
+			t_edit.base = self
+		
+		set_process(true)
+		initialised = true
 
 func _process(delta):
 	var t = da.teams
-	for c in $TeamsWindow/TabContainer.get_children():
-		if c.name == "template":
-			c.queue_free()
-		else:
-			c.get_node("Points").text = "Points: " + str(t[c.name].points)
-			c.get_node("TeamChat").pressed = t[c.name].data["flag_chat"]
-			c.get_node("VoiceChat").pressed = t[c.name].data["flag_vc"]
+	if not t.empty():
+		for c in $TeamsWindow/TabContainer.get_children():
+			if c.name == "template":
+				c.queue_free()
+			else:
+				c.get_node("Points").text = "Points: " + str(t[c.name].points)
+				c.get_node("TeamChat").pressed = t[c.name].data["flag_chat"]
+				c.get_node("VoiceChat").pressed = t[c.name].data["flag_vc"]
 
 func _on_Exit_pressed():
 	da.rpc("close_server")
