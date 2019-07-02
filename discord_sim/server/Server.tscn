@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://server/Server.gd" type="Script" id=1]
 [ext_resource path="res://server/Websocket.gd" type="Script" id=2]
 [ext_resource path="res://server/Data.gd" type="Script" id=3]
 [ext_resource path="res://server/Discord.gd" type="Script" id=4]
 [ext_resource path="res://server/MessageHandler.gd" type="Script" id=5]
-[ext_resource path="res://server/world/MonsterFactory.gd" type="Script" id=6]
+[ext_resource path="res://server/world/World.gd" type="Script" id=6]
+[ext_resource path="res://server/world/MonsterFactory.gd" type="Script" id=7]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -23,6 +24,7 @@ script = ExtResource( 4 )
 script = ExtResource( 5 )
 
 [node name="World" type="Node" parent="."]
+script = ExtResource( 6 )
 
 [node name="MonsterFactory" type="Node" parent="World"]
-script = ExtResource( 6 )
+script = ExtResource( 7 )

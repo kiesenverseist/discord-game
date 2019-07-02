@@ -34,8 +34,11 @@ master func save_all():
 	for u in users:
 		us[u] = users[u].get_all()
 	
+	var world = $"../World".get_all()
+	
 	data["teams"] = ts
 	data["users"] = us
+	data["World"] = world
 	
 	var data_string = JSON.print(data)
 	
@@ -67,6 +70,9 @@ func load_all():
 	for u in us:
 		users[u] = User.new(u)
 		users[u].set_all(us[u])
+	
+	var world = data["World"]
+	$"../World".set_all(world)
 	
 	print("done loading")
 
@@ -100,7 +106,6 @@ func set_users(u):
 
 func get_users() -> Dictionary:
 	return users
-
 
 master func close_server():
 	ws.close()

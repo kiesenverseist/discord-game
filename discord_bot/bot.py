@@ -59,7 +59,7 @@ class MyClient(discord.Client):
                         self.send_q.put(snd_dat)
                 
                 if data["type"] == "create_channel":
-                    category = self.indexed_channels[data["category_name"]["category_id"]]
+                    category = self.indexed_channels[data["category_name"]]["category_id"]
                     category = self.get_channel(int(category))
                     if data["channel_type"] == "text":
                         await category.create_text_channel(data["channel_name"])
