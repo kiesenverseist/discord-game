@@ -116,6 +116,6 @@ func discord_message(message : String, Channel : String = "bridge", Category = "
 	ws.send_data({
 		"type" : "message",
 		"channel_name" : Channel,
-		"category_name": Catgeory,
+		"category_name": Category,
 		"message" : message
 	})
