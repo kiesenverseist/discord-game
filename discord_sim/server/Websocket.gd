@@ -9,6 +9,7 @@ var requests = {}
 signal user_joined(data)
 signal message_recieved(data)
 signal answer(data)
+signal user_left(data)
 
 func _ready():
 	client.connect("data_received", self, "data_recieved")
@@ -66,6 +67,8 @@ func data_recieved():
 			emit_signal("message_recieved", data)
 		"member_join":
 			emit_signal("user_joined", data)
+		"member_leave":
+			emit_signal("user_left", data)
 		"answer":
 			emit_signal("answer", data)
 		_:

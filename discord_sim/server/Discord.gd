@@ -6,6 +6,7 @@ onready var da = $"../Data"
 func _ready():
 	ws.connect("message_recieved", self, "_on_message_receved")
 	ws.connect("user_joined", self, "_on_user_join")
+	ws.connect("user_left", self, "_on_user_leave")
 	
 	randomize()
 	update_loop()
@@ -31,6 +32,13 @@ func _on_user_join(data):
 		if role_id == "Yellow":
 			role_id = teams[-2].name
 	
+	#create and publices user object
+	da.add_user(data["user_id"])
+	var u = da.users
+	u[data["user_id"]].data["team"] = role_id
+	u[data["user_id"]].data["user_name"] = data["user_name"]
+	da.users = u
+	
 	print("is to be assigned to ", role_id, " in 3 minutes")
 	yield(get_tree().create_timer(180), "timeout")
 	
@@ -47,6 +55,10 @@ func _on_user_join(data):
 		"message" : "Welcome your new member %s!" % data["user_name"]
 	}
 	ws.send_data(msg)
+
+func _on_user_leave(data):
+	discord_message("user left: %s" % data, "dev-general", "Super")
+	da.remove_user(data["user_id"])
 
 func _on_message_receved(data):
 	$MessageHandler.handle_message(data)

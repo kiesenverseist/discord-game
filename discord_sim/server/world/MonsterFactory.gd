@@ -4,6 +4,8 @@ var to_spawn_uwou : bool = false
 var next_uwou_spawn : int = 0
 export var uwou_cooldown : int = 3600*24
 
+var uwou_count : int = 0
+
 onready var di = $"../../Discord"
 
 func _ready():
@@ -13,6 +15,7 @@ func try_spawn_uwou():
 	to_spawn_uwou = true
 
 func spawn_uwou():
+	uwou_count += 1
 	var messages = [
 		"A deep rumble is heard from deep within the maze",
 		"The floor trembles",
@@ -20,7 +23,7 @@ func spawn_uwou():
 		"Small critters flee the maze",
 		"The maze feels darker than before"
 	]
-	di.discord_message(messages[randi()%messages.size()],"events","Diplomacy")
+	di.discord_message("#%s " % uwou_count + messages[randi()%messages.size()],"events","Diplomacy")
 
 func spawn_loop():
 	var curr_time = OS.get_unix_time()
@@ -36,7 +39,8 @@ func spawn_loop():
 func get_all() -> String:
 	return JSON.print({
 		"next_uwou_spawn" : str(next_uwou_spawn),
-		"to_spawn_uwou" : str(to_spawn_uwou)
+		"to_spawn_uwou" : str(to_spawn_uwou),
+		"uwou_count" : str(uwou_count)
 	})
 
 func set_all(dat : String):
@@ -44,3 +48,4 @@ func set_all(dat : String):
 	
 	next_uwou_spawn = int(parsed["next_uwou_spawn"])
 	to_spawn_uwou = bool(parsed["to_spawn_uwou"])
+	uwou_count = int(uwou_count)
