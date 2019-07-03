@@ -3,9 +3,12 @@ class_name User
 
 var data = {}
 
-func _init(id : String, nam : String = ""):
+func _init(id : String):
 	data["id"] = id
-	data["user_name"] = nam
+	data["user_name"] = ""
+	data["nick"] = ""
+	data["avatar"] = ""
+	data["team"] = ""
 
 func set_nick(nick : String):
 	data["nick"] = nick

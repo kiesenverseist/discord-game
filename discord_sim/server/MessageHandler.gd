@@ -2,19 +2,23 @@ extends Node
 
 onready var ws = $"../../Websocket"
 onready var da = $"../../Data"
+onready var di = get_parent()
 var regex = {
 	uwou = RegEx.new()
 }
 
 func _ready():
-	regex.uwou.compile("[uUwWoO]{3}")
+	regex.uwou.compile("[uUwWoO0]{3}")
 
 func handle_message(data):
+	if data["message"].begins_with("^"):
+		admin_command(data)
+	
 	if not data["is_dm"]:
 		
 		#uwou detector
 		var uwou_data = regex.uwou.search_all(data["message"])
-		if uwou_data.size() > 20:
+		if uwou_data.size() > 5:
 			var reply = {
 				"type" : "message",
 				"channel_name" : data["channel_name"],
@@ -27,7 +31,7 @@ func handle_message(data):
 				"type" : "message",
 				"channel_name" : data["channel_name"],
 				"category_name": data["category_name"],
-				"message" : "*Sigh*"
+				"message" : "<%s seconds>\n\n*Sigh*" % str(uwou_data.size() * 2)
 			}
 			ws.send_data(reply)
 			
@@ -42,6 +46,7 @@ func handle_message(data):
 				"message" : ret + "What's this?"
 			}
 			ws.send_data(reply)
+			$"../../World/MonsterFactory".try_spawn_uwou()
 		
 		if data["message"].matchn("kys"):
 			var reply = {
@@ -159,3 +164,10 @@ func handle_message(data):
 		reply_dm["channel_id"] = data["channel_id"]
 		reply_dm["message"] = "Plox noe dm ;-;"
 		ws.send_data(reply_dm)
+
+func admin_command(data):
+	if data["user_id"] != "183363112882274305":
+		return
+	
+	if data["message"].matchn("update_leaderboard"):
+		di.update_leaderboard()
