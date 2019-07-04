@@ -71,7 +71,7 @@ class MyClient(discord.Client):
                                 "user_name" : u.name,
                                 "nick" : u.display_name,
                                 "mention" : u.mention,
-                                "avatar" : u.avatar_url
+                                "avatar" : str(u.avatar_url)
 
                             }
 
