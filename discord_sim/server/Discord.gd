@@ -124,9 +124,9 @@ func update_loop():
 				pass
 
 func update_users():
-	var req = ws.request({"request" : "users"})
+	var req : WSRequest = ws.request({"request" : "users"})
 	yield(req, "request_complete")
-	var users_raw : Dictionary = req.ans_data("users")
+	var users_raw : Dictionary = req.ans_data["users"]
 	req.complete()
 	
 	var users : Dictionary = da.users
