@@ -34,6 +34,7 @@ remote func remote_server_setup(id):
 	print("remote server connected", id)
 	remote_servers[id] = null
 	$Data.set_teams()
+	$Data.set_users()
 
 remote func player_client_setup(id):
 	player_clients[id] = null

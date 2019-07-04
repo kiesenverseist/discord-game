@@ -57,6 +57,30 @@ class MyClient(discord.Client):
                             "channels" : self.indexed_channels
                         }
                         self.send_q.put(snd_dat)
+                    
+                    if data["request"] == "users":
+                        usrs = self.gld.members
+                        users = {}
+                        roles = []
+                        for r in u.roles:
+                            roles.append(str(r))
+                        for u in usrs:
+                            users[u] = {
+                                "user_id" : u.id,
+                                "roles" : roles,
+                                "user_name" : u.name,
+                                "nick" : u.display_name,
+                                "mention" : u.mention,
+                                "avatar" : u.avatar_url
+
+                            }
+
+                        snd_dat = {
+                            "type" : "answer",
+                            "request_id" : data["request_id"],
+                            "users" : users
+                        }
+                        self.send_q.put(snd_dat)
                 
                 if data["type"] == "create_channel":
                     category = self.indexed_channels[data["category_name"]]["category_id"]

@@ -7,6 +7,8 @@ var regex = {
 	uwou = RegEx.new()
 }
 
+var spy_cooldown : bool = true
+
 func _ready():
 	regex.uwou.compile("[uUwWoO0]{3}")
 
@@ -48,13 +50,13 @@ func handle_message(data):
 			ws.send_data(reply)
 			$"../../World/MonsterFactory".try_spawn_uwou()
 		
-		if data["message"].matchn("kys"):
+		if data["message"].matchn("*kys*"):
 			var reply = {
 				"type" : "message",
 				"channel_name" : data["channel_name"],
 				"category_name": data["category_name"]
 			}
-			if data["message"].matchn("kysenverseist"):
+			if data["message"].matchn("*kysenverseist*"):
 				var replies = ["No u","*Kiesenverseist", "No.", "staph"]
 				reply["message"] = replies[randi()%replies.size()]
 			else:
@@ -64,6 +66,12 @@ func handle_message(data):
 		
 		match data["channel_name"]:
 			"generator":
+				#give user point
+				var us = da.users
+				us[data["user_id"]].add_points(1)
+				da.users = us
+				
+				#assign team shenanigans
 				var t = da.teams
 				
 				var other_teams = ["Yellow", "Blue", "Red", "Green"]
@@ -120,11 +128,13 @@ func handle_message(data):
 			"team-chat":
 				if data["message"].matchn("*p*o*i*n*t*"):
 					var t = da.teams
+					var u = da.users
 					var reply = {
 						"type" : "message",
 						"channel_name" : data["channel_name"],
 						"category_name": data["category_name"],
-						"message" : "Your team has %s points" % str(t[data["category_name"]].points)
+						"message" : "Your team has %s points" % str(t[data["category_name"]].points)\
+								+ "\nYou have %s points" % str(u[data["user_id"]].data["points"])
 					}
 					ws.send_data(reply)
 				
@@ -133,17 +143,7 @@ func handle_message(data):
 				
 				for team in other_teams:
 					if data["message"].matchn("*%s*" % team):
-						var face = [">_>", "<_<", "o_0", "0_o", ":O"]
-						face.shuffle()
-						face = face.front()
-						var culprit = data["category_name"] if randf() < 0.1 else ""
-						var reply = {
-							"type" : "message",
-							"channel_name" : "team-chat",
-							"category_name": team,
-							"message" : "Another team mentioned this team %s" % face + culprit
-						}
-						ws.send_data(reply)
+						try_spy(data)
 				
 				if randf() < 0.001:
 					var t = da.teams
@@ -157,8 +157,9 @@ func handle_message(data):
 						"message" : "You found a point."
 					}
 					ws.send_data(reply)
-
+	
 	else:
+		
 		var reply_dm = {}
 		reply_dm["type"] = "message"
 		reply_dm["channel_id"] = data["channel_id"]
@@ -169,5 +170,25 @@ func admin_command(data):
 	if data["user_id"] != "183363112882274305":
 		return
 	
-	if data["message"].matchn("update_leaderboard"):
+	if data["message"].matchn("*update_leaderboard*"):
 		di.update_leaderboard()
+	
+	if data["message"].matchn("*update_users*"):
+		di.update_users()
+
+func try_spy(data):
+	if spy_cooldown:
+		var face = [">_>", "<_<", "o_0", "0_o", ":O"]
+		face.shuffle()
+		face = face.front()
+		var culprit = data["category_name"] if randf() < 0.1 else ""
+		var reply = {
+			"type" : "message",
+			"channel_name" : "team-chat",
+			"category_name": team,
+			"message" : "Another team mentioned this team %s" % face + culprit
+		}
+		ws.send_data(reply)
+		spy_cooldown = false
+		yield(get_tree().create_timer(300), "timeout")
+		spy_cooldown = true

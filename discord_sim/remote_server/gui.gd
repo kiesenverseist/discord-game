@@ -17,7 +17,7 @@ func start():
 			$TeamsWindow/TabContainer.add_child(t_edit)
 			t_edit.name = t
 			t_edit.base = self
-		
+		$RawUsers.text = str(da.users)
 		set_process(true)
 		initialised = true
 

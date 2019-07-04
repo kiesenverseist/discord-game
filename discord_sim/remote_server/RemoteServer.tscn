@@ -61,6 +61,12 @@ resizable = true
 [node name="TabContainer" type="TabContainer" parent="GUI/TeamsWindow"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="RawUsers" type="Label" parent="GUI"]
+anchor_right = 1.0
+margin_left = 171.0
+margin_bottom = 14.0
+autowrap = true
 [connection signal="pressed" from="GUI/Exit" to="GUI" method="_on_Exit_pressed"]
 [connection signal="pressed" from="GUI/Save" to="GUI" method="_on_Save_pressed"]
 [connection signal="pressed" from="GUI/OpenTeams" to="GUI" method="_on_OpenTeams_pressed"]

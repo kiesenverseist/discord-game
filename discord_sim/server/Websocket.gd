@@ -45,6 +45,7 @@ master func send_data(data : Dictionary):
 func request(data:Dictionary) -> WSRequest:
 	var request_id := randi()
 	data["request_id"] = str(request_id)
+	data["type"] = "request"
 	var req := WSRequest.new(request_id, data)
 	add_child(req)
 	send_data(data)

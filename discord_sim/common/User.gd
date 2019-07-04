@@ -9,6 +9,8 @@ func _init(id : String):
 	data["nick"] = ""
 	data["avatar"] = ""
 	data["team"] = ""
+	data["points"] = 0
+	data["mention"] = ""
 
 func set_nick(nick : String):
 	data["nick"] = nick
@@ -18,6 +20,9 @@ func set_avatar(avatar : String):
 
 func get_all() -> String:
 	return JSON.print(data)
+
+func add_points(points : int):
+	data["points"] += points
 
 func set_all(dat : String):
 	var parsed = JSON.parse(dat).result

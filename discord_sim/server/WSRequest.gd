@@ -11,6 +11,7 @@ func _init(id,data):
 	req_data = data
 
 func _ready():
+	
 	get_parent().connect("answer", self, "on_answer")
 
 func complete_request(data):

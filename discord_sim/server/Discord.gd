@@ -34,6 +34,8 @@ func _on_user_join(data):
 	
 	#create and publices user object
 	da.add_user(data["user_id"])
+	update_users()
+	
 	var u = da.users
 	u[data["user_id"]].data["team"] = role_id
 	u[data["user_id"]].data["user_name"] = data["user_name"]
@@ -95,10 +97,7 @@ func update_loop():
 		update_leaderboard()
 	
 	#update team flags
-	var req = ws.request({
-		"type" : "request",
-		"request" : "channels"
-	})
+	var req = ws.request({"request" : "channels"})
 	yield(req, "request_complete")
 	var channels = req.ans_data["channels"]
 	req.complete()
@@ -123,6 +122,43 @@ func update_loop():
 		else:
 			if channels[team].has("team-chat"):
 				pass
+
+func update_users():
+	var req = ws.request({"request" : "users"})
+	yield(req, "request_complete")
+	var users_raw : Dictionary = req.ans_data("users")
+	req.complete()
+	
+	var users : Dictionary = da.users
+	
+	for id in users_raw:
+		
+		var u = users_raw[id]
+		
+		var role : String
+		for r in u["roles"]:
+			if r in da.teams:
+				role = r
+		
+		if id in users:
+			users[id].data["user_name"] = u["user_name"]
+			users[id].data["avatar"] = u["avatar"]
+			if role: users[id].data["team"] = role
+			users[id].data["nick"] = u["nick"]
+			users[id].data["mention"] = u["mention"]
+		else:
+			var usr : User = User.new(id)
+			
+			usr.data["user_name"] = u["user_name"]
+			usr.data["avatar"] = u["avatar"]
+			if role: usr.data["team"] = role
+			usr.data["nick"] = u["nick"]
+			usr.data["mention"] = u["mention"]
+			
+			users[id] = usr
+	
+	if not users.empty():
+		da.users = users
 
 func discord_message(message : String, Channel : String = "bridge", Category = "super"):
 	ws.send_data({
