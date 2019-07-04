@@ -143,7 +143,7 @@ func handle_message(data):
 				
 				for team in other_teams:
 					if data["message"].matchn("*%s*" % team):
-						try_spy(data)
+						try_spy(data, team)
 				
 				if randf() < 0.001:
 					var t = da.teams
@@ -176,12 +176,12 @@ func admin_command(data):
 	if data["message"].matchn("*update_users*"):
 		di.update_users()
 
-func try_spy(data):
+func try_spy(data, team):
 	if spy_cooldown:
 		var face = [">_>", "<_<", "o_0", "0_o", ":O"]
 		face.shuffle()
 		face = face.front()
-		var culprit = data["category_name"] if randf() < 0.1 else ""
+		var culprit = "\nIt was: " + data["category_name"] if randf() < 0.1 else ""
 		var reply = {
 			"type" : "message",
 			"channel_name" : "team-chat",
