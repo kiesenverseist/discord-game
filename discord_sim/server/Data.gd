@@ -131,5 +131,6 @@ func get_users() -> Dictionary:
 
 master func close_server():
 	ws.close()
+	yield(get_tree().create_timer(1.1), "timeout")
 	save_all()
 	get_tree().quit()

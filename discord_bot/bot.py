@@ -65,7 +65,7 @@ class MyClient(discord.Client):
                         for u in usrs:
                             for r in u.roles:
                                 roles.append(str(r))
-                            users[u] = {
+                            users[u.id] = {
                                 "user_id" : u.id,
                                 "roles" : roles,
                                 "user_name" : u.name,
