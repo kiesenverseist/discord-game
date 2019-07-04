@@ -62,9 +62,9 @@ class MyClient(discord.Client):
                         usrs = self.gld.members
                         users = {}
                         roles = []
-                        for r in u.roles:
-                            roles.append(str(r))
                         for u in usrs:
+                            for r in u.roles:
+                                roles.append(str(r))
                             users[u] = {
                                 "user_id" : u.id,
                                 "roles" : roles,
