@@ -92,13 +92,17 @@ func update_user_leaderboard(data):
 	var users : Array = []
 	var u = da.users
 	for user in u:
-		users.append(u[user])
+		if data.has("team"):
+			if u[user].data["team"] == data["team"]:
+				users.append(u[user])
+		else:
+			users.append(u[user])
 	
 	users.sort_custom(self, "leader_board_sort")
 	
 	var msg : String = ""
 	for user in users:
-		msg += user.name + ": " + str(user.points) + " \n"
+		msg += user.data["nick"] + ": " + str(user.points) + " \n"
 	
 	var send_update = {}
 	send_update["type"] = "message"
@@ -111,17 +115,13 @@ func update_loop():
 	get_tree().create_timer(3600).connect("timeout", self, "update_loop")
 	print("current time is: ", str(OS.get_time()))
 	
-	#update leaderboard
-	if OS.get_time().hour == 20:
-		update_leaderboard()
+	var t = da.teams
 	
 	#update team flags
 	var req = ws.request({"request" : "channels"})
 	yield(req, "request_complete")
 	var channels = req.ans_data["channels"]
 	req.complete()
-	
-	var t = da.teams
 	
 	for team in t:
 		if t[team].data["flag_vc"]:
@@ -137,10 +137,37 @@ func update_loop():
 				pass
 		if t[team].data["flag_chat"]:
 			if not channels[team].has("team-chat"):
-				pass
+				ws.send_data({
+					"type" : "create_channel",
+					"channel_type" : "text",
+					"category_name" : team,
+					"channel_name" : "team-chat"
+				})
 		else:
 			if channels[team].has("team-chat"):
 				pass
+		if t[team].data["flag_user_leaderboard"]:
+			if not channels[team].has("team-leaderboard"):
+				ws.send_data({
+					"type" : "create_channel",
+					"channel_type" : "text",
+					"category_name" : team,
+					"channel_name" : "team-leaderboard"
+				})
+		else:
+			if channels[team].has("team-vc"):
+				pass
+	
+	#update leaderboard(s)
+	if OS.get_time().hour == 20:
+		update_leaderboard()
+		for team in t:
+			if t[team].data["flag_user_leaderboard"]:
+				update_user_leaderboard({
+					"team" : team,
+					"category_name" : team,
+					"channel_name" : "team-leaderboard"
+				})
 
 func update_users():
 	var req : WSRequest = ws.request({"request" : "users"})

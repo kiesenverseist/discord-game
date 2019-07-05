@@ -11,6 +11,7 @@ func _init(nam : String):
 	data["points"] = 0
 	data["flag_chat"] = false
 	data["flag_vc"] = false
+	data["flag_user_leaderboard"] = false
 
 func add_points(p : int = 1):
 	data["points"] += p
@@ -25,8 +26,9 @@ func get_name() -> String:
 func eval_flags():
 	var pts = self.points
 	
-	data["flag_chat"] = pts > 10
-	data["flag_vc"] = pts > 50
+	data["flag_chat"] = pts >= 10
+	data["flag_vc"] = pts >= 50
+	data["flag_user_leaderboard"] = pts >= 75
 
 #saving / sending/ updating
 func get_all() -> String:
