@@ -106,7 +106,7 @@ func update_user_leaderboard(data):
 	
 	var send_update = {}
 	send_update["type"] = "message"
-	send_update["category_name"] = data["catgegory_name"]
+	send_update["category_name"] = data["category_name"]
 	send_update["channel_name"] = data["channel_name"]
 	send_update["message"] = msg
 	ws.send_data(send_update)
