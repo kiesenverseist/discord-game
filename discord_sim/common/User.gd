@@ -2,6 +2,7 @@ extends Resource
 class_name User
 
 var data = {}
+var points setget ,get_points
 
 func _init(id : String):
 	data["id"] = id
@@ -23,6 +24,9 @@ func get_all() -> String:
 
 func add_points(points : int):
 	data["points"] += points
+
+func get_points():
+	return data["points"]
 
 func set_all(dat : String):
 	var parsed = JSON.parse(dat).result

@@ -2,7 +2,7 @@ extends Node
 
 var to_spawn_uwou : bool = false
 var next_uwou_spawn : int = 0
-export var uwou_cooldown : int = 3600*24
+export var uwou_cooldown : int = 3600*18
 
 var uwou_count : int = 0
 
@@ -30,7 +30,7 @@ func spawn_loop():
 	
 	if to_spawn_uwou and next_uwou_spawn < curr_time:
 		to_spawn_uwou = false
-		next_uwou_spawn = curr_time + uwou_cooldown
+		next_uwou_spawn = curr_time + uwou_cooldown * (randf()+0.5)
 		spawn_uwou()
 	
 	get_tree().create_timer(60).connect("timeout", self, "spawn_loop")
@@ -48,4 +48,4 @@ func set_all(dat : String):
 	
 	next_uwou_spawn = int(parsed["next_uwou_spawn"])
 	to_spawn_uwou = bool(parsed["to_spawn_uwou"])
-	uwou_count = int(uwou_count)
+	uwou_count = int(parsed["uwou_count"])

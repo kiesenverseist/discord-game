@@ -25,8 +25,21 @@ remotesync func set_networked_teams(t_str : String):
 func get_teams() -> Dictionary:
 	return teams
 
-func set_users(u : Dictionary = users):
-	rset("users", u)
+func set_users(u_dict : Dictionary = users):
+	var u_data : Dictionary
+	for u in u_dict:
+		u_data[u] = u_dict[u].get_all()
+	var u_str = JSON.print(u_data)
+	rpc("set_networked_users", u_str)
+	printt("setting users from server", u_str)
+
+remotesync func set_networked_users(u_str : String):
+	var u = JSON.parse(u_str).result
+	for user in u:
+		var u_new = User.new(user)
+		u_new.set_all(u[user])
+		users[user] = u_new
+	printt("users set", u)
 
 func get_users() -> Dictionary:
 	return users

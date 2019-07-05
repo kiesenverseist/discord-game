@@ -88,6 +88,25 @@ remote func update_leaderboard():
 	send_update["message"] = msg
 	ws.send_data(send_update)
 
+func update_user_leaderboard(data):
+	var users : Array = []
+	var u = da.users
+	for user in u:
+		users.append(u[user])
+	
+	users.sort_custom(self, "leader_board_sort")
+	
+	var msg : String = ""
+	for user in users:
+		msg += user.name + ": " + str(user.points) + " \n"
+	
+	var send_update = {}
+	send_update["type"] = "message"
+	send_update["category_name"] = data["catgegory"]
+	send_update["channel_name"] = data["channel_name"]
+	send_update["message"] = msg
+	ws.send_data(send_update)
+
 func update_loop():
 	get_tree().create_timer(3600).connect("timeout", self, "update_loop")
 	print("current time is: ", str(OS.get_time()))

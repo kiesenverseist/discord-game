@@ -175,6 +175,9 @@ func admin_command(data):
 	
 	if data["message"].matchn("*update_users*"):
 		di.update_users()
+	
+	if data["message"].matchn("*update_user_leaderboard*"):
+		di.update_user_leaderboard(data)
 
 func try_spy(data, team):
 	if spy_cooldown:
