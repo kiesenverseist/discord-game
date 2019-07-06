@@ -118,7 +118,10 @@ class MyClient(discord.Client):
                             await msg.edit(content=data["message"])
                         else:
                             await ch.send(data["message"])
-            await asyncio.sleep(0.1)
+            except:
+                print("an error occoured")
+            finally:
+                await asyncio.sleep(0.1)
     
     async def on_member_join(self, member):
         data = {}
