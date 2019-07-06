@@ -178,7 +178,6 @@ func update_users():
 	var users : Dictionary = da.users
 	
 	for id in users_raw:
-		
 		var u = users_raw[id]
 		
 		var role : String

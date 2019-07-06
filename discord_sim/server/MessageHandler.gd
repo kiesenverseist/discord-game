@@ -159,7 +159,6 @@ func handle_message(data):
 					ws.send_data(reply)
 	
 	else:
-		
 		var reply_dm = {}
 		reply_dm["type"] = "message"
 		reply_dm["channel_id"] = data["channel_id"]
