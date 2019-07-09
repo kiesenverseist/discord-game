@@ -7,7 +7,7 @@ var player_clients = {}
 var remote_servers = {}
 
 func _ready():
-	server.create_server(8181, 100)
+	server.create_server(8081, 100)
 	get_tree().network_peer = server
 	
 	get_tree().connect("network_peer_connected",self, "client_connected")
@@ -32,9 +32,14 @@ func client_disconnected(id):
 
 remote func remote_server_setup(id):
 	print("remote server connected", id)
-	remote_servers[id] = null
+	remote_servers[id] = id
+	for i in remote_servers:
+		rset_id(i, "remote_servers", remote_servers)
 	$Data.set_teams()
 	$Data.set_users()
 
 remote func player_client_setup(id):
-	player_clients[id] = null
+	print("player connected", id)
+	player_clients[id] = id
+	for i in player_clients:
+		rset_id(i, "player_clients", player_clients)

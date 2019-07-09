@@ -33,10 +33,10 @@ func _process(delta):
 				c.get_node("VoiceChat").pressed = t[c.name].data["flag_vc"]
 
 func _on_Exit_pressed():
-	da.rpc("close_server")
+	da.rpc_id(1, "close_server")
 
 func _on_Save_pressed():
-	da.rpc("save_all")
+	da.rpc_id(1, "save_all")
 
 func _on_OpenTeams_pressed():
 	$TeamsWindow.popup()
