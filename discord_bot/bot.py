@@ -62,8 +62,8 @@ class MyClient(discord.Client):
                         if data["request"] == "users":
                             usrs = self.gld.members
                             users = {}
-                            roles = []
                             for u in usrs:
+                                roles = []
                                 for r in u.roles:
                                     roles.append(str(r))
                                 users[u.id] = {
