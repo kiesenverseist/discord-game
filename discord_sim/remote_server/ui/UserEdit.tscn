@@ -1,0 +1,95 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://remote_server/ui/UserEdit.gd" type="Script" id=1]
+
+[node name="UserEdit" type="GridContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UserNameLabel" type="Label" parent="."]
+margin_top = 5.0
+margin_right = 66.0
+margin_bottom = 19.0
+text = "Username"
+align = 2
+
+[node name="UserName" type="LineEdit" parent="."]
+margin_left = 70.0
+margin_right = 128.0
+margin_bottom = 24.0
+expand_to_text_length = true
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="NickLLabel" type="Label" parent="."]
+margin_top = 33.0
+margin_right = 66.0
+margin_bottom = 47.0
+text = "Nickname"
+align = 2
+
+[node name="NickName" type="LineEdit" parent="."]
+margin_left = 70.0
+margin_top = 28.0
+margin_right = 128.0
+margin_bottom = 52.0
+expand_to_text_length = true
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="IDLabel" type="Label" parent="."]
+margin_top = 61.0
+margin_right = 66.0
+margin_bottom = 75.0
+text = "ID"
+align = 2
+
+[node name="ID" type="LineEdit" parent="."]
+margin_left = 70.0
+margin_top = 56.0
+margin_right = 128.0
+margin_bottom = 80.0
+expand_to_text_length = true
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="TeamLabel" type="Label" parent="."]
+margin_top = 89.0
+margin_right = 66.0
+margin_bottom = 103.0
+text = "Team"
+align = 2
+
+[node name="Team" type="LineEdit" parent="."]
+margin_left = 70.0
+margin_top = 84.0
+margin_right = 128.0
+margin_bottom = 108.0
+expand_to_text_length = true
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="PointsLabel" type="Label" parent="."]
+margin_top = 117.0
+margin_right = 66.0
+margin_bottom = 131.0
+text = "Points"
+align = 2
+
+[node name="Points" type="LineEdit" parent="."]
+margin_left = 70.0
+margin_top = 112.0
+margin_right = 128.0
+margin_bottom = 136.0
+expand_to_text_length = true
+caret_blink = true
+caret_blink_speed = 0.5

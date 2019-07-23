@@ -21,7 +21,6 @@ func start():
 		initialised = true
 
 func _process(delta):
-	$RawUsers.text = str(da.users)
 	var t = da.teams
 	if not t.empty():
 		for c in $TeamsWindow/TabContainer.get_children():
@@ -40,6 +39,9 @@ func _on_Save_pressed():
 
 func _on_OpenTeams_pressed():
 	$TeamsWindow.popup()
+
+func _on_OpenUsers_pressed():
+	$UsersWindow.popup()
 
 func _on_EditPoints_pressed():
 	var team = $TeamsWindow/TabContainer.get_current_tab_control().name

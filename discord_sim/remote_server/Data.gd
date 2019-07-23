@@ -3,6 +3,8 @@ extends Node
 var teams : Dictionary = {} setget set_teams, get_teams
 var users : Dictionary = {} setget set_users, get_users
 
+signal users_updated
+
 func set_teams(t_dict : Dictionary = teams):
 	var t_data : Dictionary
 	for t in t_dict:
@@ -45,6 +47,7 @@ remote func set_networked_users(u_str : String):
 		u_new.set_all(u[user])
 		users[user] = u_new
 	printt("users set")
+	emit_signal("users_updated")
 
 func get_users() -> Dictionary:
 	return users

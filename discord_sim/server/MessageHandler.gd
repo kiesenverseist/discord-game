@@ -115,14 +115,14 @@ func handle_message(data):
 						t[data["category_name"]].add_points(1)
 				
 				#for when a team surpasses 100
-				if t[data["category_name"]].points >= 100 and t[data["category_name"]].points <= 101 :
-					var reply = {
-						"type" : "message",
-						"channel_name" : "announcements",
-						"category_name": "Super",
-						"message" : "Congradulations to %s for reaching 100 points!\nhttps://www.youtube.com/watch?v=1Bix44C1EzY" % data["category_name"]
-					}
-					ws.send_data(reply)
+#				if t[data["category_name"]].points >= 100 and t[data["category_name"]].points <= 101 :
+#					var reply = {
+#						"type" : "message",
+#						"channel_name" : "announcements",
+#						"category_name": "Super",
+#						"message" : "Congradulations to %s for reaching 100 points!\nhttps://www.youtube.com/watch?v=1Bix44C1EzY" % data["category_name"]
+#					}
+#					ws.send_data(reply)
 
 				da.teams = t
 			"team-chat":
@@ -171,12 +171,16 @@ func admin_command(data):
 	
 	if data["message"].matchn("*update_leaderboard*"):
 		di.update_leaderboard()
+		di.discord_message("leaderboard updated", data["channel_name"], data["category_name"])
 	
 	if data["message"].matchn("*update_users*"):
 		di.update_users()
+		di.discord_message("users updated", data["channel_name"], data["category_name"])
 	
 	if data["message"].matchn("*update_user_leaderboard*"):
 		di.update_user_leaderboard(data)
+		di.discord_message("users posted", data["channel_name"], data["category_name"])
+		
 
 func try_spy(data, team):
 	if spy_cooldown:

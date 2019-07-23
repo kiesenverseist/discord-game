@@ -97,3 +97,17 @@ func close():
 	yield(get_tree().create_timer(1), "timeout")
 	client.disconnect_from_host(1000,"Server closed")
 
+func set_all(data : String):
+	var dat : Dictionary = JSON.parse(data).result
+	var queue : Dictionary = JSON.parse(dat["queue"]).result
+	
+	for m in queue:
+		send_data(m)
+
+func get_all() -> String:
+	return str(self) 
+
+func _to_string() -> String:
+	return JSON.print({
+		"queue" : JSON.print(message_queue)
+	})

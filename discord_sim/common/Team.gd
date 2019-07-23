@@ -40,3 +40,6 @@ func set_all(dat : String):
 	#not directley equating incase anything new is not in the old save
 	for key in parsed:
 		data[key] = parsed[key]
+
+func _to_string() -> String:
+	return get_all()

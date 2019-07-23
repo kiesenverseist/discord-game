@@ -65,7 +65,7 @@ func _on_user_leave(data):
 func _on_message_receved(data):
 	$MessageHandler.handle_message(data)
 
-static func leader_board_sort(a , b):
+static func leader_board_sort(a, b):
 	return a.points > b.points
 
 remote func update_leaderboard():
@@ -177,9 +177,11 @@ func update_users():
 	
 	var users : Dictionary = da.users
 	
+	print(users)
+	
 	for id in users_raw:
 		var u = users_raw[id]
-		
+		print(u)
 		var role : String
 		for r in u["roles"]:
 			if r in da.teams:
@@ -205,7 +207,7 @@ func update_users():
 	if not users.empty():
 		da.users = users
 
-func discord_message(message : String, Channel : String = "bridge", Category = "super"):
+func discord_message(message : String, Channel : String = "bridge", Category : String = "super"):
 	ws.send_data({
 		"type" : "message",
 		"channel_name" : Channel,

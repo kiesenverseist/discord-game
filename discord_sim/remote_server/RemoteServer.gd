@@ -12,7 +12,6 @@ func _ready():
 	get_tree().network_peer.connect("connection_succeeded", self, "server_connected")
 	get_tree().network_peer.connect("connection_failed", self, "server_failed")
 	get_tree().network_peer.connect("server_disconnected", self, "server_disconnected")
-	
 
 func server_connected():
 	set_network_master(self_id, true)

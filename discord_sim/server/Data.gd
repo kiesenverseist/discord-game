@@ -36,9 +36,12 @@ master func save_all() ->void:
 	
 	var world = $"../World".get_all()
 	
+	var ws = $"../Websocket".get_all()
+	
 	data["teams"] = ts
 	data["users"] = us
 	data["World"] = world
+	data["websocket"] = ws
 	
 	var data_string = JSON.print(data)
 	
@@ -67,7 +70,7 @@ func load_all() -> void:
 			teams[t] = Team.new(t)
 			teams[t].set_all(ts[t])
 	else:
-		print("team data missing")
+		printerr("team data missing")
 	
 	if data.has("users"):
 		var us = data["users"]
@@ -75,13 +78,19 @@ func load_all() -> void:
 			users[u] = User.new(u)
 			users[u].set_all(us[u])
 	else:
-		print("user data missing")
+		printerr("user data missing")
 	
 	if data.has("World"):
 		var world = data["World"]
 		$"../World".set_all(world)
 	else:
-		print("world data missing!")
+		printerr("world data missing!")
+	
+	if data.has("websocket"):
+		var ws = data["websocket"]
+		$"../Websocket".set_all(ws)
+	else:
+		printerr("world data missing!")
 	
 	print("done loading")
 

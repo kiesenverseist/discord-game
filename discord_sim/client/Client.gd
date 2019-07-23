@@ -15,8 +15,6 @@ func _ready():
 
 func server_connected():
 	set_network_master(self_id, true)
-	for node in [$WebSocket, $Data, $Discord]:
-		node.set_network_master(1)
 	
 	print("connected to server")
 	rpc_id(1, "player_setup", self_id)
