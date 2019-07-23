@@ -20,7 +20,7 @@ func _ready():
 
 func connect_to_ws():
 	print("attempting to connect to websocket")
-	client.connect_to_url("ws://kiesen.australiaeast.cloudapp.azure.com:8080")
+	client.connect_to_url("ws://localhost:8080")#"ws://kiesen.australiaeast.cloudapp.azure.com:8080")
 
 #warning-ignore:unused_argument
 func _process(delta):
