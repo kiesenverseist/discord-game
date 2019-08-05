@@ -187,7 +187,6 @@ func sabotage(data : Dictionary) -> bool:
 	for team in other_teams:
 		if data["message"].matchn("*%s*" % team) and sabotaged == "":
 			sabotaged = team
-			t[team].add_points(-1)
 	
 	if sabotaged != "":
 		var msg = ""
