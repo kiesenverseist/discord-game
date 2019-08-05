@@ -5,7 +5,7 @@ var self_id
 remote var remote_servers = {}
 
 func _ready():
-	remote_server.create_client("192.168.8.110",8081)#"kiesen.australiaeast.cloudapp.azure.com", 8081)
+	remote_server.create_client("localhost", 8081)#"kiesen.australiaeast.cloudapp.azure.com", 8081)
 	get_tree().network_peer = remote_server
 	self_id = get_tree().get_network_unique_id()
 	

@@ -34,7 +34,7 @@ master func save_all() ->void:
 	for u in users:
 		us[u] = users[u].get_all()
 	
-	var world = $"../World".get_all()
+	var world = $"../../World".get_all()
 	
 	var ws = $"../Websocket".get_all()
 	
@@ -82,7 +82,7 @@ func load_all() -> void:
 	
 	if data.has("World"):
 		var world = data["World"]
-		$"../World".set_all(world)
+		$"../../World".set_all(world)
 	else:
 		printerr("world data missing!")
 	

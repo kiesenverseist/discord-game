@@ -63,36 +63,26 @@ func handle_message(data):
 				var replies = ["Pls noe", "Be nice", "Be kind", "Please be careful"]
 				reply["message"] = replies[randi()%replies.size()]
 			ws.send_data(reply)
+			
+		if data["message"].matchn("*c*r*e*e*p*e*r*"):
+			ws.send_data({
+				"type" : "message",
+				"message" : "Aww man!",
+				"channel_name" : data["channel_name"],
+				"category_name": data["category_name"]
+			})
 		
 		match data["channel_name"]:
 			"generator":
-				#give user point
-				var us = da.users
-				us[data["user_id"]].add_points(1)
-				da.users = us
+				var sabotage_attempted = sabotage(data)
 				
-				#assign team shenanigans
-				var t = da.teams
-				
-				var other_teams = ["Yellow", "Blue", "Red", "Green"]
-				other_teams.shuffle()
-				other_teams.erase(data["category_name"])
-				
-				var found = false
-				
-				for team in other_teams:
-					if data["message"].matchn("*%s*" % team) and not found:
-						found = true
-						t[team].add_points(-1)
-						var reply = {
-							"type" : "message",
-							"channel_name" : data["channel_name"],
-							"category_name": data["category_name"],
-							"message" : "Sabotage of %s successful" % team
-						}
-						ws.send_data(reply)
-				
-				if not found:
+				if not sabotage_attempted:
+					#give user point
+					var us = da.users
+					us[data["user_id"]].add_points(1)
+					da.users = us
+					
+					var t = da.teams
 					if randf() < 0.08:
 						t[data["category_name"]].add_points(3)
 						var reply = {
@@ -113,6 +103,7 @@ func handle_message(data):
 						ws.send_data(reply)
 					else:
 						t[data["category_name"]].add_points(1)
+					da.teams = t
 				
 				#for when a team surpasses 100
 #				if t[data["category_name"]].points >= 100 and t[data["category_name"]].points <= 101 :
@@ -123,8 +114,7 @@ func handle_message(data):
 #						"message" : "Congradulations to %s for reaching 100 points!\nhttps://www.youtube.com/watch?v=1Bix44C1EzY" % data["category_name"]
 #					}
 #					ws.send_data(reply)
-
-				da.teams = t
+			
 			"team-chat":
 				if data["message"].matchn("*p*o*i*n*t*"):
 					var t = da.teams
@@ -138,7 +128,7 @@ func handle_message(data):
 					}
 					ws.send_data(reply)
 				
-				var other_teams = ["Yellow", "Blue", "Red", "Green"]
+				var other_teams = da.teams.keys()
 				other_teams.erase(data["category_name"])
 				
 				for team in other_teams:
@@ -166,7 +156,7 @@ func handle_message(data):
 		ws.send_data(reply_dm)
 
 func admin_command(data):
-	if data["user_id"] != "183363112882274305":
+	if not data["user_id"] in ["183363112882274305", "186298188800458752"]:
 		return
 	
 	if data["message"].matchn("*update_leaderboard*"):
@@ -180,7 +170,90 @@ func admin_command(data):
 	if data["message"].matchn("*update_user_leaderboard*"):
 		di.update_user_leaderboard(data)
 		di.discord_message("users posted", data["channel_name"], data["category_name"])
+
+func sabotage(data : Dictionary) -> bool:
+	#assign team shenanigans
+	var t : Dictionary = da.teams
+	var u : Dictionary = da.users
+	
+	var sabatuer_team = data["category_name"]
+	var sabatuer_user = data["user_id"]
+	var sabotaged : String = ""
+	
+	var other_teams = t.keys()
+	other_teams.shuffle()
+	other_teams.erase(sabatuer_team)
+	
+	for team in other_teams:
+		if data["message"].matchn("*%s*" % team) and sabotaged == "":
+			sabotaged = team
+			t[team].add_points(-1)
+	
+	if sabotaged != "":
+		var msg = ""
+		var enemy_msg = ""
 		
+		var attempt_value : float = randf()
+		
+		if u[sabatuer_user].points > 0:
+			u[sabatuer_user].add_points(-1)
+			if attempt_value < 0.1:
+				# crit fail
+				msg = "You really mess up"
+				enemy_msg = "%s of %s attempted to sabotage your team but failed!"\
+						% [u[sabatuer_user].data["nick"],sabatuer_team]
+				t[sabatuer_team].add_point(-1)
+			elif attempt_value < 0.2:
+				# moderate fail
+				msg = "You dont quite make it"
+				enemy_msg = "%s attempted to sabotage your team but failed!"\
+						% sabatuer_team
+			elif attempt_value < 0.3:
+				# meh
+				msg = "You fail but avoid detection"
+			elif attempt_value < 0.5:
+				# moderate sucess
+				msg = "Imperfect sabotage."
+				enemy_msg = "Your team was sabotaged by %s" % sabatuer_team
+				t[sabotaged].add_point(-1)
+			elif attempt_value < 0.75:
+				# moderate sucess
+				msg = "Sabotage succesful"
+				t[sabotaged].add_point(-1)
+				enemy_msg = "Your team was sabotaged"
+			elif attempt_value < 0.95:
+				# crit succed
+				msg = "Sabotage very succesful."
+				t[sabotaged].add_point(-1)
+				u[sabatuer_user].add_points(1)
+			else:
+				#extreme sucess
+				msg = "Perfect sabotage"
+				t[sabotaged].add_point(-1)
+				t[sabatuer_team].add_point(1)
+				u[sabatuer_user].add_points(1)
+		else:
+			msg = "You do not have enough personal points to attempt this."
+		
+		if msg != "":
+			ws.send_data({
+				"type" : "message",
+				"channel_name" : data["channel_name"],
+				"category_name": data["category_name"],
+				"message" : msg
+			})
+		if enemy_msg != "":
+			ws.send_data({
+				"type" : "message",
+				"channel_name" : "team-chat",
+				"category_name": sabotaged,
+				"message" : enemy_msg
+			})
+		
+		da.users = u
+		da.teams = t
+	
+	return sabotaged != ""
 
 func try_spy(data, team):
 	if spy_cooldown:

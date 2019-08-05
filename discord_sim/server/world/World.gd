@@ -12,5 +12,4 @@ func get_all() -> String:
 func set_all(dat : String):
 	var parsed = JSON.parse(dat).result
 	
-	#not directley equating incase anything new is not in the old save
 	$MonsterFactory.set_all(parsed["MonsterFactory"])
