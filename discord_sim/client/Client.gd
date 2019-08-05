@@ -5,7 +5,7 @@ var self_id
 remote var player_clients : Dictionary = {}
 
 func _ready():
-	client.create_client("localhost",8082)#"kiesen.australiaeast.cloudapp.azure.com", 8081)
+	client.create_client("kiesen.australiaeast.cloudapp.azure.com", 8082)
 	get_tree().network_peer = client
 	self_id = get_tree().get_network_unique_id()
 	

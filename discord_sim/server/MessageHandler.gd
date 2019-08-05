@@ -202,7 +202,7 @@ func sabotage(data : Dictionary) -> bool:
 				msg = "You really mess up"
 				enemy_msg = "%s of %s attempted to sabotage your team but failed!"\
 						% [u[sabatuer_user].data["nick"],sabatuer_team]
-				t[sabatuer_team].add_point(-1)
+				t[sabatuer_team].add_points(-1)
 			elif attempt_value < 0.2:
 				# moderate fail
 				msg = "You dont quite make it"
@@ -215,22 +215,22 @@ func sabotage(data : Dictionary) -> bool:
 				# moderate sucess
 				msg = "Imperfect sabotage."
 				enemy_msg = "Your team was sabotaged by %s" % sabatuer_team
-				t[sabotaged].add_point(-1)
+				t[sabotaged].add_points(-1)
 			elif attempt_value < 0.75:
 				# moderate sucess
 				msg = "Sabotage succesful"
-				t[sabotaged].add_point(-1)
+				t[sabotaged].add_points(-1)
 				enemy_msg = "Your team was sabotaged"
 			elif attempt_value < 0.95:
 				# crit succed
 				msg = "Sabotage very succesful."
-				t[sabotaged].add_point(-1)
+				t[sabotaged].add_points(-1)
 				u[sabatuer_user].add_points(1)
 			else:
 				#extreme sucess
 				msg = "Perfect sabotage"
-				t[sabotaged].add_point(-1)
-				t[sabatuer_team].add_point(1)
+				t[sabotaged].add_points(-1)
+				t[sabatuer_team].add_points(1)
 				u[sabatuer_user].add_points(1)
 		else:
 			msg = "You do not have enough personal points to attempt this."
