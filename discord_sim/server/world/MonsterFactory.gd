@@ -6,7 +6,7 @@ export var uwou_cooldown : int = 3600*18
 
 var uwou_count : int = 0
 
-onready var di = $"../../Backend/Discord"
+onready var di = $"../../../Backend/Discord"
 
 func _ready():
 	spawn_loop()

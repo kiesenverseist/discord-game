@@ -4,6 +4,8 @@ var server := NetworkedMultiplayerENet.new()
 
 var players : Dictionary = {}
 
+onready var da = $"../Backend/Data"
+
 func _ready():
 	print("starting playerend server")
 	server.create_server(8082, 100)
@@ -38,8 +40,22 @@ func client_disconnected(id):
 	if id in players:
 		players.erase(id)
 
-remote func player_setup(id):
-	print("player connected", id)
+remote func player_setup(id, token):
+	var u = da.users
+	var usr = null
+	
+	for user in u:
+		if u[user].token == int(token):
+			usr = user
+			break
+	
+	if usr == null:
+		return
+	
+	printt("player connected", id, u[usr].data["user_name"], usr)
 	players[id] = id
 	for i in players:
 		rset_id(i, "players", players)
+
+sync func initialise_player(id, u):
+	pass

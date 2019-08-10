@@ -12,4 +12,21 @@ format = 1
 
 [node name="Players" type="Node" parent="World"]
 
-[node name="Monsters" type="Node" parent="World"]
+[node name="MonsterFactory" type="Node" parent="World"]
+
+[node name="Token" type="LineEdit" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -29.0
+margin_top = -12.0
+margin_right = 29.0
+margin_bottom = 12.0
+expand_to_text_length = true
+placeholder_text = "token"
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="text_entered" from="Token" to="." method="_on_Token_text_entered"]

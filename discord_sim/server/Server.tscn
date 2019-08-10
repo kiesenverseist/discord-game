@@ -41,5 +41,3 @@ script = ExtResource( 7 )
 format = 1
 
 [node name="Players" type="Node" parent="Playerend/World"]
-
-[node name="Monsters" type="Node" parent="Playerend/World"]

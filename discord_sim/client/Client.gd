@@ -2,7 +2,10 @@ extends Node
 
 var client = NetworkedMultiplayerENet.new()
 var self_id
+var user
+var token
 remote var player_clients : Dictionary = {}
+
 func _ready():
 	client.create_client("localhost", 8082)#"kiesen.australiaeast.cloudapp.azure.com", 8082)
 	get_tree().network_peer = client
@@ -16,7 +19,15 @@ func server_connected():
 	set_network_master(self_id, true)
 	
 	print("connected to server")
-	rpc_id(1, "player_setup", self_id)
+
+func _on_Token_text_entered(new_text):
+	token - int(new_text)
+	rpc_id(1, "player_setup", self_id, token)
+
+remote func initialise_player(id, u):
+	if id == self_id:
+		print("succesfully registered")
+		user = u
 
 func server_failed():
 	print("could not connect to server")
