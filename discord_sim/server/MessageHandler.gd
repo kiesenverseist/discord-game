@@ -154,7 +154,7 @@ func handle_message(data):
 			ws.send_data({
 				"type" : "message",
 				"channel_id" : data["channel_id"],
-				"message" : "Your token is: " + u[data["user_id"]].token
+				"message" : "Your token is: " + str(u[data["user_id"]].token)
 			})
 		else:
 			var reply_dm = {}
