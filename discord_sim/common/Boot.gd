@@ -6,11 +6,9 @@ var ip
 var port
 
 func _ready():
-	
 	if OS.has_feature("Server"):
 		get_tree().change_scene("res://server/Server.tscn")
 	if OS.has_feature("client"):
-		return
 		get_tree().change_scene("res://client/client.tscn")
 
 func _on_menu_item_selected(index : int):
@@ -40,7 +38,7 @@ func _on_Accept_pressed():
 		1 :
 			get_tree().change_scene("res://remote_server/RemoteServer.tscn")
 		2 :
-			pass
+			get_tree().change_scene("res://client/client.tscn")
 		_ :
 			pass
 

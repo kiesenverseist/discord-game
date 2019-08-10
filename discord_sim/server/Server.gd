@@ -4,7 +4,6 @@ var server = NetworkedMultiplayerENet.new()
 
 var all_clients = {}
 var player_clients = {}
-var remote_servers = {}
 
 func _ready():
 	return
@@ -26,17 +25,6 @@ func client_disconnected(id):
 	
 	if id in player_clients:
 		player_clients.erase(id)
-	
-	if id in remote_servers:
-		remote_servers.erase(id)
-
-remote func remote_server_setup(id):
-	print("remote server connected", id)
-	remote_servers[id] = id
-	for i in remote_servers:
-		rset_id(i, "remote_servers", remote_servers)
-	$Data.set_teams()
-	$Data.set_users()
 
 remote func player_client_setup(id):
 	print("player connected", id)
