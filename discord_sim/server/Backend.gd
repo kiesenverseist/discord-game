@@ -5,7 +5,7 @@ var server = NetworkedMultiplayerENet.new()
 var remote_servers = {}
 
 func _ready():
-	print("startign backend server")
+	print("starting backend server")
 	server.create_server(8081, 3)
 	custom_multiplayer = MultiplayerAPI.new()
 	custom_multiplayer.network_peer = server

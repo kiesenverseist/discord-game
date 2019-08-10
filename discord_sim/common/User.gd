@@ -3,6 +3,7 @@ class_name User
 
 var data = {}
 var points setget ,get_points
+var token setget ,get_token
 
 func _init(id : String):
 	data["id"] = id
@@ -27,6 +28,9 @@ func add_points(points : int):
 
 func get_points():
 	return data["points"]
+
+func get_token():
+	return hash(str(data["id"]))
 
 func set_all(dat : String):
 	var parsed = JSON.parse(dat).result

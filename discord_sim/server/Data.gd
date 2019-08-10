@@ -53,8 +53,8 @@ master func save_all() ->void:
 	print("data saved")
 
 func _notification(what):
-    if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-        close_server()
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		close_server()
 
 func load_all() -> void:
 	var save_game = File.new()

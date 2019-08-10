@@ -76,7 +76,7 @@ func handle_message(data):
 			"generator":
 				var sabotage_attempted = sabotage(data)
 				
-				if not sabotage_attempted:
+				if sabotage_attempted:
 					#give user point
 					var us = da.users
 					us[data["user_id"]].add_points(1)
@@ -149,11 +149,19 @@ func handle_message(data):
 					ws.send_data(reply)
 	
 	else:
-		var reply_dm = {}
-		reply_dm["type"] = "message"
-		reply_dm["channel_id"] = data["channel_id"]
-		reply_dm["message"] = "Plox noe dm ;-;"
-		ws.send_data(reply_dm)
+		if data["message"].matchn("*t*o*k*e*n*"):
+			var u = da.users
+			ws.send_data({
+				"type" : "message",
+				"channel_id" : data["channel_id"],
+				"message" : "Your token is: " + u[data["user_id"]].token
+			})
+		else:
+			var reply_dm = {}
+			reply_dm["type"] = "message"
+			reply_dm["channel_id"] = data["channel_id"]
+			reply_dm["message"] = "Plox noe dm ;-;"
+			ws.send_data(reply_dm)
 
 func admin_command(data):
 	if not data["user_id"] in ["183363112882274305", "186298188800458752"]:
@@ -252,7 +260,7 @@ func sabotage(data : Dictionary) -> bool:
 		da.users = u
 		da.teams = t
 	
-	return sabotaged != ""
+	return sabotaged == ""
 
 func try_spy(data, team):
 	if spy_cooldown:
