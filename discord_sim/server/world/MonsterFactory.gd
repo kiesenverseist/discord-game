@@ -7,9 +7,13 @@ export var uwou_cooldown : int = 3600*18
 var uwou_count : int = 0
 
 onready var di = $"../../../Backend/Discord"
+onready var uwou_pk = preload("res://common/npcs/uwou/UwouMaster.tscn")
 
 func _ready():
 	spawn_loop()
+	for i in range(2):
+		var uwou = uwou_pk.instance()
+		spawn(uwou)
 
 func try_spawn_uwou():
 	to_spawn_uwou = true
@@ -24,6 +28,20 @@ func spawn_uwou():
 		"The maze feels darker than before"
 	]
 	di.discord_message("#%s " % uwou_count + messages[randi()%messages.size()],"events","Diplomacy")
+	
+	var uwou = uwou_pk.instance()
+	spawn(uwou)
+
+func spawn(creature):
+	add_child(creature)
+	
+	yield(creature, "ready")
+	
+	var creature_dat := str(creature)
+	
+	var players = $"../../".players
+	for p in players:
+		rpc_id(players, "spawn", creature_dat)
 
 func spawn_loop():
 	var curr_time = OS.get_unix_time()
@@ -35,17 +53,36 @@ func spawn_loop():
 	
 	get_tree().create_timer(60).connect("timeout", self, "spawn_loop")
 
+remote func request_sync():
+	var monsters : Dictionary = {}
+	for c in get_children():
+		monsters[c.name] = str(c)
+	
+	var req_id = custom_multiplayer.get_rpc_sender_id()
+	rpc_id(req_id, "synchronise", monsters)
+
 #saving / sending/ updating
 func get_all() -> String:
+	var monsters : Dictionary = {}
+	for c in get_children():
+		monsters[c.name] = str(c)
+	
 	return JSON.print({
 		"next_uwou_spawn" : str(next_uwou_spawn),
 		"to_spawn_uwou" : str(to_spawn_uwou),
-		"uwou_count" : str(uwou_count)
+		"uwou_count" : str(uwou_count),
+		"monsters" : monsters
 	})
 
 func set_all(dat : String):
-	var parsed = JSON.parse(dat).result
+	var parsed : Dictionary = JSON.parse(dat).result
 	
 	next_uwou_spawn = int(parsed["next_uwou_spawn"])
 	to_spawn_uwou = bool(parsed["to_spawn_uwou"])
 	uwou_count = int(parsed["uwou_count"])
+	var monsters : Dictionary = parsed.get("monsters", {})
+	
+	for m in monsters:
+		var uwou = uwou_pk.instance()
+		uwou._set_all(monsters[m])
+		spawn(uwou)

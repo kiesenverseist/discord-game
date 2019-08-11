@@ -8,20 +8,25 @@ func _ready():
 	pass
 
 func _physics_process(delta):
-	position += direction.normalized() * speed
+	position += direction.normalized() * speed * delta
+	
+	if abs(position.x) > 1000 or abs(position.y) > 1000:
+		direction = -direction
 
-func _set_all(data : Dictionary):
+func _set_all(data):
+	data = JSON.parse(data).result
 	name = data["name"]
 	title = data["title"]
-	position = data["position"]
-	direction = data["direction"]
-	speed = data["speed"]
+	position = str2var(data["position"])
+	direction = str2var(data["direction"])
+	speed = float(data["speed"])
+	
 
 func _to_string() -> String:
 	return JSON.print({
 		"name" : name,
 		"title" : title,
-		"position" : position,
-		"direction" : direction,
+		"position" : var2str(position),
+		"direction" : var2str(direction),
 		"speed" : speed
 	})

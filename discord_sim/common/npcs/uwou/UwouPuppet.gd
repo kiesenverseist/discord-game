@@ -6,3 +6,4 @@ func _ready():
 remote func move(pos, dir):
 	position = pos
 	direction = dir
+

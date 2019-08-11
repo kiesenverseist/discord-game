@@ -17,6 +17,8 @@ func _ready():
 	custom_multiplayer.connect("network_peer_disconnected",self, "client_disconnected")
 	
 	get_tree().connect("node_added", self, "_on_children_changed")
+	
+	set_network_master(1)
 
 func _process(delta):
 	custom_multiplayer.poll()
@@ -50,12 +52,17 @@ remote func player_setup(id, token):
 			break
 	
 	if usr == null:
+		print("token not valid")
 		return
 	
 	printt("player connected", id, u[usr].data["user_name"], usr)
 	players[id] = id
+	
+	initialise_player(id, usr)
+	
 	for i in players:
 		rset_id(i, "players", players)
+		rpc_id(i, "initialise_player", id, usr)
 
-sync func initialise_player(id, u):
+func initialise_player(id, u):
 	pass

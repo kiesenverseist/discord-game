@@ -10,6 +10,7 @@ func get_all() -> String:
 	})
 
 func set_all(dat : String):
+	yield(self, "ready")
 	var parsed = JSON.parse(dat).result
 	
 	$MonsterFactory.set_all(parsed["MonsterFactory"])

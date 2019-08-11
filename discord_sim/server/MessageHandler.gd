@@ -48,7 +48,7 @@ func handle_message(data):
 				"message" : ret + "What's this?"
 			}
 			ws.send_data(reply)
-			$"../../World/MonsterFactory".try_spawn_uwou()
+			$"../../../Playerend/World/MonsterFactory".try_spawn_uwou()
 		
 		if data["message"].matchn("*kys*"):
 			var reply = {
