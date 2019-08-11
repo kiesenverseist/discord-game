@@ -11,7 +11,7 @@ remote func spawn(creature):
 	add_child(uwou)
 
 func connected():
-	rpc_id(1, "request_sync")
+	rpc_id(1, "request_sync", multiplayer.get_network_unique_id())
 
 remote func synchronise(monsters):
 	for c in get_children():

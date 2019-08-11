@@ -30,7 +30,7 @@ remote func initialise_player(id, u):
 	if int(id) == self_id:
 		print("succesfully registered")
 		user = u
-		$Token.hide()
+		$GUI/Token.hide()
 		$World.connected()
 	else:
 		pass

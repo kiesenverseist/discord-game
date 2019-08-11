@@ -53,13 +53,12 @@ func spawn_loop():
 	
 	get_tree().create_timer(60).connect("timeout", self, "spawn_loop")
 
-remote func request_sync():
+remote func request_sync(id):
 	var monsters : Dictionary = {}
 	for c in get_children():
 		monsters[c.name] = str(c)
 	
-	var req_id = custom_multiplayer.get_rpc_sender_id()
-	rpc_id(req_id, "synchronise", monsters)
+	rpc_id(id, "synchronise", monsters)
 
 #saving / sending/ updating
 func get_all() -> String:

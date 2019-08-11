@@ -36,10 +36,9 @@ script = ExtResource( 2 )
 current = true
 script = SubResource( 1 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-follow_viewport_enable = true
+[node name="GUI" type="CanvasLayer" parent="."]
 
-[node name="Token" type="LineEdit" parent="CanvasLayer"]
+[node name="Token" type="LineEdit" parent="GUI"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -54,4 +53,4 @@ caret_blink = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="text_entered" from="CanvasLayer/Token" to="." method="_on_Token_text_entered"]
+[connection signal="text_entered" from="GUI/Token" to="." method="_on_Token_text_entered"]
