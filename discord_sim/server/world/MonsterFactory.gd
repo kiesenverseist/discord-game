@@ -11,9 +11,6 @@ onready var uwou_pk = preload("res://common/npcs/uwou/UwouMaster.tscn")
 
 func _ready():
 	spawn_loop()
-	for i in range(2):
-		var uwou = uwou_pk.instance()
-		spawn(uwou)
 
 func try_spawn_uwou():
 	to_spawn_uwou = true
@@ -33,7 +30,7 @@ func spawn_uwou():
 	spawn(uwou)
 
 func spawn(creature):
-	add_child(creature)
+	add_child(creature, true)
 	
 	yield(creature, "ready")
 	

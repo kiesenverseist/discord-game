@@ -19,6 +19,8 @@ func _ready():
 	get_tree().connect("node_added", self, "_on_children_changed")
 	
 	set_network_master(1)
+	yield(get_tree(), "idle_frame")
+	_on_children_changed(null)
 
 func _process(delta):
 	custom_multiplayer.poll()
@@ -51,11 +53,11 @@ remote func player_setup(id, token):
 			usr = user
 			break
 	
-	if usr == null:
+	if usr == null and token != 204:
 		print("token not valid")
 		return
 	
-	printt("player connected", id, u[usr].data["user_name"], usr)
+#	printt("player connected", id, u[usr].data["user_name"], usr)
 	players[id] = id
 	
 	initialise_player(id, usr)

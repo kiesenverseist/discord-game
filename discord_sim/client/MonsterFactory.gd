@@ -1,6 +1,6 @@
 extends Node
 
-onready var uwou_pk = preload("res://common/npcs/uwou/UwouMaster.tscn")
+onready var uwou_pk = preload("res://common/npcs/uwou/UwouPuppet.tscn")
 
 func _ready():
 	pass
@@ -21,3 +21,5 @@ remote func synchronise(monsters):
 		var uwou = uwou_pk.instance()
 		uwou._set_all(monsters[m])
 		add_child(uwou)
+		
+	print(get_children())
