@@ -44,6 +44,7 @@ func client_disconnected(id):
 	
 	if id in players:
 		players.erase(id)
+		get_node("World/Players/%s" % str(id)).queue_free()
 
 remote func player_setup(id, token):
 	var u = da.users
@@ -73,4 +74,5 @@ remote func player_setup(id, token):
 func initialise_player(id, u):
 	var p = player_server_pk.instance()
 	p.name = str(id)
+	p.usr_id = u
 	$World/Players.add_child(p, true)

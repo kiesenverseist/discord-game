@@ -1,22 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://client/Client.gd" type="Script" id=1]
 [ext_resource path="res://client/MonsterFactory.gd" type="Script" id=2]
 [ext_resource path="res://client/World.gd" type="Script" id=3]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends Camera2D
-
-func _process(delta):
-	if Input.is_key_pressed(KEY_UP):
-		position.y -= 16
-	if Input.is_key_pressed(KEY_DOWN):
-		position.y += 16
-	if Input.is_key_pressed(KEY_LEFT):
-		position.x -= 16
-	if Input.is_key_pressed(KEY_RIGHT):
-		position.x += 16
-"
 
 [node name="Playerend" type="Node"]
 script = ExtResource( 1 )
@@ -31,10 +17,6 @@ format = 1
 
 [node name="MonsterFactory" type="Node" parent="World"]
 script = ExtResource( 2 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-script = SubResource( 1 )
 
 [node name="GUI" type="CanvasLayer" parent="."]
 

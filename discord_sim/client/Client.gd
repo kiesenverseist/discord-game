@@ -17,6 +17,7 @@ func _ready():
 	get_tree().network_peer.connect("connection_succeeded", self, "server_connected")
 	get_tree().network_peer.connect("connection_failed", self, "server_failed")
 	get_tree().network_peer.connect("server_disconnected", self, "server_disconnected")
+	get_tree().network_peer.connect("peer_disconnected", self, "player_disconnected")
 	
 	set_network_master(1)
 
@@ -48,6 +49,9 @@ remote func initialise_player(id, u):
 		var p = player_puppet_pk.instance()
 		p.name = str(id)
 		$World/Players.add_child(p, true)
+
+func player_disconnected(id):
+	get_node("World/Players/%s" % str(id)).queue_free()
 
 func server_failed():
 	print("could not connect to server")
