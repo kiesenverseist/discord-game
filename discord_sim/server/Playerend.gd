@@ -74,5 +74,5 @@ remote func player_setup(id, token):
 func initialise_player(id, u):
 	var p = player_server_pk.instance()
 	p.name = str(id)
-	p.usr_id = int(u)
+	p.usr_id = u
 	$World/Players.add_child(p, true)
