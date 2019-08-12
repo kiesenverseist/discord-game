@@ -36,6 +36,10 @@ config/name="Discord Game"
 run/main_scene="res://common/Boot.tscn"
 run/main_scene.server="res://server/Server.tscn"
 
+[autoload]
+
+globals="*res://common/globals.gd"
+
 [debug]
 
 settings/stdout/verbose_stdout=true
