@@ -16,9 +16,12 @@ func _on_NetworkUpdate():
 func set_user(usr):
 	if not ready:
 		yield(self, "ready")
-	yield(get_tree().create_timer(0.1), "timeout")
+	usr_id = usr
+	request_user_update()
+
+remote func request_user_update():
 	var u = get_node("/root/Main/Backend/Data").users
-	var user : User = u[usr]
+	var user : User = u[usr_id]
 	
 	print("updating user data")
 	set_user_data(user.data)

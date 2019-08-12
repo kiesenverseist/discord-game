@@ -8,7 +8,7 @@ var keys : Dictionary = {
 }
 
 func _ready():
-	pass # Replace with function body.
+	rpc_id(1, "request_user_update")
 
 func _unhandled_input(event):
 	var old_keys = keys.duplicate(true)
@@ -44,5 +44,4 @@ puppet func move_update(pos : Vector2, mov : Vector2):
 	move = mov
 
 puppet func set_user_data(dat):
-	printt("user data updated", dat)
 	.set_user_data(dat)

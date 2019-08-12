@@ -38,7 +38,7 @@ func _on_Accept_pressed():
 		1 :
 			get_tree().change_scene("res://remote_server/RemoteServer.tscn")
 		2 :
-			get_tree().change_scene("res://client/client.tscn")
+			get_tree().change_scene("res://client/Client.tscn")
 		_ :
 			pass
 

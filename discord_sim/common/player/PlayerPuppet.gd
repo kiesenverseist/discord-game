@@ -1,7 +1,9 @@
 extends "player.gd"
 
+var ready
+
 func _ready():
-	pass
+	rpc_id(1, "request_user_update")
 
 puppet func move_update(pos : Vector2, mov : Vector2):
 	position = pos
