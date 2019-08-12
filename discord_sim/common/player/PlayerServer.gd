@@ -13,7 +13,7 @@ func _on_NetworkUpdate():
 	rpc("move_update", position, move)
 
 func set_user(usr):
-	yield(self, "ready")
+	yield(get_tree().create_timer(0.1), "timeout")
 	var u = get_node("/root/Main/Backend/Data").users
 	var user : User = u[usr]
 	

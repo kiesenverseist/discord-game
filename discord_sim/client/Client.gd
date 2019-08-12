@@ -43,7 +43,7 @@ remote func initialise_player(id, u):
 			
 		for p in players:
 			if p != id:
-				initialise_player(players[p]["id"], players[p]["user"])
+				initialise_player(int(players[p]["id"]), players[p]["user"])
 	
 	else:
 		var p = player_puppet_pk.instance()
