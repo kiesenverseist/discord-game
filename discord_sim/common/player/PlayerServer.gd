@@ -1,6 +1,6 @@
 extends "player.gd"
 
-var usr_id : String = "" setget set_user
+var usr_id : int setget set_user
 
 func _ready():
 	pass
