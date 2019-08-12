@@ -44,4 +44,5 @@ puppet func move_update(pos : Vector2, mov : Vector2):
 	move = mov
 
 puppet func set_user_data(dat):
+	printt("user data updated", dat)
 	.set_user_data(dat)
