@@ -9,11 +9,24 @@ script = ExtResource( 1 )
 [node name="icon" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
-[node name="Label" type="Label" parent="."]
+[node name="PlayerName" type="Label" parent="."]
 margin_bottom = -80.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "ID"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerTeam" type="Label" parent="."]
+margin_left = -20.0
+margin_top = 33.0
+margin_right = 20.0
+margin_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Team"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
