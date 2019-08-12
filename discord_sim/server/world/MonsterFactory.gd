@@ -2,7 +2,7 @@ extends Node
 
 var to_spawn_uwou : bool = false
 var next_uwou_spawn : int = 0
-export var uwou_cooldown : int = 3600*18
+export var uwou_cooldown : int = 3600*12
 
 var uwou_count : int = 0
 

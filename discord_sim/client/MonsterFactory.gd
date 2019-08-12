@@ -21,5 +21,3 @@ remote func synchronise(monsters):
 		var uwou = uwou_pk.instance()
 		uwou._set_all(monsters[m])
 		add_child(uwou)
-		
-	print(get_children())

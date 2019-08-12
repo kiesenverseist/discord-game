@@ -5,6 +5,7 @@ var server := NetworkedMultiplayerENet.new()
 var players : Dictionary = {}
 
 onready var da = $"../Backend/Data"
+onready var player_server_pk = preload("res://common/player/PlayerServer.tscn")
 
 func _ready():
 	print("starting playerend server")
@@ -53,18 +54,23 @@ remote func player_setup(id, token):
 			usr = user
 			break
 	
-	if usr == null and token != 204:
+	if usr == null:
 		print("token not valid")
 		return
 	
-#	printt("player connected", id, u[usr].data["user_name"], usr)
-	players[id] = id
+	printt("player connected", id, u[usr].data["user_name"], usr)
+	players[id] = {
+		"id" : id,
+		"user" : usr
+	}
 	
-	initialise_player(id, usr)
+	initialise_player(id, u)
 	
 	for i in players:
 		rset_id(i, "players", players)
 		rpc_id(i, "initialise_player", id, usr)
 
 func initialise_player(id, u):
-	pass
+	var p = player_server_pk.instance()
+	p.name = str(id)
+	$World/Players.add_child(p, true)
