@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://common/Team.gd"
 }, {
+"base": "Sprite",
+"class": "URLSprite",
+"language": "GDScript",
+"path": "res://common/URLSprite.gd"
+}, {
 "base": "Resource",
 "class": "User",
 "language": "GDScript",
@@ -26,6 +31,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Team": "",
+"URLSprite": "",
 "User": "",
 "WSRequest": ""
 }

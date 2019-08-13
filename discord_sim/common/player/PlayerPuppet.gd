@@ -14,3 +14,4 @@ puppet func set_user_data(dat):
 	
 	$PlayerName.text = user_data["user_name"]
 	$PlayerTeam.text = user_data["team"]
+	$URLSprite.url = user_data["avatar"]

@@ -29,9 +29,26 @@ margin_left = -29.0
 margin_top = -12.0
 margin_right = 29.0
 margin_bottom = 12.0
+grow_horizontal = 2
 expand_to_text_length = true
 placeholder_text = "token"
 caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Status" type="Label" parent="GUI"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -14.0
+margin_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Unconnected, Enter token and press enter to connect."
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

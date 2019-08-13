@@ -9,7 +9,7 @@ func _ready():
 	if OS.has_feature("Server"):
 		get_tree().change_scene("res://server/Server.tscn")
 	if OS.has_feature("client"):
-		get_tree().change_scene("res://client/client.tscn")
+		get_tree().change_scene("res://client/Client.tscn")
 
 func _on_menu_item_selected(index : int):
 	state = index

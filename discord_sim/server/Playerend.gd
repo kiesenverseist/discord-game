@@ -42,7 +42,7 @@ func client_connected(id):
 func client_disconnected(id):
 	print("client disconnected", id)
 	
-	if id in players:
+	if id in players and players[id] != null:
 		players.erase(id)
 		get_node("World/Players/%s" % str(id)).queue_free()
 
@@ -57,6 +57,7 @@ remote func player_setup(id, token):
 	
 	if usr == null:
 		print("token not valid")
+		rpc_id(id, "invalid_token")
 		return
 	
 	printt("player connected", id, u[usr].data["user_name"], usr)
