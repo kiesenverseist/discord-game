@@ -5,6 +5,7 @@ var ready = false
 
 func _ready():
 	ready = true
+	get_node("/root/Main/Backend/Data").connect("users_updated", self, "request_user_update")
 
 master func update_keys(keys : Dictionary):
 	.update_keys(keys)

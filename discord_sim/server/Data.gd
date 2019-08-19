@@ -5,6 +5,9 @@ var users = {} setget set_users, get_users
 
 onready var ws = $"../Websocket"
 
+signal teams_updated
+signal users_updated
+
 func _ready():
 	get_tree().set_auto_accept_quit(false)
 	var savefile = File.new()
@@ -117,6 +120,7 @@ remote func set_networked_teams(t_str : String):
 		t_new.set_all(t[team])
 		teams[team] = t_new
 	printt("teams set")
+	emit_signal("teams_updated")
 
 func get_teams() -> Dictionary:
 	return teams
@@ -138,6 +142,7 @@ remote func set_networked_users(u_str : String):
 		u_new.set_all(u[user])
 		users[user] = u_new
 	printt("users set")
+	emit_signal("users_updated")
 
 func get_users() -> Dictionary:
 	return users

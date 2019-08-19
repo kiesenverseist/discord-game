@@ -4,6 +4,7 @@ var client = NetworkedMultiplayerENet.new()
 var self_id
 var user
 var token
+var user_data : Dictionary = {}
 remote var players : Dictionary = {}
 
 onready var player_client_pk = preload("res://common/player/PlayerClient.tscn")
@@ -45,8 +46,10 @@ remote func initialise_player(id, u):
 		
 		var p = player_client_pk.instance()
 		p.name = str(id)
-		$World/Players.add_child(p, true)	
-			
+		$World/Players.add_child(p, true)
+		
+		p.connect("data_set", self, "user_data_updated")
+		
 		for p in players:
 			if p != id:
 				initialise_player(int(players[p]["id"]), players[p]["user"])
@@ -59,6 +62,9 @@ remote func initialise_player(id, u):
 remote func invalid_token():
 	get_tree().network_peer = null
 	$GUI/Status.text = "Invalid token, disconnected."
+
+func user_data_set(dat):
+	user_data = dat
 
 func player_disconnected(id):
 	var pn = get_node("World/Players/%s" % str(id))
