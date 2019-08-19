@@ -150,7 +150,7 @@ func handle_message(data):
 	
 	else:
 		if data["message"].begins_with("^"):
-			var cmd : String = data["message"].rstrip("^").split(" ", false, 2)
+			var cmd = data["message"].rstrip("^").split(" ", false, 2)
 			if cmd[0].matchn("token"):
 				var u = da.users
 				ws.send_data({

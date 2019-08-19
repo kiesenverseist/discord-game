@@ -16,3 +16,15 @@ master func update_keys(keys):
 
 func set_user_data(dat : Dictionary):
 	user_data = dat
+
+puppet func move_update(pos: Vector2, mov : Vector2):
+	var dist = (position - pos).length()
+	
+	if dist < 5:
+		position = pos
+	elif dist < 50:
+		position += (pos - position)/(dist/ 4)
+	else:
+		position = pos
+	
+	move = mov

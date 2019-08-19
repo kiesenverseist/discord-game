@@ -49,8 +49,8 @@ remote func initialise_player(id, u):
 		p.name = str(id)
 		$World/Players.add_child(p, true)
 		
-		p.connect("user_data_set", self, "user_data_updated")
-		p.connect("team_data_set", self, "team_data_updated")
+		p.connect("user_data_set", self, "user_data_set")
+		p.connect("team_data_set", self, "team_data_set")
 		
 		for p in players:
 			if p != id:
