@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://client/Client.gd" type="Script" id=1]
 [ext_resource path="res://client/MonsterFactory.gd" type="Script" id=2]
 [ext_resource path="res://client/World.gd" type="Script" id=3]
+[ext_resource path="res://client/GUI.gd" type="Script" id=4]
 
 [node name="Playerend" type="Node"]
 script = ExtResource( 1 )
@@ -19,6 +20,7 @@ format = 1
 script = ExtResource( 2 )
 
 [node name="GUI" type="CanvasLayer" parent="."]
+script = ExtResource( 4 )
 
 [node name="Token" type="LineEdit" parent="GUI"]
 anchor_left = 0.5
@@ -52,4 +54,27 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
+anchor_right = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Points" type="Label" parent="GUI/HBoxContainer"]
+margin_right = 115.0
+margin_bottom = 14.0
+text = "Personal Points: 0"
+
+[node name="TeamPoints" type="Label" parent="GUI/HBoxContainer"]
+margin_left = 119.0
+margin_right = 214.0
+margin_bottom = 14.0
+text = "Team Points: 0"
+
+[node name="Team" type="Label" parent="GUI/HBoxContainer"]
+margin_left = 218.0
+margin_right = 293.0
+margin_bottom = 14.0
+text = "Team: none"
 [connection signal="text_entered" from="GUI/Token" to="." method="_on_Token_text_entered"]

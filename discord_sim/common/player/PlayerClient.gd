@@ -1,6 +1,7 @@
 extends "player.gd"
 
-signal data_set
+signal user_data_set
+signal team_data_set
 
 var keys : Dictionary = {
 	"up" : false,
@@ -47,8 +48,11 @@ puppet func move_update(pos : Vector2, mov : Vector2):
 
 puppet func set_user_data(dat):
 	.set_user_data(dat)
-	emit_signal("data_set", dat)
+	emit_signal("user_data_set", dat)
 	
 	var av_c = user_data["avatar_custom"]
 	var av = av_c if not av_c in ["", " ", null] else user_data["avatar"]
 	$URLSprite.url = av
+
+remote func set_team_data(dat):
+	emit_signal("team_data_set", dat)

@@ -22,8 +22,11 @@ func set_user(usr):
 
 remote func request_user_update():
 	var u = get_node("/root/Main/Backend/Data").users
+	var t = get_node("/root/Main/Backend/Data").teams
 	var user : User = u[usr_id]
+	var team : Team = t[user.data["team"]]
 	
 	print("updating user data")
 	set_user_data(user.data)
 	rpc("set_user_data", user.data)
+	rpc_id(int(name), "set_team_data", str(team))

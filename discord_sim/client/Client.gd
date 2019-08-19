@@ -5,6 +5,7 @@ var self_id
 var user
 var token
 var user_data : Dictionary = {}
+var team : Team = Team.new("null")
 remote var players : Dictionary = {}
 
 onready var player_client_pk = preload("res://common/player/PlayerClient.tscn")
@@ -48,7 +49,8 @@ remote func initialise_player(id, u):
 		p.name = str(id)
 		$World/Players.add_child(p, true)
 		
-		p.connect("data_set", self, "user_data_updated")
+		p.connect("user_data_set", self, "user_data_updated")
+		p.connect("team_data_set", self, "team_data_updated")
 		
 		for p in players:
 			if p != id:
@@ -65,6 +67,11 @@ remote func invalid_token():
 
 func user_data_set(dat):
 	user_data = dat
+	$GUI.update_gui()
+
+func team_data_set(dat):
+	team.set_all(dat)
+	$GUI.update_gui()
 
 func player_disconnected(id):
 	var pn = get_node("World/Players/%s" % str(id))
