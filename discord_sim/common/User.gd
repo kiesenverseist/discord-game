@@ -10,6 +10,7 @@ func _init(id : String):
 	data["user_name"] = ""
 	data["nick"] = ""
 	data["avatar"] = ""
+	data["avatar_custom"] = ""
 	data["team"] = ""
 	data["points"] = 0
 	data["mention"] = ""

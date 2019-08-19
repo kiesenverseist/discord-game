@@ -149,13 +149,29 @@ func handle_message(data):
 					ws.send_data(reply)
 	
 	else:
-		if data["message"].matchn("*t*o*k*e*n*"):
-			var u = da.users
-			ws.send_data({
-				"type" : "message",
-				"channel_id" : data["channel_id"],
-				"message" : "Your token is: " + str(u[data["user_id"]].token)
-			})
+		if data["message"].begins_with("^"):
+			var cmd : String = data["message"].rstrip("^").split(" ", false, 2)
+			if cmd[0].matchn("token"):
+				var u = da.users
+				ws.send_data({
+					"type" : "message",
+					"channel_id" : data["channel_id"],
+					"message" : "Your token is: " + str(u[data["user_id"]].token)
+				})
+			if cmd[0].matchn("avatar"):
+				var u = da.users
+				if len(cmd) > 1:
+					u[data["user_id"]].data["avatar_custom"] = cmd[1]
+				
+				var av = u[data["user_id"]].data["avatar"]
+				var av_c = u[data["user_id"]].data["avatar_custom"]
+				av = av_c  + "\nUse the `^avatar  ` command with a double space to reset to default" \
+						if not av_c in [" ", "", null] else av
+				ws.send_data({
+					"type" : "message",
+					"channel_id" : data["channel_id"],
+					"message" : "Your current profile is: " + av
+				})
 		else:
 			var reply_dm = {}
 			reply_dm["type"] = "message"
