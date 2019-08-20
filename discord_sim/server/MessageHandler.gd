@@ -150,7 +150,7 @@ func handle_message(data):
 	
 	else:
 		if data["message"].begins_with("^"):
-			var cmd = data["message"].lstrip("^").split(" ", false, 2)
+			var cmd = data["message"].lstrip("^").split(" ", true, 2)
 			if cmd[0].matchn("token"):
 				var u = da.users
 				ws.send_data({
@@ -161,7 +161,8 @@ func handle_message(data):
 			if cmd[0].matchn("avatar"):
 				var u = da.users
 				if len(cmd) > 1:
-					u[data["user_id"]].data["avatar_custom"] = (cmd[1] as String).strip_edges()
+					var url = (cmd[1] as String).strip_edges()
+					u[data["user_id"]].data["avatar_custom"] = url
 				
 				var av = u[data["user_id"]].data["avatar"]
 				var av_c = u[data["user_id"]].data["avatar_custom"]
