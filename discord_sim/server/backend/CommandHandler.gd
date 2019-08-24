@@ -120,7 +120,8 @@ func get_points(data, arguments):
 func give_user_points(data, arguments):
 	var u = da.users
 	var giver = data["user_id"]
-	var reciever = str(int(arguments[0]))
+	var reciever = (arguments[0] as String).lstrip("<@").rstrip(">")
+	
 	
 	if not u.has(reciever):
 		di.discord_message_id("Recipient not found.", data["channel_id"])
