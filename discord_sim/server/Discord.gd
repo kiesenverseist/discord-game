@@ -64,6 +64,7 @@ func _on_user_leave(data):
 
 func _on_message_receved(data):
 	$MessageHandler.handle_message(data)
+	$CommandHandler.handle_command(data)
 
 static func leader_board_sort(a, b):
 	return a.points > b.points
