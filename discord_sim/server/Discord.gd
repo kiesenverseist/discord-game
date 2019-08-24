@@ -215,3 +215,10 @@ func discord_message(message : String, Channel : String = "bridge", Category : S
 		"category_name": Category,
 		"message" : message
 	})
+
+func discord_message_id(message : String, Channel : String):
+	ws.send_data({
+		"type" : "message",
+		"channel_id" : Channel,
+		"message" : message
+	})
