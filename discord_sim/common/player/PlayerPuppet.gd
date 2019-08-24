@@ -16,5 +16,5 @@ puppet func set_user_data(dat):
 	$PlayerTeam.text = user_data["team"]
 	
 	var av_c = user_data["avatar_custom"]
-	var av = av_c if not av_c in ["", " ", null] else user_data["avatar"]
+	var av = av_c if not av_c in ["", "-", null] else user_data["avatar"]
 	$URLSprite.url = user_data["avatar"]

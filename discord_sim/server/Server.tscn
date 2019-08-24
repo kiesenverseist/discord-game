@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://server/Server.gd" type="Script" id=1]
 [ext_resource path="res://server/Websocket.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://server/world/MonsterFactory.gd" type="Script" id=7]
 [ext_resource path="res://server/Backend.gd" type="Script" id=8]
 [ext_resource path="res://server/Playerend.gd" type="Script" id=9]
+[ext_resource path="res://server/backend/CommandHandler.gd" type="Script" id=10]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -27,6 +28,9 @@ script = ExtResource( 4 )
 
 [node name="MessageHandler" type="Node" parent="Backend/Discord"]
 script = ExtResource( 5 )
+
+[node name="CommandHandler" type="Node" parent="Backend/Discord"]
+script = ExtResource( 10 )
 
 [node name="Playerend" type="Node" parent="."]
 script = ExtResource( 9 )

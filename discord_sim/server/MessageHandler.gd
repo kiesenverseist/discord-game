@@ -3,6 +3,8 @@ extends Node
 onready var ws = $"../../Websocket"
 onready var da = $"../../Data"
 onready var di = get_parent()
+onready var ch = $"../CommandHandler"
+
 var regex = {
 	uwou = RegEx.new()
 }
@@ -13,8 +15,8 @@ func _ready():
 	regex.uwou.compile("[uUwWoO0]{3}")
 
 func handle_message(data):
-	if data["message"].begins_with("^"):
-		admin_command(data)
+#	if data["message"].begins_with("^"):
+#		admin_command(data)
 	
 	if not data["is_dm"]:
 		
@@ -148,7 +150,7 @@ func handle_message(data):
 					}
 					ws.send_data(reply)
 	
-	else:
+	else: # is a dm
 		if data["message"].begins_with("^"):
 			var cmd = data["message"].lstrip("^").split(" ", true, 2)
 			if cmd[0].matchn("token"):
@@ -164,10 +166,10 @@ func handle_message(data):
 					var url = (cmd[1] as String).strip_edges()
 					u[data["user_id"]].data["avatar_custom"] = url
 				
-				var av = u[data["user_id"]].data["avatar"]
-				var av_c = u[data["user_id"]].data["avatar_custom"]
-				av = av_c  + "\nUse the `^avatar  ` command with a double space to reset to default" \
-						if not av_c in [" ", "", null] else av
+				var av = u[data["user_id"]].data["avatar"] 
+				var av_c = u[data["user_id"]].data["avatar_custom"] + "\nUse the command `^avatar <url>` to change to <url>"
+				av = av_c  + "\nUse the command `^avatar -` to reset to default" \
+						if not av_c in ["-", "", null] else av
 				ws.send_data({
 					"type" : "message",
 					"channel_id" : data["channel_id"],

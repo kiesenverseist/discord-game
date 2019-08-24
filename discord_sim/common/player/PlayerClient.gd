@@ -47,7 +47,7 @@ puppet func set_user_data(dat):
 	emit_signal("user_data_set", dat)
 	
 	var av_c = user_data["avatar_custom"]
-	var av = av_c if not av_c in ["", " ", null] else user_data["avatar"]
+	var av = av_c if not av_c in ["", "-", null] else user_data["avatar"]
 	$URLSprite.url = av
 
 remote func set_team_data(dat : String):
