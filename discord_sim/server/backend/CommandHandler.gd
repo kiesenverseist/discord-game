@@ -35,7 +35,7 @@ func handle_command(data):
 	printt("command:", command, arguments)
 	
 	if commands.has(command):
-		commands[command].call(data, arguments)
+		commands[command].call_func(data, arguments)
 	else:
 		di.discord_message("invalid command", data["channel_name"], data["category_name"])
 
