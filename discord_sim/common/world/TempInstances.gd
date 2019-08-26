@@ -12,6 +12,7 @@ func _ready():
 	spawn_thing()
 
 func spawn_thing():
+	print("spawn point package")
 	get_tree().create_timer(1000).connect("timeout", self, "spawn_thing")
 	drop_points(Vector2(rand_range(-1000,1000), rand_range(-1000,1000)), randi()%3+1)
 

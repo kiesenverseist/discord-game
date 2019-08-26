@@ -53,7 +53,7 @@ master func save_all() ->void:
 	save_game.store_line(data_string)
 	save_game.close()
 	
-	print("data saved")
+	print("data saved to %s" % OS.get_user_data_dir())
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
