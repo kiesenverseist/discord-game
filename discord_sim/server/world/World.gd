@@ -14,7 +14,7 @@ func set_all(dat : String):
 	yield(self, "ready")
 	var parsed = JSON.parse(dat).result
 	
-	if parsed.has("MonsterFactpry"):
+	if parsed.has("MonsterFactory"):
 		$MonsterFactory.set_all(parsed["MonsterFactory"])
 	if parsed.has("TempInstances"):
 		$TempInstances.set_all(parsed["TempInstances"])
