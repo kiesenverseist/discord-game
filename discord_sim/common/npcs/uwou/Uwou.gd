@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 
 var direction : Vector2 = Vector2(0,0)
 var speed : float = 32
@@ -8,7 +8,7 @@ func _ready():
 	pass
 
 func _physics_process(delta):
-	position += direction.normalized() * speed * delta
+	move_and_slide(direction.normalized() * speed)
 	
 	if abs(position.x) > 1000 or abs(position.y) > 1000:
 		direction = -direction

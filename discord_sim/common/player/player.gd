@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 
 var move : Vector2 = Vector2(0,0)
 var speed : float = 200
@@ -8,7 +8,7 @@ func _ready():
 	pass
 
 func _physics_process(delta):
-	position += move.normalized() * speed * delta
+	move_and_slide(move.normalized() * speed)
 
 master func update_keys(keys):
 	move.y = int(keys["up"]) * -1 + int(keys["down"]) * 1
