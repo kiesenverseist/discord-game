@@ -31,14 +31,14 @@ func spawn_uwou():
 
 func spawn(creature):
 	add_child(creature, true)
-	
+	creature.connect("drop_points", $"../TempInstances", "drop_points")
 	yield(creature, "ready")
 	
 	var creature_dat := str(creature)
 	
 	var players = $"../../".players
 	for p in players:
-		rpc_id(players, "spawn", creature_dat)
+		rpc_id(int(p.name), "spawn", creature_dat)
 
 func spawn_loop():
 	var curr_time = OS.get_unix_time()

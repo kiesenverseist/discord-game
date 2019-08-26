@@ -7,6 +7,11 @@ func _ready():
 	ready = true
 	get_node("/root/Main/Backend/Data").connect("users_updated", self, "request_user_update")
 
+func give_points(amount : int) -> void:
+	var u = get_node("/root/Main/Backend/Data").users
+	u[usr_id].add_points(amount)
+	get_node("/root/Main/Backend/Data").users = u
+
 master func update_keys(keys : Dictionary):
 	.update_keys(keys)
 	rpc("move_update", position, move)

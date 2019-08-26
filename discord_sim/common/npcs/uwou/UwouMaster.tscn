@@ -17,4 +17,9 @@ autostart = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="PointCountdown" type="Timer" parent="."]
+wait_time = 3600.0
+autostart = true
 [connection signal="timeout" from="NetworkUpdateTimer" to="." method="move"]
+[connection signal="timeout" from="PointCountdown" to="." method="_on_PointCountdown_timeout"]
