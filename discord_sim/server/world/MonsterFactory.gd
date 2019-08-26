@@ -36,10 +36,7 @@ func spawn(creature):
 	yield(creature, "ready")
 	
 	var creature_dat := str(creature)
-	
-	var players = $"../../".players
-	for p in players:
-		rpc_id(int(p.name), "spawn", creature_dat)
+	rpc("spawn", creature_dat)
 
 func spawn_loop():
 	var curr_time = OS.get_unix_time()

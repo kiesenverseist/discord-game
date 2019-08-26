@@ -5,3 +5,4 @@ func _ready():
 
 func connected():
 	$MonsterFactory.connected()
+	$TempInstances.request_sync()
