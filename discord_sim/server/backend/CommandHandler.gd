@@ -42,7 +42,7 @@ func handle_command(data):
 	if commands.has(command):
 		commands[command].call_func(data, arguments)
 	else:
-		di.discord_message("invalid command", data["channel_name"], data["category_name"])
+		di.discord_message("invalid command", data["channel_id"])
 
 ## commands
 # admin
@@ -85,15 +85,15 @@ func update_user_leaderboard(data, arguments):
 #dm
 func token(data, arguments):
 	if not is_dm(data):
-		di.discord_message("This command can only be used in DMs.", data["channel_name"], data["category_name"])
+		di.discord_message_id("This command can only be used in DMs.", data["channel_id"])
 		return
 	
 	var u = da.users
-	di.discord_message_id("Your token is: " + str(u[data["user_id"]].token, data["channel_id"]))
+	di.discord_message_id("Your token is: " + str(u[data["user_id"]].token), data["channel_id"])
 
 func avatar(data, arguments):
 	if not is_dm(data):
-		di.discord_message("This command can only be used in DMs.", data["channel_name"], data["category_name"])
+		di.discord_message_id("This command can only be used in DMs.", data["channel_id"])
 		return
 	
 	var u = da.users

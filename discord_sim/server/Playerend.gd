@@ -36,11 +36,11 @@ func _on_children_changed(node):
 		(c as Node).custom_multiplayer = custom_multiplayer
 
 func client_connected(id):
-	print("client connected", id)
+	printt("client connected", id)
 	players[id] = null
 
 func client_disconnected(id):
-	print("client disconnected", id)
+	printt("client disconnected", id)
 	
 	if id in players and players[id] != null:
 		players.erase(id)

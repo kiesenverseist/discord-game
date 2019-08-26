@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://server/Server.gd" type="Script" id=1]
 [ext_resource path="res://server/Websocket.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://server/Backend.gd" type="Script" id=8]
 [ext_resource path="res://server/Playerend.gd" type="Script" id=9]
 [ext_resource path="res://server/backend/CommandHandler.gd" type="Script" id=10]
+[ext_resource path="res://common/world/terrain/Terrain.tscn" type="PackedScene" id=11]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -41,7 +42,6 @@ script = ExtResource( 6 )
 [node name="MonsterFactory" type="Node" parent="Playerend/World"]
 script = ExtResource( 7 )
 
-[node name="Terrain" type="TileMap" parent="Playerend/World"]
-format = 1
-
 [node name="Players" type="Node" parent="Playerend/World"]
+
+[node name="Terrain" parent="Playerend/World" instance=ExtResource( 11 )]
