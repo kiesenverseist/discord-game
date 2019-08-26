@@ -11,6 +11,7 @@ onready var uwou_pk = preload("res://common/npcs/uwou/UwouMaster.tscn")
 
 func _ready():
 	spawn_loop()
+	spawn_uwou()
 
 func try_spawn_uwou():
 	to_spawn_uwou = true

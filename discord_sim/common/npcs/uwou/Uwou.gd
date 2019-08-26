@@ -4,8 +4,8 @@ var direction : Vector2 = Vector2(0,0)
 var speed : float = 32
 var title : String = ""
 sync var points : int = 0
-var max_health : int = 1
-var health = 1
+var max_health : int = 10
+var health = max_health
 
 signal drop_points
 
@@ -20,16 +20,24 @@ func damage(amount):
 	
 	if health <= 0:
 		emit_signal("drop_points", position, points)
-		
+		points = 0
+		die()
+		rpc("die")
 
-func _set_all(data):
-	data = JSON.parse(data).result
+remote func die():
+	print("an uwou dieded")
+	queue_free()
+
+func _set_all(dat : String):
+	var data : Dictionary= JSON.parse(dat).result
 	name = data["name"]
 	title = data["title"]
 	position = str2var(data["position"])
 	direction = str2var(data["direction"])
 	speed = float(data["speed"])
 	points = int(data["points"])
+	max_health = int(data.get("max_health", 10))
+	health = int(data.get("health", max_health))
 
 func _to_string() -> String:
 	return JSON.print({
@@ -38,5 +46,7 @@ func _to_string() -> String:
 		"position" : var2str(position),
 		"direction" : var2str(direction),
 		"speed" : speed,
-		"points" : points
+		"points" : points,
+		"max_health" : max_health,
+		"health" : health
 	})
