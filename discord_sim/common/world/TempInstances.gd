@@ -29,7 +29,7 @@ remote func network_drop_points(pos : Vector2, points : int) -> void:
 
 # call this to make a bullet everywhere
 func shoot_bullet(pos: Vector2, dir : Vector2) -> void:
-	rpc("network_shot_bullet", pos, dir)
+	rpc("network_shoot_bullet", pos, dir)
 	network_shoot_bullet(pos, dir)
 
 remote func network_shoot_bullet(pos : Vector2, dir : Vector2) -> void:
