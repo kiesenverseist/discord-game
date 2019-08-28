@@ -2,15 +2,17 @@ extends KinematicBody2D
 
 var speed = 80
 var direction = Vector2(1,0)
+var active = false
 
 func _ready():
 	print("bullet spawned")
 	get_tree().create_timer(100).connect("timeout", self, "remove")
+	get_tree().create_timer(0.2).connect("timeout", self, "set", ["active", true])
 
 func _physics_process(delta):
-	var col = move_and_collide(direction.normalized() * speed)
+	var col = move_and_collide(direction.normalized() * speed * delta)
 	
-	if is_network_master() and col:
+	if is_network_master() and col and active:
 		var obj = col.collider
 		
 		if obj.has_method("damage"):
