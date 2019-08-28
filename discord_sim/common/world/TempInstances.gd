@@ -19,8 +19,9 @@ func spawn_thing():
 # call this function to create a point package across everything
 func drop_points(pos : Vector2, points : int) -> void:
 	rpc("network_drop_points", pos, points)
+	network_drop_points(pos, points)
 
-sync func network_drop_points(pos : Vector2, points : int) -> void:
+remote func network_drop_points(pos : Vector2, points : int) -> void:
 	var pp = point_package.instance()
 	pp.position = pos
 	pp.points = points
@@ -29,8 +30,10 @@ sync func network_drop_points(pos : Vector2, points : int) -> void:
 # call this to make a bullet everywhere
 func shoot_bullet(pos: Vector2, dir : Vector2) -> void:
 	rpc("network_shot_bullet", pos, dir)
+	network_shoot_bullet(pos, dir)
 
-sync func network_shoot_bullet(pos : Vector2, dir : Vector2) -> void:
+remote func network_shoot_bullet(pos : Vector2, dir : Vector2) -> void:
+	print("shot")
 	var b = bullet.instance()
 	b.position = pos
 	b.direction = dir

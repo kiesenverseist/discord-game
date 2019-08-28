@@ -5,7 +5,6 @@ func _ready():
 
 #saving / sending/ updating
 func get_all() -> String:
-	print($MonsterFactory)
 	return JSON.print({
 		"MonsterFactory" : $MonsterFactory.get_all(),
 		"TempInstances" : str($TempInstances)

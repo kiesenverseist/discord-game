@@ -4,6 +4,7 @@ var speed = 80
 var direction = Vector2(1,0)
 
 func _ready():
+	print("bullet spawned")
 	get_tree().create_timer(100).connect("timeout", self, "remove")
 
 func _physics_process(delta):
@@ -18,6 +19,7 @@ func _physics_process(delta):
 		remove()
 
 remote func remove():
+	print("bullet removed")
 	if is_network_master():
 		rpc("remove")
 	queue_free()

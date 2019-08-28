@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var move : Vector2 = Vector2(0,0)
+var last_dir : Vector2 = move
 var speed : float = 200
 var user_data : Dictionary setget set_user_data
 
@@ -18,11 +19,14 @@ func _physics_process(delta):
 master func update_keys(keys):
 	move.y = int(keys["up"]) * -1 + int(keys["down"]) * 1
 	move.x = int(keys["right"]) * 1 + int(keys["left"]) * -1
+	
+	if move != Vector2(0,0):
+		last_dir = move
 
 func shoot(keys):
 	if can_shoot:
 		can_shoot = false
-		emit_signal("shoot", position + move.normalized() * 48, move)
+		emit_signal("shoot", position + move.normalized() * 48, last_dir)
 		yield(get_tree().create_timer(shoot_cooldown), "timeout")
 		can_shoot = true
 
