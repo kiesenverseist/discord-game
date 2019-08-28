@@ -24,7 +24,7 @@ master func update_keys(keys):
 		last_dir = move
 
 func shoot(keys):
-	if can_shoot and keys["primary_key"]:
+	if can_shoot and keys["primary_click"]:
 		can_shoot = false
 		emit_signal("shoot", position + move.normalized() * 48, last_dir)
 		yield(get_tree().create_timer(shoot_cooldown), "timeout")
