@@ -11,7 +11,6 @@ onready var uwou_pk = preload("res://common/npcs/uwou/UwouMaster.tscn")
 
 func _ready():
 	spawn_loop()
-	spawn_uwou()
 
 func try_spawn_uwou():
 	to_spawn_uwou = true
@@ -80,3 +79,6 @@ func set_all(dat : String):
 		var uwou = uwou_pk.instance()
 		uwou._set_all(monsters[m])
 		spawn(uwou)
+
+func _to_string() -> String:
+	return get_all()

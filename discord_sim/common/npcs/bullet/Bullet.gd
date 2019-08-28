@@ -9,7 +9,6 @@ func _ready():
 func _physics_process(delta):
 	var col = move_and_collide(direction.normalized() * speed)
 	
-	
 	if is_network_master() and col.remainder != Vector2(0,0):
 		var obj = col.collider
 		

@@ -14,7 +14,9 @@ func give_points(amount : int) -> void:
 
 master func update_keys(keys : Dictionary):
 	.update_keys(keys)
-	rpc("move_update", position, move)
+	rpc_unreliable("move_update", position, move)
+	
+	.shoot(keys)
 
 func _on_NetworkUpdate():
 	rpc("move_update", position, move)

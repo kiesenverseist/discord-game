@@ -4,6 +4,11 @@ var move : Vector2 = Vector2(0,0)
 var speed : float = 200
 var user_data : Dictionary setget set_user_data
 
+var can_shoot : bool = true
+var shoot_cooldown : float = 0.7
+
+signal shoot
+
 func _ready():
 	pass
 
@@ -13,6 +18,13 @@ func _physics_process(delta):
 master func update_keys(keys):
 	move.y = int(keys["up"]) * -1 + int(keys["down"]) * 1
 	move.x = int(keys["right"]) * 1 + int(keys["left"]) * -1
+
+func shoot(keys):
+	if can_shoot:
+		can_shoot = false
+		emit_signal("shoot", position + move.normalized() * 48, move)
+		yield(get_tree().create_timer(shoot_cooldown), "timeout")
+		can_shoot = true
 
 func set_user_data(dat : Dictionary):
 	user_data = dat

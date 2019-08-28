@@ -9,7 +9,7 @@ var bullet = preload("res://common/npcs/bullet/Bullet.tscn")
 # smaller stuff where the code isn't as long.
 
 func _ready():
-	spawn_thing()
+	pass
 
 func spawn_thing():
 	print("spawn point package")
@@ -37,12 +37,12 @@ sync func network_shoot_bullet(pos : Vector2, dir : int) -> void:
 	add_child(b, true)
 
 func request_sync() -> void:
-	rpc_id(1, "give_sync")
+	rpc_id(1, "give_sync", multiplayer.get_network_unique_id())
 
 master func give_sync(id : int) -> void:
 	rpc_id(id, "recieve_sync", str(self))
 
-puppet func recieve_sync(data : String) -> void:
+remote func recieve_sync(data : String) -> void:
 	set_all(data)
 
 func set_all(data : String) -> void:
