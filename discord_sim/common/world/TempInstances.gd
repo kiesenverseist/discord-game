@@ -13,8 +13,8 @@ func _ready():
 
 func spawn_thing():
 	print("spawn point package")
-	get_tree().create_timer(1000).connect("timeout", self, "spawn_thing")
-	drop_points(Vector2(rand_range(-1000,1000), rand_range(-1000,1000)), randi()%3+1)
+	get_tree().create_timer(3600).connect("timeout", self, "spawn_thing")
+	drop_points(Vector2(rand_range(-3000,3000), rand_range(-3000,3000)), randi()%3+1)
 
 # call this function to create a point package across everything
 func drop_points(pos : Vector2, points : int) -> void:
@@ -30,7 +30,7 @@ sync func network_drop_points(pos : Vector2, points : int) -> void:
 func shoot_bullet(pos: Vector2, dir : Vector2) -> void:
 	rpc("network_shot_bullet", pos, dir)
 
-sync func network_shoot_bullet(pos : Vector2, dir : int) -> void:
+sync func network_shoot_bullet(pos : Vector2, dir : Vector2) -> void:
 	var b = bullet.instance()
 	b.position = pos
 	b.direction = dir
