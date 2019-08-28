@@ -40,6 +40,7 @@ remote func network_shoot_bullet(pos : Vector2, dir : Vector2) -> void:
 	add_child(b, true)
 
 func request_sync() -> void:
+	set_network_master(1)
 	rpc_id(1, "give_sync", multiplayer.get_network_unique_id())
 
 master func give_sync(id : int) -> void:
