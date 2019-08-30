@@ -61,24 +61,32 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
 anchor_right = 1.0
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Points" type="Label" parent="GUI/HBoxContainer"]
-margin_right = 115.0
+margin_left = 328.0
+margin_right = 443.0
 margin_bottom = 14.0
 text = "Personal Points: 0"
 
 [node name="TeamPoints" type="Label" parent="GUI/HBoxContainer"]
-margin_left = 119.0
-margin_right = 214.0
+margin_left = 447.0
+margin_right = 542.0
 margin_bottom = 14.0
 text = "Team Points: 0"
 
 [node name="Team" type="Label" parent="GUI/HBoxContainer"]
-margin_left = 218.0
-margin_right = 293.0
+margin_left = 546.0
+margin_right = 621.0
 margin_bottom = 14.0
 text = "Team: none"
+
+[node name="Health" type="Label" parent="GUI/HBoxContainer"]
+margin_left = 625.0
+margin_right = 696.0
+margin_bottom = 14.0
+text = "Health: 5/5"
 [connection signal="text_entered" from="GUI/Token" to="." method="_on_Token_text_entered"]

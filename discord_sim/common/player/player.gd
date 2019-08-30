@@ -5,8 +5,8 @@ var last_dir : Vector2 = move
 var speed : float = 200
 var user_data : Dictionary setget set_user_data
 
-var max_health : int = 5
-var health : int = max_health
+remotesync var max_health : int = 5
+remotesync var health : int = max_health
 signal die
 signal drop_points
 
@@ -36,6 +36,7 @@ func shoot(keys):
 
 func damage(amount):
 	health -= amount
+	rset("health", health)
 	if health <= 0:
 		kill()
 
@@ -43,6 +44,7 @@ func kill():
 	emit_signal("die")
 	
 	health = max_health
+	rset("health", max_health)
 	position = Vector2(0,0)
 
 func set_user_data(dat : Dictionary):
