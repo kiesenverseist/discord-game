@@ -5,9 +5,13 @@ var last_dir : Vector2 = move
 var speed : float = 200
 var user_data : Dictionary setget set_user_data
 
+var max_health : int = 5
+var health : int = max_health
+signal die
+signal drop_points
+
 var can_shoot : bool = true
 var shoot_cooldown : float = 0.7
-
 signal shoot
 
 func _ready():
@@ -24,11 +28,22 @@ master func update_keys(keys):
 		last_dir = move
 
 func shoot(keys):
-	if can_shoot and keys["primary_click"]:
+	if can_shoot and keys["shoot"]:
 		can_shoot = false
-		emit_signal("shoot", position + move.normalized() * 48, last_dir)
+		emit_signal("shoot", position, last_dir)
 		yield(get_tree().create_timer(shoot_cooldown), "timeout")
 		can_shoot = true
+
+func damage(amount):
+	health -= amount
+	if health <= 0:
+		kill()
+
+func kill():
+	emit_signal("die")
+	
+	health = max_health
+	position = Vector2(0,0)
 
 func set_user_data(dat : Dictionary):
 	user_data = dat

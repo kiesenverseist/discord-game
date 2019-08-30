@@ -5,12 +5,12 @@ var direction = Vector2(1,0)
 var active = false
 
 func _ready():
-	print("bullet spawned")
+	rotation = direction.angle()
 	get_tree().create_timer(100).connect("timeout", self, "remove")
 	get_tree().create_timer(0.2).connect("timeout", self, "set", ["active", true])
 
 func _physics_process(delta):
-	var col = move_and_collide(direction.normalized() * speed * delta)
+	var col = move_and_collide(direction.normalized() * speed)
 	
 	if is_network_master() and col and active:
 		var obj = col.collider
@@ -21,7 +21,6 @@ func _physics_process(delta):
 		remove()
 
 remote func remove():
-	print("bullet removed")
 	if is_network_master():
 		rpc("remove")
 	queue_free()

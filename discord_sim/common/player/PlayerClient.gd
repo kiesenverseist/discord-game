@@ -8,7 +8,7 @@ var keys : Dictionary = {
 	"down" : false,
 	"right" : false,
 	"left" : false,
-	"primary_click" : false
+	"shoot" : false
 }
 
 func _ready():
@@ -37,10 +37,10 @@ func _unhandled_input(event):
 	if event.is_action_released("move_left"):
 		keys["left"] = false
 	
-	if event.is_action_pressed("primary_click"):
-		keys["primary_click"] = true
-	if event.is_action_released("primary_click"):
-		keys["primary_click"] = false
+	if event.is_action_pressed("shoot"):
+		keys["shoot"] = true
+	if event.is_action_released("shoot"):
+		keys["shoot"] = false
 	
 	if hash(old_keys) != hash(keys):
 		if multiplayer.network_peer:

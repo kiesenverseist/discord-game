@@ -32,6 +32,7 @@ func spawn_uwou():
 func spawn(creature):
 	add_child(creature, true)
 	creature.connect("drop_points", $"../TempInstances", "drop_points")
+	creature.connect("shoot", $"../TempInstances", "shoot_bullet")
 	yield(creature, "ready")
 	
 	var creature_dat := str(creature)

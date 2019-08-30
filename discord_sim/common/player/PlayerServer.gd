@@ -12,6 +12,15 @@ func give_points(amount : int) -> void:
 	u[usr_id].add_points(amount)
 	get_node("/root/Main/Backend/Data").users = u
 
+func kill():
+	var pts = user_data["points"]/2
+	emit_signal("drop_points", pts)
+	var u = get_node("/root/Main/Backend/Data").users
+	u[usr_id].add_points(-pts)
+	get_node("/root/Main/Backend/Data").users = u
+	
+	.kill()
+
 master func update_keys(keys : Dictionary):
 	.update_keys(keys)
 	rpc("move_update", position, move)
