@@ -27,6 +27,14 @@ master func update_keys(keys : Dictionary):
 	
 	.shoot(keys)
 
+master func update_pos(pos : Vector2) -> void:
+	var dist = (position - pos).length()
+	
+	if dist > 250:
+		rpc("move_update", position, move)
+	else:
+		position = pos
+
 func _on_NetworkUpdate():
 	rpc("move_update", position, move)
 

@@ -33,7 +33,6 @@ func shoot_bullet(pos: Vector2, dir : Vector2) -> void:
 	network_shoot_bullet(pos, dir)
 
 remote func network_shoot_bullet(pos : Vector2, dir : Vector2) -> void:
-	print("shot")
 	var b = bullet.instance()
 	b.position = pos
 	b.direction = dir

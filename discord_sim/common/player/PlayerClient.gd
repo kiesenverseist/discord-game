@@ -58,3 +58,16 @@ puppet func set_user_data(dat):
 
 remote func set_team_data(dat : String):
 	emit_signal("team_data_set", dat)
+
+puppet func move_update(pos: Vector2, mov : Vector2):
+	var dist = (position - pos).length()
+	
+	if dist < 100:
+		pass
+	elif dist < 300:
+		position += (pos - position)/(dist/ 4)
+	else:
+		position = pos
+
+func _on_NetworkUpdate():
+	rpc_unreliable_id(1, "update_pos", position)
