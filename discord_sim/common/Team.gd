@@ -9,9 +9,14 @@ var name setget ,get_name
 func _init(nam : String):
 	data["name"] = nam
 	data["points"] = 0
+	
+	# flags
 	data["flag_chat"] = false
 	data["flag_vc"] = false
 	data["flag_user_leaderboard"] = false
+	
+	# loop checks?
+	data["points_changed"] = false
 
 func add_points(p : int = 1):
 	data["points"] += p
@@ -32,14 +37,10 @@ func eval_flags():
 
 #saving / sending/ updating
 func get_all() -> String:
-	return JSON.print(data)
+	return var2str(data)
 
 func set_all(dat : String):
-	var parsed = JSON.parse(dat).result
-	
-	#not directley equating incase anything new is not in the old save
-	for key in parsed:
-		data[key] = parsed[key]
+	data = str2var(dat)
 
 func _to_string() -> String:
 	return get_all()

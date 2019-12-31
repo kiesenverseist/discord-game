@@ -107,20 +107,9 @@ func handle_message(data):
 					t[data["category_name"]].add_points(1)
 				da.teams = t
 				
-			emit_signal("points_changed")
+			emit_signal("points_changed", data["category_name"])
 
 		"team-chat":
-#				if data["message"].matchn("*p*o*i*n*t*"):
-#					var t = da.teams
-#					var u = da.users
-#					var reply = {
-#						"type" : "message",
-#						"channel_name" : data["channel_name"],
-#						"category_name": data["category_name"],
-#						"message" : "Your team has %s points" % str(t[data["category_name"]].points)\
-#								+ "\nYou have %s points" % str(u[data["user_id"]].data["points"])
-#					}
-#					ws.send_data(reply)
 			
 			var other_teams = da.teams.keys()
 			other_teams.erase(data["category_name"])
@@ -142,7 +131,7 @@ func handle_message(data):
 				}
 				ws.send_data(reply)
 				
-				emit_signal("points_changed")
+				emit_signal("points_changed", data["category_name"])
 
 func sabotage(data : Dictionary) -> bool:
 	#assign team shenanigans

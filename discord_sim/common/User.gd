@@ -25,16 +25,6 @@ func set_avatar(avatar : String):
 	data["avatar"] = avatar
 
 func get_all() -> String:
-	# try changeing the whole thing to var2str and str2var
-	# also pass dictionaries all the way up in saving
-	# to reduce escape garbage
-	
-	var dat = {}
-	
-	for key in data:
-		dat[key] = var2str(data[key])
-	
-#	return JSON.print(dat)
 	return var2str(data)
 
 func add_points(points : int):
@@ -47,12 +37,6 @@ func get_token():
 	return hash(str(data["id"]))
 
 func set_all(dat : String):
-#	var parsed : Dictionary = JSON.parse(dat).result
-#
-#	#not directley equating incase anything new is not in the old save
-#	for key in parsed:
-#		if parsed[key] != null:
-#			data[key] = str2var(parsed[key])
 	data = str2var(dat)
 
 func _to_string() -> String:

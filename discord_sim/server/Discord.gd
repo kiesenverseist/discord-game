@@ -3,7 +3,7 @@ extends Node
 onready var ws = $"../Websocket"
 onready var da = $"../Data"
 
-var team_leaderboard_changed : bool = true
+var team_leaderboard_changed : bool = false
 
 func _ready():
 	ws.connect("message_recieved", self, "_on_message_receved")
@@ -169,12 +169,15 @@ func update_loop():
 		update_leaderboard()
 		team_leaderboard_changed = false
 		for team in t:
-			if t[team].data["flag_user_leaderboard"]:
+			var d = t[team].data
+			if d["flag_user_leaderboard"] and d["points_changed"]:
 				update_user_leaderboard({
 					"team" : team,
 					"category_name" : team,
 					"channel_name" : "team-leaderboard"
 				})
+			t[team].data["points_changed"] = false
+			da.teams = t
 
 func update_users():
 	var req : WSRequest = ws.request({"request" : "users"})
@@ -214,8 +217,12 @@ func update_users():
 	if not users.empty():
 		da.users = users
 
-func points_changed() -> void:
+func points_changed(team : String = "") -> void:
 	team_leaderboard_changed = true
+	
+	if team != "":
+		var t = da.teams
+		(t[team] as Team).data["points_changed"] = true
 
 func discord_message(message : String, Channel : String = "bridge", Category : String = "super"):
 	ws.send_data({

@@ -145,7 +145,8 @@ func give_user_points(data, arguments):
 	di.discord_message_id("%s gave %s %s points." % \
 			[u[giver].data["mention"],u[reciever].data["mention"], str(pts)], data["channel_id"])
 			
-	emit_signal("points_changed")
+	emit_signal("points_changed", u[reciever].data["team"])
+	emit_signal("points_changed", u[giver].data["team"])
 
 func give_team_points(data, arguments):
 	var u = da.users
@@ -170,7 +171,7 @@ func give_team_points(data, arguments):
 	di.discord_message_id("%s donated %s points, giving %s %s more points" % \
 			[u[giver].data["mention"], str(pts), team, str(pts/3)], data["channel_id"])
 	
-	emit_signal("points_changed")
+	emit_signal("points_changed", team)
 
 
 ## util functions
