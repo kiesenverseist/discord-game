@@ -34,7 +34,8 @@ func get_all() -> String:
 	for key in data:
 		dat[key] = var2str(data[key])
 	
-	return JSON.print(dat)
+#	return JSON.print(dat)
+	return var2str(data)
 
 func add_points(points : int):
 	data["points"] += points
@@ -46,11 +47,13 @@ func get_token():
 	return hash(str(data["id"]))
 
 func set_all(dat : String):
-	var parsed = JSON.parse(dat).result
-	
-	#not directley equating incase anything new is not in the old save
-	for key in parsed:
-		data[key] = str2var(parsed[key])
+#	var parsed : Dictionary = JSON.parse(dat).result
+#
+#	#not directley equating incase anything new is not in the old save
+#	for key in parsed:
+#		if parsed[key] != null:
+#			data[key] = str2var(parsed[key])
+	data = str2var(dat)
 
 func _to_string() -> String:
 	return get_all()
