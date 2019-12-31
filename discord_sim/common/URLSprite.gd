@@ -48,6 +48,10 @@ func set_url(u : String) -> void:
 	
 func data_ready(result, response_code, headers, body):
 	var img = Image.new()
+	
+	# fallover to various image formats, see which one works
+	# alternative would be pasreing th original url
+	# but cbb
 	var load_err = img.load_webp_from_buffer(body)
 	if load_err:
 		load_err = img.load_png_from_buffer(body)

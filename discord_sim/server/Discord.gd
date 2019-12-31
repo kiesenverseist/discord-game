@@ -3,10 +3,15 @@ extends Node
 onready var ws = $"../Websocket"
 onready var da = $"../Data"
 
+var team_leaderboard_changed : bool = true
+
 func _ready():
 	ws.connect("message_recieved", self, "_on_message_receved")
 	ws.connect("user_joined", self, "_on_user_join")
 	ws.connect("user_left", self, "_on_user_leave")
+	
+	$MessageHandler.connect("points_changed", self, "points_changed")
+	$CommandHandler.connect("points_changed", self, "points_changed")
 	
 	randomize()
 	update_loop()
@@ -160,8 +165,9 @@ func update_loop():
 				pass
 	
 	#update leaderboard(s)
-	if OS.get_time().hour == 20:
+	if OS.get_time().hour == 20 and team_leaderboard_changed:
 		update_leaderboard()
+		team_leaderboard_changed = false
 		for team in t:
 			if t[team].data["flag_user_leaderboard"]:
 				update_user_leaderboard({
@@ -207,6 +213,9 @@ func update_users():
 	
 	if not users.empty():
 		da.users = users
+
+func points_changed() -> void:
+	team_leaderboard_changed = true
 
 func discord_message(message : String, Channel : String = "bridge", Category : String = "super"):
 	ws.send_data({

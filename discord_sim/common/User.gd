@@ -14,6 +14,9 @@ func _init(id : String):
 	data["team"] = ""
 	data["points"] = 0
 	data["mention"] = ""
+	data["max_hp"] = 5
+	data["hp"] = data["max_hp"]
+	data["position"] = Vector2(0,0)
 
 func set_nick(nick : String):
 	data["nick"] = nick
@@ -22,7 +25,16 @@ func set_avatar(avatar : String):
 	data["avatar"] = avatar
 
 func get_all() -> String:
-	return JSON.print(data)
+	# try changeing the whole thing to var2str and str2var
+	# also pass dictionaries all the way up in saving
+	# to reduce escape garbage
+	
+	var dat = {}
+	
+	for key in data:
+		dat[key] = var2str(data[key])
+	
+	return JSON.print(dat)
 
 func add_points(points : int):
 	data["points"] += points
@@ -38,7 +50,7 @@ func set_all(dat : String):
 	
 	#not directley equating incase anything new is not in the old save
 	for key in parsed:
-		data[key] = parsed[key]
+		data[key] = str2var(parsed[key])
 
 func _to_string() -> String:
 	return get_all()

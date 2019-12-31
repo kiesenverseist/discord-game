@@ -7,6 +7,8 @@ onready var mh = $"../MessageHandler"
 
 var command_symbol = "%"
 
+signal points_changed
+
 var commands = {
 	"update_leaderboard" : funcref(self, "update_leaderboard"),
 	"update_users" : funcref(self, "update_users"),
@@ -142,6 +144,8 @@ func give_user_points(data, arguments):
 	
 	di.discord_message_id("%s gave %s %s points." % \
 			[u[giver].data["mention"],u[reciever].data["mention"], str(pts)], data["channel_id"])
+			
+	emit_signal("points_changed")
 
 func give_team_points(data, arguments):
 	var u = da.users
@@ -165,6 +169,8 @@ func give_team_points(data, arguments):
 	
 	di.discord_message_id("%s donated %s points, giving %s %s more points" % \
 			[u[giver].data["mention"], str(pts), team, str(pts/3)], data["channel_id"])
+	
+	emit_signal("points_changed")
 
 
 ## util functions

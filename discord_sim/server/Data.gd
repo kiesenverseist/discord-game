@@ -26,7 +26,7 @@ func autosave():
 	save_all()
 	get_tree().create_timer(900).connect("timeout", self, "autosave")
 
-master func save_all() ->void:
+master func save_all() -> void:
 	var data = {}
 	
 	var ts = {}

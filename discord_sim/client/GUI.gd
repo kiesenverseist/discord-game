@@ -10,3 +10,4 @@ func update_gui():
 	$HBoxContainer/Points.text = "Personal Points: " + str(data["points"])
 	$HBoxContainer/Team.text = "Team: " + data["team"]
 	$HBoxContainer/TeamPoints.text = "Team Points: " + str(t.points)
+	$HBoxContainer/Health.text = "Health: " + str(data["health"]) + "/" + str(data["max_health"])

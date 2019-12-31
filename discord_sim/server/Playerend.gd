@@ -66,6 +66,8 @@ remote func player_setup(id, token):
 		"user" : usr
 	}
 	
+	print_debug()
+	
 	initialise_player(id, usr)
 	
 	for i in players:

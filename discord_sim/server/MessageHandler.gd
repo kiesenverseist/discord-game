@@ -5,6 +5,8 @@ onready var da = $"../../Data"
 onready var di = get_parent()
 onready var ch = $"../CommandHandler"
 
+signal points_changed
+
 var regex = {
 	uwou = RegEx.new()
 }
@@ -74,9 +76,9 @@ func handle_message(data):
 	
 	match data["channel_name"]:
 		"generator":
-			var sabotage_attempted = sabotage(data)
+			var sabotage_attempted = not sabotage(data)
 			
-			if sabotage_attempted:
+			if not sabotage_attempted:
 				#give user point
 				var us = da.users
 				us[data["user_id"]].add_points(1)
@@ -104,6 +106,8 @@ func handle_message(data):
 				else:
 					t[data["category_name"]].add_points(1)
 				da.teams = t
+				
+			emit_signal("points_changed")
 
 		"team-chat":
 #				if data["message"].matchn("*p*o*i*n*t*"):
@@ -137,6 +141,8 @@ func handle_message(data):
 					"message" : "You found a point."
 				}
 				ws.send_data(reply)
+				
+				emit_signal("points_changed")
 
 func sabotage(data : Dictionary) -> bool:
 	#assign team shenanigans

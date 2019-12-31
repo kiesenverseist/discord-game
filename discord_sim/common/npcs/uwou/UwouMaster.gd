@@ -44,6 +44,8 @@ func move():
 func _on_PointCountdown_timeout():
 	sub_point -= 1
 	
+	# sorry i also dont understand what i was trying to do here
+	
 	if sub_point <= 0:
 		points += 1
 		rset("points", points)
